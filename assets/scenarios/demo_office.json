@@ -11,7 +11,8 @@
   "skills": [
     { "id": "observe", "name": "觀察", "value": 65 },
     { "id": "stealth", "name": "隱匿", "value": 50 },
-    { "id": "lore", "name": "博學", "value": 55 }
+    { "id": "lore", "name": "博學", "value": 55 },
+    { "id": "resolve", "name": "意志", "value": 70 }
   ],
   "start_scene": "scene_start",
   "scenes": {
@@ -169,8 +170,32 @@
       "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
       "narrative": "你艱難地吞嚥，被勒住的幻覺讓嗓音變得沙啞：「⋯⋯小婷？這麼晚了，怎麼還沒回去？」\n\n她顫抖的肩膀猛然停住，接著緩緩轉過頭。眼前的景象讓你倒吸一口涼氣，腳步不自覺地往後踉蹌。小婷沒有眼睛——準確來說，她的眼框只剩下兩個深不見底的空洞，彷彿被人硬生生摘走了眼球，兩行鮮血順著臉頰流下。\n\n你強壓下作嘔的衝動，試圖找出一種合理的解釋：討債公司？家庭暴力？但下一秒，你便知道自己錯得離譜。那對眼窩開始滲出濃稠的黑霧。她露出乖巧的微笑，聲音卻像從地底傳來：\n\n「前輩，這個報表我一個人做不完⋯⋯你也會留下來陪我，對吧？」",
       "choices": [
-        { "label": "這根本不是人類！抓起她的手腕直接往電梯衝", "next": "scene_end_good" },
-        { "label": "看著那對溢滿黑霧的眼窩，你失神地回答：『好』", "next": "scene_end_lost" },
+        {
+          "label": "不管三七二十一，抓起他的手腕就往電梯衝。",
+          "skill_check": {
+            "skill": "resolve",
+            "outcomes": {
+              "critical_success": { "next": "scene_end_good" },
+              "success":          { "next": "scene_end_good" },
+              "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -40 }] }
+            }
+          }
+        },
+        {
+          "label": "強忍著恐懼，答應小婷",
+          "skill_check": {
+            "skill": "resolve",
+            "outcomes": {
+              "critical_success": { "next": "scene_end_lost" },
+              "success":          { "next": "scene_end_lost" },
+              "partial":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -20 }] },
+              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] },
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -45 }] }
+            }
+          }
+        },
         {
           "label": "轉頭就跑，什麼也不管，絕不回頭",
           "skill_check": {
