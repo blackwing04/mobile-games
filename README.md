@@ -1,6 +1,16 @@
 # 異聞錄 — 模板化文字 TRPG 工廠
 
+[![License: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/License-PolyForm%20Noncommercial%201.0.0-red.svg)](LICENSE)
+
 一套用於量產文字冒險 TRPG 遊戲的引擎，核心循環為「劇情 → 選擇 / 骰子檢定 → 多線分支 → 多重結局」。同一套引擎可載入不同 JSON 劇本，快速產出多款主題不同的遊戲。
+
+> ⚠️ **授權警告 / License Warning**
+>
+> 本軟體授權為 **PolyForm Noncommercial License 1.0.0** —— 個人 / 學術 / 非商業 hobby 用途允許；**任何商業用途（包括但不限於上架 app store、變現、收費、廣告營利）皆禁止，必須先取得書面授權**。
+>
+> 劇本內容（`assets/scenarios/`）為原作著作，與程式碼採用同一授權。詳見 [LICENSE](LICENSE) 與 [NOTICE](NOTICE)。
+>
+> Commercial use is **strictly prohibited** without prior written permission from the copyright holder. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
 ## 線上試玩
 
@@ -119,3 +129,21 @@ flutter build apk --release
 - [ ] 第 2~5 款劇本，驗證模板化生產速度
 - [ ] 演化為 monorepo（多 app 共用 packages/game_engine）
 - [ ] iOS 支援（需 Mac + Apple 開發者帳號）
+
+## 授權 / License
+
+本專案授權為 **[PolyForm Noncommercial License 1.0.0](LICENSE)**。
+
+| 用途 | 是否允許 |
+|------|---------|
+| 個人學習、研究、hobby 專案 | ✅ |
+| 學術機構教學 / 研究 | ✅ |
+| Fork 後改作非商業作品（同樣以 PolyForm Noncommercial 釋出） | ✅ |
+| **將此程式或衍生作上架商店（含免費 + 廣告變現）** | ❌ |
+| **將此程式或劇本用於任何商業產品 / 服務** | ❌ |
+| **複製、改編劇本內容用於其他作品** | ❌ |
+| **作為商業 AI 模型訓練資料** | ❌ |
+
+商業用途請先取得書面授權，請開 GitHub Issue 或聯絡 [@blackwing04](https://github.com/blackwing04)。
+
+完整條款見 [LICENSE](LICENSE) 與 [NOTICE](NOTICE)（含劇本內容額外說明）。

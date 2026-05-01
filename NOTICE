@@ -1,0 +1,83 @@
+================================================================
+NOTICE — 異聞錄 (Mobile Games / 模板化文字 TRPG 工廠)
+================================================================
+
+Copyright (c) 2026 blackwing04
+https://github.com/blackwing04
+
+Licensed under the PolyForm Noncommercial License 1.0.0.
+See LICENSE for the full text, or visit:
+https://polyformproject.org/licenses/noncommercial/1.0.0
+
+
+Required Notice: Copyright (c) 2026 blackwing04 (https://github.com/blackwing04)
+
+
+----------------------------------------------------------------
+ABOUT GAME SCENARIO CONTENT (assets/scenarios/)
+劇本內容說明（assets/scenarios/）
+----------------------------------------------------------------
+
+The narratives, character dialogues, scene designs, branching
+logic, and all creative text under `assets/scenarios/` are
+original works by blackwing04 and form an integral part of this
+software. They are licensed under the same PolyForm Noncommercial
+License 1.0.0 as the rest of this repository.
+
+`assets/scenarios/` 目錄下的所有敘事文字、角色對話、場景設計、
+分支邏輯與創意文本均為 blackwing04 之原創著作，與本軟體為一體，
+適用同一份 PolyForm Noncommercial License 1.0.0 授權。
+
+Any commercial use — including, but not limited to:
+任何商業用途 — 包括但不限於以下行為：
+
+  - publishing a derivative game on app stores or game platforms
+    (Google Play, Apple App Store, Steam, itch.io, etc.)
+    將衍生遊戲上架 app store 或遊戲平台
+
+  - using these scenarios as part of any commercial product or
+    service, paid or ad-supported
+    將這些劇本納入任何商業產品或服務（付費或廣告支援）
+
+  - selling, sublicensing, or charging users to access or play
+    these scenarios
+    銷售、再授權，或向使用者收費以提供存取或遊玩
+
+  - using these scenarios as training data for commercial AI
+    models or content-generation services
+    將這些劇本用作商業 AI 模型或內容產生服務的訓練資料
+
+  - translating or adapting these scenarios for commercial
+    distribution
+    將這些劇本翻譯或改編後以商業方式散佈
+
+— is NOT permitted without a separate written commercial license
+from the copyright holder.
+— 在無著作權人另行書面商業授權的情況下，皆禁止。
+
+
+----------------------------------------------------------------
+COMMERCIAL LICENSING / 商業授權洽詢
+----------------------------------------------------------------
+
+For commercial use inquiries, please open an issue or contact
+via GitHub:
+
+  https://github.com/blackwing04
+
+
+----------------------------------------------------------------
+THIRD-PARTY DEPENDENCIES / 第三方依賴
+----------------------------------------------------------------
+
+This software depends on the following open-source packages.
+Their respective licenses apply to their portions only and
+do NOT relax the license that applies to this software as a whole.
+
+  - Flutter SDK            (BSD-3-Clause)
+  - flutter_riverpod       (MIT)
+  - cupertino_icons        (MIT)
+  - flutter_lints          (BSD-3-Clause)
+
+See `pubspec.lock` for exact versions and the websites of each
+dependency for their full license texts.
