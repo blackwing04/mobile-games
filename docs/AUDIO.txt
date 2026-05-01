@@ -1,0 +1,32 @@
+scene_start:bgm/the_mountain-lonely.mp3
+scene_clear_view:bgm/building-tension.mp3
+scene_blurry_view:sfx/woman-crying.wav(循環播放但需要一點間隔)
+scene_no_view:bgm/flourescent-light_All.wav(循環播放)
+scene_pretend:bgm/building-tension.mp3
+scene_recall_full:bgm/entropy-sad-horror-piano-music.mp3
+scene_recall_partial:bgm/per-sempre-noi.mp3
+scene_approach:bgm/the_mountain-horror.mp3
+scene_call_security:bgm/entropy-sad-horror-piano-music.mp3
+scene_called_but_noticed:bgm/building-tension.mp3
+scene_passed:bgm/frozen-in-the-nebula-liminal-dark-eerie-space.mp3
+scene_leave_attempt:bgm/building-tension.mp3
+scene_end_good:bgm/music-pain.mp3
+scene_end_neutral:bgm/sad-strings.mp3
+scene_end_caught:bgm/horror-ambience.mp3
+scene_end_lost:bgm/halloween-bgmkill-me-babydark.mp3
+scene_end_first_look:bgm/feedeorfano-terror.mp3
+
+如果有音樂場景上下接續是一樣的 那就不用特地切斷重放音樂 就直接繼續撥就好
+
+dice_roll:sfx/dice-rolling-on-table.wav
+ui_click:sfx/ui-button-sound.mp3
+outcome_critical:sfx/success.mp3
+outcome_success:sfx/message-received.mp3
+outcome_partial:sfx/magicalstaffgroundimpact.wav
+outcome_failure:sfx/deep-bass-thump.wav
+outcome_fumble:sfx/failure.wav (這個需要:Failure 3.wav by FunWithSound -- https://freesound.org/s/394898/ -- License: Attribution 4.0)
+
+
+
+
+
