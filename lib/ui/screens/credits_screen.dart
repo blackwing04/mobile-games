@@ -13,8 +13,24 @@ class CreditsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _SectionTitle('音效授權'),
+              _SectionTitle('背景音樂'),
               const SizedBox(height: 8),
+              const _PlainNote(
+                '所有 BGM 來自 Pixabay，依 Pixabay Content License 授權使用'
+                '（免費供商業 / 非商業用途，無需署名歸屬）。\n'
+                'https://pixabay.com/music/\n'
+                'https://pixabay.com/service/license-summary/',
+              ),
+              const SizedBox(height: 24),
+
+              _SectionTitle('音效'),
+              const SizedBox(height: 8),
+              const _PlainNote(
+                '所有 SFX 來自 Freesound（https://freesound.org/），'
+                '依各自原始頁面所列授權條款使用。多數為 CC0 公眾領域，'
+                '需要署名歸屬者列示如下：',
+              ),
+              const SizedBox(height: 12),
               const _AttributionCard(
                 title: 'Failure 3.wav',
                 author: 'FunWithSound',
@@ -23,14 +39,6 @@ class CreditsScreen extends StatelessWidget {
                 licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
                 modification: '重新編碼為 96 kbps MP3、副檔名由 .wav 變更為 .mp3',
                 usedAs: '骰子大失敗音效（outcome_fumble）',
-              ),
-              const SizedBox(height: 24),
-
-              _SectionTitle('其他資產'),
-              const SizedBox(height: 8),
-              const _PlainNote(
-                '其他 BGM 與 SFX 為授權使用之素材；如有遺漏的歸屬聲明，'
-                '請聯絡專案維護者補正。',
               ),
               const SizedBox(height: 24),
 
