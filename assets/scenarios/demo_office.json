@@ -205,7 +205,7 @@
             "skill": "resolve",
             "outcomes": {
               "critical_success": { "next": "scene_dispatch_truth_check", "effects": [{ "resource": "san", "delta": 15 }] },
-              "success":          { "next": "scene_dispatch_good_check" },
+              "success":          { "next": "scene_dispatch_truth_check" },
               "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
               "failure":          { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -35 }] },
               "fumble":           { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -50 }] }
@@ -294,13 +294,6 @@
       "conditional_next": [
         { "if_resource_at_least": { "clue": 3, "san": 50 }, "next": "scene_end_truth" },
         { "default": true, "next": "scene_end_good" }
-      ]
-    },
-    "scene_dispatch_good_check": {
-      "narrative": "",
-      "conditional_next": [
-        { "if_resource_at_least": { "clue": 2, "san": 60 }, "next": "scene_end_good" },
-        { "default": true, "next": "scene_dispatch_neutral" }
       ]
     },
     "scene_dispatch_recall_check": {
