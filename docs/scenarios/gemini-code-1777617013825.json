@@ -1,0 +1,120 @@
+{
+  "_copyright": "Copyright (c) 2026 blackwing04. All rights reserved. This scenario is part of the 'Strange Tales' TRPG project.",
+  "id": "demo_office",
+  "title": "辦公室的最後一夜",
+  "author": "Joe & Gemini",
+  "estimated_minutes": 10,
+  "resources": [
+    { "id": "san", "name": "神智", "max": 100, "initial": 80, "icon": "🧠" },
+    { "id": "clue", "name": "線索", "initial": 0, "icon": "🔍" }
+  ],
+  "skills": [
+    { "id": "observe", "name": "觀察", "value": 65 },
+    { "id": "stealth", "name": "隱匿", "value": 50 },
+    { "id": "lore", "name": "博學", "value": 55 }
+  ],
+  "start_scene": "scene_start",
+  "scenes": {
+    "scene_start": {
+      "narrative": "螢幕毫無預警地跳出淡藍色的死機畫面，你腦中瞬間斷線——剛完成的文件還沒存檔。\n\n你脫力地癱坐在工位上，看向手錶：23:47。正當你陷入窒息般的沉默時，茶水間傳來一聲細微的摩擦聲，隨後是斷斷續續、極力壓抑的啜泣。\n\n你明明記得其他同事都走光了。你屏住呼吸，眼角餘光不自覺地往茶水間的陰影瞄去。",
+      "choices": [
+        {
+          "label": "去看看是誰在那裡偷哭",
+          "skill_check": {
+            "skill": "observe",
+            "outcomes": {
+              "critical_success": { "next": "scene_clear_view", "effects": [{ "resource": "clue", "delta": 2 }] },
+              "success":          { "next": "scene_clear_view", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_blurry_view", "effects": [{ "resource": "san", "delta": -10 }, { "resource": "clue", "delta": 1 }] },
+              "failure":          { "next": "scene_no_view" },
+              "fumble":           { "next": "scene_end_first_look", "effects": [{ "resource": "san", "delta": -50 }] }
+            }
+          }
+        },
+        { "label": "當作沒聽到，耳機戴起來", "next": "scene_pretend" }
+      ]
+    },
+    "scene_clear_view": {
+      "narrative": "你壓下狂跳的心臟，屏息走向茶水間。門縫中漏出日光燈忽明忽暗的殘影，伴隨著電流刺耳的吱吱聲。\n\n透過那道窄縫，你看見一個長髮女生背對著你，縮在飲水機旁的陰影裡顫抖，對著牆壁喃喃自語。從那件熟悉的米色針織衫，你認出那是你平時負責帶的實習生，小婷。\n\n但那股莫名的違和感讓你停下了腳步。你將門推開些許，視線隨著閃爍的燈光掃過室內——牆上、地板、飲水機，所有物品都在燈光下投出搖晃的影子，唯獨小婷，她腳下空無一物。\n\n她沒有影子。\n\n寒意瞬間從腳底竄上脊椎，你突然感覺後頸一涼，一股力道不明、卻極度清晰的束縛感勒住了你的脖子，彷彿有人正從你背後慢慢收緊雙手。",
+      "choices": [
+        { "label": "強撐著恐懼，試著喚醒她", "next": "scene_approach" },
+        {
+          "label": "趁還能呼吸，放輕動作退回去",
+          "skill_check": {
+            "skill": "stealth",
+            "outcomes": {
+              "critical_success": { "next": "scene_call_security", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "success":          { "next": "scene_call_security" },
+              "partial":          { "next": "scene_called_but_noticed", "effects": [{ "resource": "san", "delta": -5 }] },
+              "failure":          { "next": "scene_called_but_noticed", "effects": [{ "resource": "san", "delta": -10 }] },
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] }
+            }
+          }
+        }
+      ]
+    },
+    "scene_approach": {
+      "narrative": "你艱難地吞嚥，被勒住的幻覺讓嗓音變得沙啞：「⋯⋯小婷？這麼晚了，怎麼還沒回去？」\n\n她顫抖的肩膀猛然停住，接著緩緩轉過頭。\n\n眼前的景象讓你倒吸一口涼氣，腳步不自覺地往後踉蹌。小婷沒有眼睛——準確來說，她的眼框只剩下兩個深不見底的空洞，彷彿被人硬生生摘走了眼球，兩行鮮血順著臉頰流下。\n\n你強壓下作嘔的衝動，大腦瘋狂運作，試圖找出一種合理的解釋：小婷家裡不是欠債嗎？難道是討債公司找上門？是遭遇了暴力對待？\n\n但下一秒，你便知道自己錯得離譜。那對眼窩開始滲出濃稠的黑霧，將流下的血跡一點一點吞噬。她對你露出平時那副乖巧的微笑，聲音卻像從地底深處傳來：\n\n「前輩，這個報表我一個人做不完⋯⋯你也會留下來陪我，對吧？」",
+      "choices": [
+        { "label": "這根本不是人類！抓起她的手腕直接往電梯衝", "next": "scene_end_good" },
+        { "label": "看著那對溢滿黑霧的眼窩，你失神地回答：『好』", "next": "scene_end_lost" },
+        {
+          "label": "強迫自己冷靜：『別怕，我現在幫妳打電話給妳媽⋯⋯』",
+          "skill_check": {
+            "skill": "lore",
+            "outcomes": {
+              "critical_success": { "next": "scene_end_good" },
+              "success":          { "next": "scene_end_good" },
+              "partial":          { "next": "scene_end_neutral", "effects": [{ "resource": "san", "delta": -10 }] },
+              "failure":          { "next": "scene_end_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
+              "fumble":           { "next": "scene_end_lost" }
+            }
+          }
+        }
+      ]
+    },
+    "scene_leave_attempt": {
+      "narrative": "你抓起包包，幾乎是連滾帶爬地衝向電梯間。在空曠的走廊上，你的腳步聲響亮得令人心慌。\n\n電梯按鈕發出冰冷的紅光。十一樓⋯⋯十二樓⋯⋯「叮」的一聲，金屬門緩緩滑開，電梯內白熾燈亮得刺眼。\n\n裡面站著一個人。是小婷，她正低頭滑著手機，螢幕的微光映照著她那張毫無血色的臉。她抬起頭，對你露出一個僵硬的微笑：「前輩，你也要下班啦？一起走吧？」",
+      "choices": [
+        { "label": "別無選擇，硬著頭皮進電梯", "next": "scene_end_lost" },
+        {
+          "label": "趁門關上，轉身撞向厚重的防火門",
+          "skill_check": {
+            "skill": "stealth",
+            "outcomes": {
+              "critical_success": { "next": "scene_end_good" },
+              "success":          { "next": "scene_end_neutral" },
+              "partial":          { "next": "scene_end_neutral", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_end_caught" },
+              "fumble":           { "next": "scene_end_caught" }
+            }
+          }
+        }
+      ]
+    },
+    "scene_end_good": {
+      "narrative": "",
+      "ending": {
+        "type": "good",
+        "title": "破曉之前",
+        "description": "你顧不得那股勒喉的窒息感，死命往樓梯口狂奔。跑動間，你感覺腳踝被一股異樣的沉重力道死死拽住，速度瞬間被拖慢。在腎上腺素的驅使下，你嘶吼著踢開束縛，半拖半爬地撞進安全梯。\n\n感應燈一層層亮起，踏入安全梯的那一刻，拉住腳的力量瞬間消失。你在寂靜的樓梯間瘋狂向下奔跑，身後迴盪著自己沉重且破碎的呼吸。你衝出大廳，躲進宿舍被子裡清醒地熬過這漫長的一夜。\n\n隔天清晨，老闆連環奪命扣的電話震碎了你的理智。看著房租帳單，你明白身為社畜，連恐懼的權利都是奢侈。你拖著疲憊至極的身體踏入公司。晨光穿透玻璃門，小婷竟然已經站在門口等著你——畢竟你是負責帶領她的前輩。\n\n此時的小婷眼眶黑霧早已散去，完全不記得昨晚的事，只是一直揉著發紅的手腕抱怨。不久後她請長假回了老家。直到某天，你在舊檔案夾裡翻到一張三年前的實習生照片，照片裡的女孩笑容燦爛，穿著一模一樣的米色針織衫。"
+      }
+    },
+    "scene_end_lost": {
+      "narrative": "",
+      "ending": {
+        "type": "bad",
+        "title": "陪她",
+        "description": "你看著那對溢滿黑霧的眼窩，大腦像被灌進了鉛塊，思考變得遲鈍且溫暖。你聽見自己用一種陌生的、空洞的聲音回答：「好。」\n\n她聽完笑得很燦爛。她牽起你的手，那是你這輩子感受過最純粹的寒冷，但你卻不想放開。十二樓的窗戶不知道何時已經敞開，你跟著她緩緩走向窗邊，腳步輕盈得像踩在棉花上，彷彿所有的生活壓力與債務都隨風而逝。\n\n你跨上窗台，看著下方深邃的黑暗，竟然覺得那裡比明天的辦公室還要溫馨。\n\n——隔天早上，公司門口少了一個打卡的人。"
+      }
+    },
+    "scene_end_caught": {
+      "narrative": "",
+      "ending": {
+        "type": "bad",
+        "title": "她找到你了",
+        "description": "你的後頸傳來一陣溫熱且潮濕的觸感，伴隨著一股像是陳年舊報紙的霉味。「找到你了⋯⋯」那聲音直接在你腦袋裡響起。\n\n隔天一早，清潔阿姨推開茶水間的大門，嚇得丟掉了手中的拖把。你正蜷縮在飲水機旁的角落，雙眼無神地盯著牆壁，嘴裡反覆呢喃著沒人聽得懂的報表數據。你臉上的微笑，跟那天晚上的小婷一模一樣。"
+      }
+    }
+  }
+}
