@@ -63,7 +63,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: scenarios.length,
-            separatorBuilder: (_, _) => const SizedBox(height: 12),
+            separatorBuilder: (_, __) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
               final s = scenarios[index];
               return Card(

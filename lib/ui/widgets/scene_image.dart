@@ -29,7 +29,7 @@ class SceneImage extends StatelessWidget {
               assetPath!,
               key: ValueKey(assetPath),
               fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => _Placeholder(),
+              errorBuilder: (_, __, ___) => _Placeholder(),
             ),
           ),
         ),
