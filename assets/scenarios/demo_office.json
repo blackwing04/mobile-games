@@ -88,6 +88,7 @@
       "choices": [
         {
           "label": "深呼吸，試著回想這公司到底出過什麼事",
+          "hide_if_resource_at_least": { "clue": 3 },
           "skill_check": {
             "skill": "lore",
             "outcomes": {
@@ -98,6 +99,11 @@
               "fumble":           { "next": "scene_end_first_look", "effects": [{ "resource": "san", "delta": -50 }] }
             }
           }
+        },
+        {
+          "label": "你手上的線索已經足以拼出全貌——直接想清楚整件事",
+          "require_resource_at_least": { "clue": 3 },
+          "next": "scene_recall_full"
         },
         { "label": "這氣氛不對勁，收東西走人才是真的", "next": "scene_leave_attempt" }
       ]

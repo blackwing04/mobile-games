@@ -88,13 +88,15 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
                       SceneImage(assetPath: scene.image),
                       NarrativeText(scene.narrative),
                       const SizedBox(height: 8),
-                      ...scene.choices.map(
-                        (c) => ChoiceButton(
-                          choice: c,
-                          scenario: scenario,
-                          onPressed: () => notifier.selectChoice(c),
-                        ),
-                      ),
+                      ...scene.choices
+                          .where((c) => c.isVisibleFor(state.resources))
+                          .map(
+                            (c) => ChoiceButton(
+                              choice: c,
+                              scenario: scenario,
+                              onPressed: () => notifier.selectChoice(c),
+                            ),
+                          ),
                       const SizedBox(height: 32),
                     ],
                   ),
