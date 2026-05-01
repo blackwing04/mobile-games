@@ -30,15 +30,16 @@ class GameSessionNotifier extends StateNotifier<GameState> {
   }
 
   void selectChoice(Choice choice) {
-    if (choice.isCheck) {
-      state = _runner.rollSkillCheck(state, choice);
-    } else {
-      state = _runner.applyDirectChoice(state, choice);
-    }
+    final next = choice.isCheck
+        ? _runner.rollSkillCheck(state, choice)
+        : _runner.applyDirectChoice(state, choice);
+    // 直接型選項才 follow router (擲骰選項在 dismissDice 才推進場景)
+    state = choice.isCheck ? next : _runner.followConditionalNext(next);
   }
 
   void dismissDice() {
-    state = _runner.dismissDiceResult(state);
+    final dismissed = _runner.dismissDiceResult(state);
+    state = _runner.followConditionalNext(dismissed);
   }
 
   void restart() {

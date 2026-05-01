@@ -1,4 +1,5 @@
 import 'choice.dart';
+import 'conditional_next.dart';
 
 class Ending {
   final String type; // good / neutral / bad
@@ -47,6 +48,10 @@ class Scene {
   /// 不像 BGM/ambient 那樣持續播放
   final String? sfxOnEnter;
 
+  /// 條件式跳轉規則 — 進入此場景時依序檢查，第一條符合的決定下一個 sceneId。
+  /// 常用於「結局調度」場景 (router scene)：本身不顯示 UI，立刻按資源條件分流。
+  final List<ConditionalNext> conditionalNext;
+
   const Scene({
     required this.id,
     required this.narrative,
@@ -58,6 +63,7 @@ class Scene {
     this.ambient,
     this.ambientIntervalMs = 3000,
     this.sfxOnEnter,
+    this.conditionalNext = const [],
   });
 
   factory Scene.fromJson(String id, Map<String, dynamic> json) => Scene(
@@ -75,7 +81,13 @@ class Scene {
         ambient: json['ambient'] as String?,
         ambientIntervalMs: json['ambient_interval_ms'] as int? ?? 3000,
         sfxOnEnter: json['sfx_on_enter'] as String?,
+        conditionalNext: ((json['conditional_next'] as List<dynamic>?) ?? const [])
+            .map((c) => ConditionalNext.fromJson(c as Map<String, dynamic>))
+            .toList(growable: false),
       );
 
   bool get isEnding => ending != null;
+
+  /// router scene = 沒 narrative、沒 choices、有 conditional_next
+  bool get isRouter => conditionalNext.isNotEmpty && choices.isEmpty;
 }

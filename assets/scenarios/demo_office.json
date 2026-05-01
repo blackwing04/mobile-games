@@ -132,7 +132,7 @@
       "bgm": "assets/audio/bgm/frozen-in-the-nebula-liminal-dark-eerie-space.mp3",
       "narrative": "你摒住呼吸，連睫毛都不敢顫動。那股帶著霉味的冰冷氣息停在你身後很久，久到你以為時間已經凝固。最後，腳步聲緩緩經過了你，消失在走廊盡頭。\n\n你不敢轉頭。直到東方的天空泛起魚肚白，你才發現自己的指甲深深嵌進了手心。那一夜，你活了下來，但有些東西已經在你體內徹底壞掉了。",
       "choices": [
-        { "label": "這班我不上了，結束這一切", "next": "scene_end_neutral" }
+        { "label": "這班我不上了，結束這一切", "next": "scene_dispatch_neutral" }
       ]
     },
     "scene_call_security": {
@@ -140,7 +140,7 @@
       "bgm": "assets/audio/bgm/entropy-sad-horror-piano-music.mp3",
       "narrative": "你屏住呼吸退回座位，顫抖著撥通了警衛室的內線。十分鐘後，老警衛搖著手電筒，一臉疲憊地上樓巡查，但茶水間裡空無一人。\n\n他沉默地看著你，許久才發出一聲長長的嘆息，將手電筒的光移向別處，輕聲說：「⋯⋯這不是第一次了，也不是最後一個。明天你就請假吧，這裡不適合留太晚。」",
       "choices": [
-        { "label": "聽他的建議，默默收拾離開", "next": "scene_end_neutral" }
+        { "label": "聽他的建議，默默收拾離開", "next": "scene_dispatch_neutral" }
       ]
     },
     "scene_called_but_noticed": {
@@ -154,8 +154,8 @@
           "skill_check": {
             "skill": "stealth",
             "outcomes": {
-              "critical_success": { "next": "scene_end_neutral" },
-              "success":          { "next": "scene_end_neutral" },
+              "critical_success": { "next": "scene_dispatch_neutral" },
+              "success":          { "next": "scene_dispatch_neutral" },
               "partial":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -20 }] },
               "failure":          { "next": "scene_end_caught" },
               "fumble":           { "next": "scene_end_caught" }
@@ -178,8 +178,8 @@
             "outcomes": {
               "critical_success": { "next": "scene_end_good" },
               "success":          { "next": "scene_end_good" },
-              "partial":          { "next": "scene_end_neutral", "effects": [{ "resource": "san", "delta": -10 }] },
-              "failure":          { "next": "scene_end_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
+              "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -10 }] },
+              "failure":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
               "fumble":           { "next": "scene_end_lost" }
             }
           }
@@ -199,8 +199,8 @@
             "skill": "stealth",
             "outcomes": {
               "critical_success": { "next": "scene_end_good" },
-              "success":          { "next": "scene_end_neutral" },
-              "partial":          { "next": "scene_end_neutral", "effects": [{ "resource": "san", "delta": -15 }] },
+              "success":          { "next": "scene_dispatch_neutral" },
+              "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -15 }] },
               "failure":          { "next": "scene_end_caught" },
               "fumble":           { "next": "scene_end_caught" }
             }
@@ -218,6 +218,13 @@
         "description": "你顧不得那股勒喉的窒息感，死命往樓梯口狂奔。跑動間，你感覺腳踝被一股異樣的沉重力道死死拽住。衝出大廳後，你躲進宿舍被子裡清醒地熬過漫漫長夜。\n\n隔天，生活費帳單震碎了你的理智，你不得不再次踏入公司。晨光中，小婷竟已站在門口等著你——畢竟你是負責帶她的前輩。此時的她眼眶黑霧早已散去，完全不記得昨晚的事，只揉著發紅的手腕抱怨莫名疼痛。直到某天，你在舊檔案夾裡翻到三年前的照片，裡面的女孩笑容燦爛，穿著一模一樣的米色針織衫。"
       }
     },
+    "scene_dispatch_neutral": {
+      "narrative": "",
+      "conditional_next": [
+        { "if_resource_below": { "san": 50 }, "next": "scene_end_broken" },
+        { "default": true, "next": "scene_end_neutral" }
+      ]
+    },
     "scene_end_neutral": {
       "image": "assets/images/scenarios/demo_office/scene_end_neutral.png",
       "bgm": "assets/audio/bgm/sad-strings.mp3",
@@ -226,6 +233,15 @@
         "type": "neutral",
         "title": "倖存",
         "description": "你回到家，洗了一個很長、長到皮膚都發皺的熱水澡。那夜的事你誰也沒說，同事們依然在茶水間嘻笑打鬧，彷彿一切只是你的神經質。然而，從此之後，只要時鐘走向十一點，你的脖子就會隱隱作痛。你再也沒有加過班，因為你深深地知道，有些東西，只要你不再去看，它就暫時不存在。"
+      }
+    },
+    "scene_end_broken": {
+      "bgm": "assets/audio/bgm/sad-strings.mp3",
+      "narrative": "",
+      "ending": {
+        "type": "bad",
+        "title": "斷線",
+        "description": "你勉強撐到天亮。當警衛上樓巡查時，你還癱在工位上，瞳孔渙散，嘴裡反覆念著沒人聽得懂的數字與日期。同事們說你像被掏空了什麼，看起來就像當年那個從十二樓跳下去的女孩。\n\n你住進了精神病房，一住就是三個月。出院後沒人敢再雇用你。你獨自坐在套房裡，盯著沒開機的電腦螢幕，等那個夜晚再來——你不確定自己是在害怕，還是在期待。"
       }
     },
     "scene_end_lost": {

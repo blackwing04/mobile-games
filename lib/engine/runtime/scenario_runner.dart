@@ -78,6 +78,29 @@ class ScenarioRunner {
     );
   }
 
+  /// 路由器：若當前場景是 router (含 conditional_next 且無 choices)，依資源條件
+  /// 連續跳轉直到落到非 router 場景。在 selectChoice / dismissDice 之後呼叫，
+  /// router 場景對玩家透明 (UI 不會閃現)。
+  ///
+  /// 防迴圈：最多 8 跳，超過視為設定錯誤直接停下。
+  GameState followConditionalNext(GameState state) {
+    var current = state;
+    for (var hop = 0; hop < 8; hop++) {
+      final scene = current.scenario.sceneById(current.currentSceneId);
+      if (scene == null || !scene.isRouter) return current;
+      String? nextId;
+      for (final rule in scene.conditionalNext) {
+        if (rule.matches(current.resources)) {
+          nextId = rule.next;
+          break;
+        }
+      }
+      if (nextId == null || nextId == current.currentSceneId) return current;
+      current = current.copyWith(currentSceneId: nextId);
+    }
+    return current;
+  }
+
   Map<String, int> _applyEffects(
     Map<String, int> current,
     List<ResourceEffect> effects,
