@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../engine/models/scene.dart';
+import '../../services/audio_service.dart';
 import '../widgets/scene_image.dart';
 
-class EndingScreen extends StatelessWidget {
+class EndingScreen extends ConsumerWidget {
   final Ending ending;
   final String? sceneImage;
   final VoidCallback onRestart;
@@ -33,7 +35,7 @@ class EndingScreen extends StatelessWidget {
       };
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -81,7 +83,10 @@ class EndingScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: ElevatedButton(
-                  onPressed: onRestart,
+                  onPressed: () {
+                    ref.read(audioServiceProvider).playSfx(SfxKey.uiClick);
+                    onRestart();
+                  },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: 4),
                     child: Text('再玩一次'),
@@ -90,7 +95,10 @@ class EndingScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               TextButton(
-                onPressed: onHome,
+                onPressed: () {
+                  ref.read(audioServiceProvider).playSfx(SfxKey.uiClick);
+                  onHome();
+                },
                 child: const Text('回主選單'),
               ),
             ],

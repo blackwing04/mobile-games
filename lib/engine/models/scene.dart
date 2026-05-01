@@ -36,6 +36,17 @@ class Scene {
   /// 為 null 時停止 BGM；與前一場景相同時不重啟（連續播放）
   final String? bgm;
 
+  /// 帶間隔循環的環境聲，如 "assets/audio/sfx/woman-crying.wav"
+  /// 與 BGM 並行播放（兩個獨立 player）；間隔由 ambientIntervalMs 控制
+  final String? ambient;
+
+  /// ambient 兩次播放之間的間隔毫秒數，預設 3000ms
+  final int ambientIntervalMs;
+
+  /// 進場時播放一次的 SFX key（對應 SfxKey.jsonKey），如 "elevator_open"
+  /// 不像 BGM/ambient 那樣持續播放
+  final String? sfxOnEnter;
+
   const Scene({
     required this.id,
     required this.narrative,
@@ -44,6 +55,9 @@ class Scene {
     this.chapterId,
     this.image,
     this.bgm,
+    this.ambient,
+    this.ambientIntervalMs = 3000,
+    this.sfxOnEnter,
   });
 
   factory Scene.fromJson(String id, Map<String, dynamic> json) => Scene(
@@ -58,6 +72,9 @@ class Scene {
         chapterId: json['chapter'] as String?,
         image: json['image'] as String?,
         bgm: json['bgm'] as String?,
+        ambient: json['ambient'] as String?,
+        ambientIntervalMs: json['ambient_interval_ms'] as int? ?? 3000,
+        sfxOnEnter: json['sfx_on_enter'] as String?,
       );
 
   bool get isEnding => ending != null;

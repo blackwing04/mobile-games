@@ -59,6 +59,8 @@
     },
     "scene_blurry_view": {
       "image": "assets/images/scenarios/demo_office/scene_blurry_view.png",
+      "ambient": "assets/audio/sfx/woman-crying.wav",
+      "ambient_interval_ms": 4000,
       "narrative": "你揉了揉被藍屏螢幕晃得發花的雙眼，視野邊緣殘留著一圈詭異的紫斑。茶水間的日光燈閃爍頻率高得嚇人，在那忽明忽暗的間隙中，你只看見一個模糊的輪廓蹲在角落。\n\n一陣細碎的聲音傳來，像是壓抑的哭聲，又像是喉嚨深處發出的乾癟笑聲。那聲音斷斷續續地鑽進你的耳朵，攪動著你的腦漿。\n\n你的太陽穴隨著燈光閃爍突突地狂跳，胃部一陣翻攪，你甚至無法確定那是人的形體，還是一團堆在角落的舊報紙。",
       "choices": [
         {
@@ -187,6 +189,7 @@
     "scene_leave_attempt": {
       "image": "assets/images/scenarios/demo_office/scene_leave_attempt.png",
       "bgm": "assets/audio/bgm/building-tension.mp3",
+      "sfx_on_enter": "elevator_open",
       "narrative": "你抓起包包，幾乎是連滾帶爬地衝向電梯間。在空曠的走廊上，你的腳步聲響亮得令人心慌。電梯按鈕發出冰冷的紅光。十一樓⋯⋯十二樓⋯⋯「叮」的一聲，金屬門緩緩滑開，電梯內白熾燈亮得刺眼。\n\n裡面站著一個人。是小婷，她正低頭滑著手機，螢幕的微光映照著她那張毫無血色的臉。她抬起頭，對你露出一個僵硬的微笑：「前輩，你也要下班啦？一起走吧？」",
       "choices": [
         { "label": "別無選擇，硬著頭皮進電梯", "next": "scene_end_lost" },

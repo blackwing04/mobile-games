@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../engine/models/scenario.dart';
+import '../../engine/models/scene.dart';
 import '../../providers/game_provider.dart';
 import '../../services/audio_service.dart';
 import '../widgets/choice_button.dart';
@@ -21,17 +22,29 @@ class ScenarioScreen extends ConsumerStatefulWidget {
 }
 
 class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
+  void _syncSceneAudio(Scene scene) {
+    final audio = ref.read(audioServiceProvider);
+    audio.playBgm(scene.bgm);
+    audio.playAmbient(
+      scene.ambient,
+      interval: Duration(milliseconds: scene.ambientIntervalMs),
+    );
+    final sfxKey =
+        scene.sfxOnEnter == null ? null : SfxKey.tryParse(scene.sfxOnEnter!);
+    if (sfxKey != null) audio.playSfx(sfxKey);
+  }
+
   @override
   void initState() {
     super.initState();
     final state = ref.read(gameSessionProvider(widget.scenario));
     final scene = widget.scenario.sceneById(state.currentSceneId)!;
-    ref.read(audioServiceProvider).playBgm(scene.bgm);
+    _syncSceneAudio(scene);
   }
 
   @override
   void dispose() {
-    ref.read(audioServiceProvider).stop();
+    ref.read(audioServiceProvider).stopAll();
     super.dispose();
   }
 
@@ -45,8 +58,7 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
     ref.listen<String>(
       gameSessionProvider(scenario).select((s) => s.currentSceneId),
       (prev, next) {
-        final nextScene = scenario.sceneById(next)!;
-        ref.read(audioServiceProvider).playBgm(nextScene.bgm);
+        _syncSceneAudio(scenario.sceneById(next)!);
       },
     );
 
