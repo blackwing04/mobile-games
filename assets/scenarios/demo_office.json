@@ -80,6 +80,28 @@
         { "label": "這氣氛不對勁，收東西走人才是真的", "next": "scene_leave_attempt" }
       ]
     },
+    "scene_blurry_view_revisit": {
+      "image": "assets/images/scenarios/demo_office/scene_blurry_view.png",
+      "ambient": "assets/audio/sfx/woman-crying.wav",
+      "ambient_interval_ms": 4000,
+      "narrative": "你回到了辦公室，茶水間依舊傳來小婷的啜泣，你不自覺地再次靠近茶水間，茶水間的日光燈閃爍頻率高得嚇人，在那忽明忽暗的間隙中，你只看見一個模糊的輪廓蹲在角落。\n\n一陣細碎的聲音傳來，像是壓抑的哭聲，又像是喉嚨深處發出的乾癟笑聲。那聲音斷斷續續地鑽進你的耳朵，攪動著你的腦漿。\n\n你的太陽穴隨著燈光閃爍突突地狂跳，胃部一陣翻攪，你甚至無法確定那是人的形體，還是一團堆在角落的舊報紙。",
+      "choices": [
+        {
+          "label": "深呼吸，試著回想這公司到底出過什麼事",
+          "skill_check": {
+            "skill": "lore",
+            "outcomes": {
+              "critical_success": { "next": "scene_recall_full", "effects": [{ "resource": "clue", "delta": 2 }, { "resource": "san", "delta": 10 }] },
+              "success":          { "next": "scene_recall_partial", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_recall_partial", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_leave_attempt", "effects": [{ "resource": "san", "delta": -10 }] },
+              "fumble":           { "next": "scene_end_first_look", "effects": [{ "resource": "san", "delta": -50 }] }
+            }
+          }
+        },
+        { "label": "這氣氛不對勁，收東西走人才是真的", "next": "scene_leave_attempt" }
+      ]
+    },
     "scene_recall_full": {
       "image": "assets/images/scenarios/demo_office/scene_recall_full.png",
       "bgm": "assets/audio/bgm/entropy-sad-horror-piano-music.mp3",
@@ -142,7 +164,7 @@
       "narrative": "你屏住呼吸退回座位，顫抖著撥通了警衛室的內線。十分鐘後，老警衛搖著手電筒，一臉疲憊地上樓巡查，但茶水間裡空無一人。\n\n他沉默地看著你，許久才發出一聲長長的嘆息，將手電筒的光移向別處，輕聲說：「⋯⋯這不是第一次了，也不是最後一個。明天你就請假吧，這裡不適合留太晚。」",
       "choices": [
         { "label": "聽他的建議，默默收拾離開", "next": "scene_dispatch_neutral" },
-        { "label": "不聽他的建議，騙他說還有東西沒弄完，回到辦公室", "next": "scene_blurry_view" }
+        { "label": "不聽他的建議，騙他說還有東西沒弄完，回到辦公室", "next": "scene_blurry_view_revisit" }
       ]
     },
     "scene_called_but_noticed": {
