@@ -107,6 +107,8 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
               result: state.lastRoll!,
               triggerLabel: state.pendingChoiceLabel!,
               onContinue: notifier.dismissDice,
+              resourceDeltas: state.lastRollResourceDeltas,
+              resources: scenario.resources,
             ),
         ],
       ),

@@ -5,19 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../engine/dice/dice_roller.dart';
+import '../../engine/models/resource.dart';
 import '../../services/audio_service.dart';
 
-/// 擲骰動畫 overlay：數字快速跳動 → 停在結果 → 顯示成功階級
+/// 擲骰動畫 overlay：數字快速跳動 → 停在結果 → 顯示成功階級 + 資源變動
 class DiceOverlay extends ConsumerStatefulWidget {
   final DiceResult result;
   final String triggerLabel;
   final VoidCallback onContinue;
+
+  /// 本次擲骰造成的資源變動 (resource id → delta)。null / 空時不顯示
+  final Map<String, int>? resourceDeltas;
+
+  /// 對應的資源定義 (用於顯示 icon + name)
+  final List<ResourceDef> resources;
 
   const DiceOverlay({
     super.key,
     required this.result,
     required this.triggerLabel,
     required this.onContinue,
+    this.resourceDeltas,
+    this.resources = const [],
   });
 
   @override
@@ -121,6 +130,28 @@ class _DiceOverlayState extends ConsumerState<DiceOverlay>
                     color: _outcomeColor(widget.result.outcome),
                   ),
                 ),
+                if (widget.resourceDeltas != null &&
+                    widget.resourceDeltas!.isNotEmpty) ...[
+                  const SizedBox(height: 20),
+                  TweenAnimationBuilder<double>(
+                    duration: const Duration(milliseconds: 500),
+                    tween: Tween(begin: 0, end: 1),
+                    curve: Curves.easeOutCubic,
+                    builder: (context, value, child) {
+                      return Opacity(
+                        opacity: value,
+                        child: Transform.translate(
+                          offset: Offset(0, 12 * (1 - value)),
+                          child: child,
+                        ),
+                      );
+                    },
+                    child: _DeltaRow(
+                      deltas: widget.resourceDeltas!,
+                      resources: widget.resources,
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 32),
                 ElevatedButton(
                   onPressed: () {
@@ -140,6 +171,71 @@ class _DiceOverlayState extends ConsumerState<DiceOverlay>
           ),
         ),
       ),
+    );
+  }
+}
+
+/// 顯示擲骰造成的資源變動 chip 列表 (例如「🧠 神智 -15」)
+class _DeltaRow extends StatelessWidget {
+  final Map<String, int> deltas;
+  final List<ResourceDef> resources;
+
+  const _DeltaRow({required this.deltas, required this.resources});
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 8,
+      alignment: WrapAlignment.center,
+      children: deltas.entries.map((entry) {
+        final def = resources.firstWhere(
+          (r) => r.id == entry.key,
+          orElse: () => ResourceDef(
+            id: entry.key,
+            name: entry.key,
+            initial: 0,
+            icon: '◆',
+          ),
+        );
+        final delta = entry.value;
+        final isPositive = delta > 0;
+        final color = isPositive
+            ? const Color(0xFF81C784)
+            : const Color(0xFFE57373);
+        final sign = isPositive ? '+' : '';
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: color.withValues(alpha: 0.6), width: 1),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(def.icon, style: const TextStyle(fontSize: 18)),
+              const SizedBox(width: 6),
+              Text(
+                def.name,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white.withValues(alpha: 0.85),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                '$sign$delta',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
+              ),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }

@@ -13,6 +13,10 @@ class GameState {
   /// 這樣骰子動畫期間 currentSceneId 還是當前場景，不會被 ending screen 攔截。
   final String? pendingNextSceneId;
 
+  /// 本次擲骰造成的資源變動量 (resource id → delta)。
+  /// DiceOverlay 用來顯示「🧠 神智 -15」這類提示，按繼續後清空。
+  final Map<String, int>? lastRollResourceDeltas;
+
   const GameState({
     required this.scenario,
     required this.currentSceneId,
@@ -20,6 +24,7 @@ class GameState {
     this.lastRoll,
     this.pendingChoiceLabel,
     this.pendingNextSceneId,
+    this.lastRollResourceDeltas,
   });
 
   factory GameState.initial(Scenario scenario) {
@@ -38,9 +43,11 @@ class GameState {
     DiceResult? lastRoll,
     String? pendingChoiceLabel,
     String? pendingNextSceneId,
+    Map<String, int>? lastRollResourceDeltas,
     bool clearLastRoll = false,
     bool clearPendingChoice = false,
     bool clearPendingNext = false,
+    bool clearDeltas = false,
   }) {
     return GameState(
       scenario: scenario,
@@ -53,6 +60,9 @@ class GameState {
       pendingNextSceneId: clearPendingNext
           ? null
           : (pendingNextSceneId ?? this.pendingNextSceneId),
+      lastRollResourceDeltas: clearDeltas
+          ? null
+          : (lastRollResourceDeltas ?? this.lastRollResourceDeltas),
     );
   }
 }

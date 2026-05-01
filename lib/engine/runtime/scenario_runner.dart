@@ -59,12 +59,21 @@ class ScenarioRunner {
     final afterOutcomeEffects =
         _applyEffects(afterChoiceEffects, outcome.effects);
 
+    // 計算本次擲骰造成的 resource 變動 (僅保留有實際變化的 entry)
+    final deltas = <String, int>{};
+    for (final key in afterOutcomeEffects.keys) {
+      final before = state.resources[key] ?? 0;
+      final after = afterOutcomeEffects[key]!;
+      if (before != after) deltas[key] = after - before;
+    }
+
     return state.copyWith(
       // currentSceneId 保留當前 — 等玩家按「繼續」才推進
       resources: afterOutcomeEffects,
       lastRoll: result,
       pendingChoiceLabel: choice.label,
       pendingNextSceneId: outcome.next ?? state.currentSceneId,
+      lastRollResourceDeltas: deltas.isEmpty ? null : deltas,
     );
   }
 
@@ -75,6 +84,7 @@ class ScenarioRunner {
       clearLastRoll: true,
       clearPendingChoice: true,
       clearPendingNext: true,
+      clearDeltas: true,
     );
   }
 
