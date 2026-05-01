@@ -1,17 +1,19 @@
 import 'dart:convert';
 
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show AssetManifest, rootBundle;
 
 import '../models/scenario.dart';
 
 class ScenarioLoader {
-  /// 從 Flutter 內建的 AssetManifest 自動掃出所有 assets/scenarios/*.json
-  /// 排序：dev_* 開頭的 scenario 排最後（避免出現在主選單第一位）
+  /// 用 Flutter 標準 AssetManifest API 自動掃出所有 assets/scenarios/*.json
+  /// (Flutter 3.13+ 把 manifest 改成 .bin 格式，這個 API 自動處理跨版本差異)
+  ///
+  /// 排序：dev_* 開頭的 scenario 排最後（避免污染主選單第一位）
   Future<List<Scenario>> loadAll() async {
-    final manifestRaw = await rootBundle.loadString('AssetManifest.json');
-    final manifest = jsonDecode(manifestRaw) as Map<String, dynamic>;
+    final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
 
-    final paths = manifest.keys
+    final paths = manifest
+        .listAssets()
         .where((k) => k.startsWith('assets/scenarios/') && k.endsWith('.json'))
         .toList()
       ..sort((a, b) {

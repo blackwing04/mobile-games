@@ -29,20 +29,15 @@ void main() {
     // 找選項 1 衝電梯
     final scene = demo.sceneById('scene_approach')!;
     final choice1 = scene.choices.firstWhere((c) => c.label.contains('不管三七'));
-    print('Choice 1 found: ${choice1.label}');
 
     // 擲骰 (強制 critical)
     state = runner.rollSkillCheck(state, choice1);
-    print('擲骰後: currentSceneId=${state.currentSceneId} pendingNextSceneId=${state.pendingNextSceneId}');
-    print('擲骰後 resources: ${state.resources}');
 
     // dismissDice (推進 currentSceneId 到 pendingNextSceneId)
     state = runner.dismissDiceResult(state);
-    print('dismiss 後: currentSceneId=${state.currentSceneId}');
 
     // followConditionalNext
     state = runner.followConditionalNext(state);
-    print('follow 後: currentSceneId=${state.currentSceneId}');
 
     expect(state.currentSceneId, 'scene_end_truth',
         reason: 'clue=3 san=80 (套 critical +15 後 95) 應該觸發 truth dispatch');
