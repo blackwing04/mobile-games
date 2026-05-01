@@ -70,8 +70,8 @@
             "skill": "lore",
             "outcomes": {
               "critical_success": { "next": "scene_recall_full", "effects": [{ "resource": "clue", "delta": 2 }, { "resource": "san", "delta": 10 }] },
-              "success":          { "next": "scene_recall_partial", "effects": [{ "resource": "clue", "delta": 1 }] },
-              "partial":          { "next": "scene_recall_partial", "effects": [{ "resource": "san", "delta": -15 }] },
+              "success":          { "next": "scene_dispatch_recall_check", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_dispatch_recall_check", "effects": [{ "resource": "san", "delta": -15 }] },
               "failure":          { "next": "scene_leave_attempt", "effects": [{ "resource": "san", "delta": -10 }] },
               "fumble":           { "next": "scene_end_first_look", "effects": [{ "resource": "san", "delta": -50 }] }
             }
@@ -93,8 +93,8 @@
             "skill": "lore",
             "outcomes": {
               "critical_success": { "next": "scene_recall_full", "effects": [{ "resource": "clue", "delta": 2 }, { "resource": "san", "delta": 10 }] },
-              "success":          { "next": "scene_recall_partial", "effects": [{ "resource": "clue", "delta": 1 }] },
-              "partial":          { "next": "scene_recall_partial", "effects": [{ "resource": "san", "delta": -15 }] },
+              "success":          { "next": "scene_dispatch_recall_check", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_dispatch_recall_check", "effects": [{ "resource": "san", "delta": -15 }] },
               "failure":          { "next": "scene_leave_attempt", "effects": [{ "resource": "san", "delta": -10 }] },
               "fumble":           { "next": "scene_end_first_look", "effects": [{ "resource": "san", "delta": -50 }] }
             }
@@ -300,6 +300,13 @@
       "conditional_next": [
         { "if_resource_at_least": { "clue": 2, "san": 60 }, "next": "scene_end_good" },
         { "default": true, "next": "scene_dispatch_neutral" }
+      ]
+    },
+    "scene_dispatch_recall_check": {
+      "narrative": "",
+      "conditional_next": [
+        { "if_resource_at_least": { "clue": 3 }, "next": "scene_recall_full" },
+        { "default": true, "next": "scene_recall_partial" }
       ]
     },
     "scene_end_neutral": {
