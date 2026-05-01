@@ -24,7 +24,7 @@ outcome_critical:sfx/success.mp3
 outcome_success:sfx/message-received.mp3
 outcome_partial:sfx/magicalstaffgroundimpact.wav
 outcome_failure:sfx/deep-bass-thump.wav
-outcome_fumble:sfx/failure.wav (這個需要:Failure 3.wav by FunWithSound -- https://freesound.org/s/394898/ -- License: Attribution 4.0)
+outcome_fumble:sfx/failure.mp3 (這個需要:Failure 3.wav by FunWithSound -- https://freesound.org/s/394898/ -- License: Attribution 4.0)
 
 
 
