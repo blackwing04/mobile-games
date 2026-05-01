@@ -157,7 +157,7 @@
       ]
     },
     "scene_passed": {
-      "image": "assets/images/scenarios/demo_office/scene_passed.png",
+      "image": "assets/images/scenarios/demo_office/scene_passed.jpg",
       "bgm": "assets/audio/bgm/frozen-in-the-nebula-liminal-dark-eerie-space.mp3",
       "narrative": "你摒住呼吸，連睫毛都不敢顫動。那股帶著霉味的冰冷氣息停在你身後很久，久到你以為時間已經凝固。最後，腳步聲緩緩經過了你，消失在走廊盡頭。\n\n你不敢轉頭。直到東方的天空泛起魚肚白，你才發現自己的指甲深深嵌進了手心。那一夜，你活了下來，但有些東西已經在你體內徹底壞掉了。",
       "choices": [
@@ -174,7 +174,7 @@
       ]
     },
     "scene_called_but_noticed": {
-      "image": "assets/images/scenarios/demo_office/scene_called_but_noticed.png",
+      "image": "assets/images/scenarios/demo_office/scene_called_but_noticed.jpg",
       "bgm": "assets/audio/bgm/building-tension.mp3",
       "narrative": "你屏住呼吸退回座位，打算打電話通報警衛。\n\n你才剛拿起電話，耳邊的哭聲就瞬間消失了。隨即，整層樓的燈光像是被巨手捏碎般同步熄滅，整層樓陷入徹底的黑暗。唯一的光源，只剩下你電腦藍屏那慘淡的微光。\n\n走廊盡頭傳來緩慢、僵硬的腳步聲。一聲、兩聲，正筆直地朝你而來。",
       "choices": [
@@ -241,7 +241,7 @@
       ]
     },
     "scene_leave_attempt": {
-      "image": "assets/images/scenarios/demo_office/scene_leave_attempt.png",
+      "image": "assets/images/scenarios/demo_office/scene_leave_attempt.jpg",
       "bgm": "assets/audio/bgm/building-tension.mp3",
       "sfx_on_enter": "elevator_open",
       "narrative": "腦中一片混亂，你已經沒有思考的餘力。你抓起包包，幾乎是連滾帶爬地衝向電梯間。在空曠的走廊上，你的腳步聲響亮得令人心慌。電梯按鈕發出冰冷的紅光。十一樓⋯⋯十二樓⋯⋯「叮」的一聲，金屬門緩緩滑開，電梯內白熾燈亮得刺眼。\n\n裡面站著一個人。是小婷，她正低頭滑著手機，螢幕的微光映照著她那張毫無血色的臉。她抬起頭，對你露出一個僵硬的微笑：「前輩，你也要下班啦？一起走吧？」",
@@ -263,7 +263,7 @@
       ]
     },
     "scene_end_good": {
-      "image": "assets/images/scenarios/demo_office/scene_end_good.png",
+      "image": "assets/images/scenarios/demo_office/scene_end_good.jpg",
       "bgm": "assets/audio/bgm/music-pain.mp3",
       "narrative": "",
       "ending": {
@@ -273,6 +273,7 @@
       }
     },
     "scene_end_truth": {
+      "image": "assets/images/scenarios/demo_office/scene_end_truth.jpg",
       "bgm": "assets/audio/bgm/melancholic-piano.mp3",
       "narrative": "",
       "ending": {
@@ -310,7 +311,7 @@
       ]
     },
     "scene_end_neutral": {
-      "image": "assets/images/scenarios/demo_office/scene_end_neutral.png",
+      "image": "assets/images/scenarios/demo_office/scene_end_neutral.jpg",
       "bgm": "assets/audio/bgm/sad-strings.mp3",
       "narrative": "",
       "ending": {
@@ -320,6 +321,7 @@
       }
     },
     "scene_end_broken": {
+      "image": "assets/images/scenarios/demo_office/scene_end_broken.jpg",
       "bgm": "assets/audio/bgm/sad-strings.mp3",
       "narrative": "",
       "ending": {
@@ -329,7 +331,7 @@
       }
     },
     "scene_end_lost": {
-      "image": "assets/images/scenarios/demo_office/scene_end_lost.png",
+      "image": "assets/images/scenarios/demo_office/scene_end_lost.jpg",
       "bgm": "assets/audio/bgm/halloween-bgmkill-me-babydark.mp3",
       "narrative": "",
       "ending": {
@@ -339,7 +341,7 @@
       }
     },
     "scene_end_caught": {
-      "image": "assets/images/scenarios/demo_office/scene_end_caught.png",
+      "image": "assets/images/scenarios/demo_office/scene_end_caught.jpg",
       "bgm": "assets/audio/bgm/horror-ambience.mp3",
       "narrative": "",
       "ending": {
@@ -349,7 +351,7 @@
       }
     },
     "scene_end_first_look": {
-      "image": "assets/images/scenarios/demo_office/scene_end_first_look.png",
+      "image": "assets/images/scenarios/demo_office/scene_end_first_look.jpg",
       "bgm": "assets/audio/bgm/feedeorfano-terror.mp3",
       "narrative": "",
       "ending": {
