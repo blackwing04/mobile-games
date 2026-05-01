@@ -16,6 +16,7 @@
   "start_scene": "scene_start",
   "scenes": {
     "scene_start": {
+      "image": "assets/images/scenarios/demo_office/scene_start.webp",
       "narrative": "公司只剩你一個人。電腦時鐘顯示 23:47。\n\n你伸了個懶腰，正準備關機，卻聽見茶水間傳來細微的啜泣聲。\n\n這層樓只有你。",
       "choices": [
         {
@@ -55,6 +56,7 @@
       ]
     },
     "scene_clear_view": {
+      "image": "assets/images/scenarios/demo_office/scene_clear_view.webp",
       "narrative": "你緩緩探頭。茶水間的燈忽明忽暗。\n\n是新來的實習生小婷，蹲在地上、面對牆壁哭泣。她沒有發現你。\n\n但她的影子——投在那面牆上的影子——形狀不對。",
       "choices": [
         {
@@ -89,6 +91,7 @@
       ]
     },
     "scene_blurry_view": {
+      "image": "assets/images/scenarios/demo_office/scene_blurry_view.webp",
       "narrative": "你眯著眼。茶水間的日光燈閃爍得厲害。\n\n你只看見一個模糊的人影蹲著，發出細碎的、像是壓抑的笑聲——不，是哭聲？\n\n你的太陽穴突突地跳。",
       "choices": [
         {
@@ -123,6 +126,7 @@
       ]
     },
     "scene_no_view": {
+      "image": "assets/images/scenarios/demo_office/scene_no_view.webp",
       "narrative": "你探頭，但茶水間裡空空如也。\n\n是幻聽嗎？你揉揉眼睛，回到座位。\n\n但走回辦公桌的路上，你聽見背後的茶水間又傳來啜泣聲。",
       "choices": [
         {
@@ -136,6 +140,7 @@
       ]
     },
     "scene_pretend": {
+      "image": "assets/images/scenarios/demo_office/scene_pretend.webp",
       "narrative": "你深呼吸，戴上耳機，把音量轉到最大。\n\n但音樂中你仍然聽得見——那個聲音，越來越近。\n\n你抬起頭。茶水間的人影站起來了，正緩緩朝你走來。",
       "choices": [
         {
@@ -167,6 +172,7 @@
       ]
     },
     "scene_recall_full": {
+      "image": "assets/images/scenarios/demo_office/scene_recall_full.webp",
       "narrative": "你想起來了。\n\n三年前，這層樓有個女實習生在加班時跳樓。當時公司強壓下來，沒上新聞。\n\n她的座位——就是現在小婷的位置。",
       "choices": [
         {
@@ -180,6 +186,7 @@
       ]
     },
     "scene_recall_partial": {
+      "image": "assets/images/scenarios/demo_office/scene_recall_partial.webp",
       "narrative": "你模糊地記得，公司前幾年好像出過事。\n\n但具體是什麼，你想不起來。只記得那陣子主管交代「不要問」。\n\n茶水間的聲音突然停了。",
       "choices": [
         {
@@ -193,6 +200,7 @@
       ]
     },
     "scene_approach": {
+      "image": "assets/images/scenarios/demo_office/scene_approach.webp",
       "narrative": "你走過去，輕聲喊：「⋯⋯小婷？」\n\n她抬起頭。是她的臉，但眼睛裡沒有東西。她對你微笑，慢慢說：\n\n「你也會留下來陪我，對吧？」",
       "choices": [
         {
@@ -225,6 +233,7 @@
       ]
     },
     "scene_call_security": {
+      "image": "assets/images/scenarios/demo_office/scene_call_security.webp",
       "narrative": "你壓低呼吸，退回工位旁，撥了警衛室的內線。\n\n十分鐘後，老警衛搖著手電筒上樓，茶水間裡——什麼也沒有。\n\n他沉默了一會，輕聲說：「⋯⋯不是第一次了。明天你就請假吧。」",
       "choices": [
         {
@@ -234,6 +243,7 @@
       ]
     },
     "scene_called_but_noticed": {
+      "image": "assets/images/scenarios/demo_office/scene_called_but_noticed.webp",
       "narrative": "你才剛拿起電話，那聲音就停了。\n\n你抬頭——茶水間的燈滅了。整層樓陷入黑暗。\n\n只剩你電腦螢幕的微光，和走廊盡頭緩慢逼近的腳步聲。",
       "choices": [
         {
@@ -259,6 +269,7 @@
       ]
     },
     "scene_passed": {
+      "image": "assets/images/scenarios/demo_office/scene_passed.webp",
       "narrative": "你屏住呼吸。腳步聲在你身後停下，然後⋯⋯經過了。\n\n你不敢轉頭。直到天亮，你才發現自己的指甲在手心裡留下了五道血痕。\n\n第二天，你交了辭呈。",
       "choices": [
         {
@@ -268,6 +279,7 @@
       ]
     },
     "scene_leave_attempt": {
+      "image": "assets/images/scenarios/demo_office/scene_leave_attempt.webp",
       "narrative": "你抓起包包衝向電梯。\n\n按鈕亮起。十一樓⋯⋯十二樓⋯⋯叮——\n\n門開了。電梯裡有人。是小婷，她笑著說：「你也加班到這麼晚啊？」",
       "choices": [
         {
@@ -297,6 +309,7 @@
       "ending": {
         "type": "good",
         "title": "破曉之前",
+        "image": "assets/images/scenarios/demo_office/scene_end_good.webp",
         "description": "你拉著她、半拖半抱地下了十二層樓梯。\n\n警衛室前，她忽然清醒、不知道自己怎麼了。你沒告訴她剛才的事。\n\n隔天小婷請了長假回老家。你知道她是誰，也知道她不是她。但至少——你都活著走出了那棟大樓。"
       }
     },
@@ -305,6 +318,7 @@
       "ending": {
         "type": "neutral",
         "title": "倖存",
+        "image": "assets/images/scenarios/demo_office/scene_end_neutral.webp",
         "description": "你回到家，洗了一個很長很長的澡。\n\n那夜的事你誰也沒說。第二天上班，茶水間又恢復成普通的茶水間，公司沒有任何異樣。\n\n只是從此之後，你再也沒有加班到晚上十一點之後。"
       }
     },
@@ -313,6 +327,7 @@
       "ending": {
         "type": "bad",
         "title": "她找到你了",
+        "image": "assets/images/scenarios/demo_office/scene_end_caught.webp",
         "description": "你聽見耳邊有溫熱的呼吸。\n\n「找到你了。」\n\n隔天早上，清潔阿姨在茶水間發現你。你坐在地上，面對牆壁，反覆地、輕聲地哭。\n\n沒有人能讓你說話。"
       }
     },
@@ -321,6 +336,7 @@
       "ending": {
         "type": "bad",
         "title": "陪她",
+        "image": "assets/images/scenarios/demo_office/scene_end_lost.webp",
         "description": "你說了「好」。\n\n她笑得很開心。十二樓的窗戶是開的，夜風吹進來。\n\n你跟著她走過去。腳步輕得像棉花。\n\n——隔天，公司又少了一個人。"
       }
     },
@@ -329,6 +345,7 @@
       "ending": {
         "type": "bad",
         "title": "別回頭看",
+        "image": "assets/images/scenarios/demo_office/scene_end_first_look.webp",
         "description": "你只是不小心，多看了一眼。\n\n茶水間裡那個東西的臉，從此再也離不開你的腦海。\n\n你辭職了、搬家了、換了城市、剃了光頭。但每天半夜十一點四十七分，你都會在床上坐起，朝牆角微笑。"
       }
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../engine/models/scene.dart';
+import '../widgets/scene_image.dart';
 
 class EndingScreen extends StatelessWidget {
   final Ending ending;
@@ -30,12 +31,15 @@ class EndingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (ending.image != null) ...[
+                SceneImage(assetPath: ending.image),
+                const SizedBox(height: 24),
+              ],
               Text(
                 _label,
                 textAlign: TextAlign.center,
@@ -56,21 +60,27 @@ class EndingScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
-              Text(
-                ending.description,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 17,
-                  height: 1.7,
-                  color: Color(0xFFCFCFCF),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  ending.description,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    height: 1.7,
+                    color: Color(0xFFCFCFCF),
+                  ),
                 ),
               ),
               const SizedBox(height: 48),
-              ElevatedButton(
-                onPressed: onRestart,
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4),
-                  child: Text('再玩一次'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ElevatedButton(
+                  onPressed: onRestart,
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 4),
+                    child: Text('再玩一次'),
+                  ),
                 ),
               ),
               const SizedBox(height: 12),

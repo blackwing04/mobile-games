@@ -7,6 +7,7 @@ import '../widgets/choice_button.dart';
 import '../widgets/dice_overlay.dart';
 import '../widgets/narrative_text.dart';
 import '../widgets/resource_bar.dart';
+import '../widgets/scene_image.dart';
 import 'ending_screen.dart';
 
 class ScenarioScreen extends ConsumerWidget {
@@ -40,6 +41,7 @@ class ScenarioScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      SceneImage(assetPath: scene.image),
                       NarrativeText(scene.narrative),
                       const SizedBox(height: 8),
                       ...scene.choices.map(
