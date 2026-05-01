@@ -175,7 +175,7 @@
           "skill_check": {
             "skill": "resolve",
             "outcomes": {
-              "critical_success": { "next": "scene_end_good", "effects": [{ "resource": "san", "delta": 15 }] },
+              "critical_success": { "next": "scene_dispatch_truth_check", "effects": [{ "resource": "san", "delta": 15 }] },
               "success":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -10 }] },
               "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
               "failure":          { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -35 }] },
@@ -249,15 +249,21 @@
       "ending": {
         "type": "good",
         "title": "安息",
-        "description": "你在離開大樓的最後一刻，停下了腳步。\n\n那些散落的線索在腦中拼成完整的故事——三年前那場被消音的職災、那個被壓下姓名的實習生、那件從十二樓墜落的米色針織衫。你終於明白，她從沒想過要傷害誰，她只是還沒找到一個願意聽她說話的人。\n\n你回過頭，朝那個空無一人的茶水間，輕聲說：「⋯⋯我聽見你了。」\n\n隔天，工程師上樓檢修，發現了一些奇怪的事：那盞夜裡會閃爍的茶水間日光燈，停了。地板上多了一灘沒人弄得清的水漬，像是有人哭了好久好久。\n\n但那之後，那一層樓再也沒有人聽過任何哭聲。\n\n多年後你升職、結婚、生小孩。某天孩子問你：「爸爸 / 媽媽，你年輕的時候有沒有遇過鬼？」你笑了笑，搖搖頭：「沒有，只是遇過一個沒辦法回家的人。」"
+        "description": "你拽著她的手腕死命衝過走廊，跌跌撞撞地撞進電梯。金屬門合上的瞬間，那層樓所有的燈一齊熄滅。\n\n你獨自走出冷清的大廳，站在街上仰起頭——十二樓的茶水間還亮著一盞昏黃的燈。\n\n那些一路上散落的線索，在腦中拼成了完整的故事：三年前那場被消音的職災、那個被壓下姓名的實習生、那件從十二樓墜落的米色針織衫。你終於明白，她從沒想過要傷害誰，她只是還沒找到一個願意聽她說話的人。\n\n你輕聲對著那盞燈說：「⋯⋯我聽見你了。」\n\n隔天，工程師上樓檢修，發現了一些奇怪的事：那盞夜裡會閃爍的茶水間日光燈，停了。地板上多了一灘沒人弄得清的水漬，像是有人哭了好久好久。\n\n但那之後，那一層樓再也沒有人聽過任何哭聲。\n\n多年後你升職、結婚、生小孩。某天孩子問你：「爸爸 / 媽媽，你年輕的時候有沒有遇過鬼？」你笑了笑，搖搖頭：「沒有，只是遇過一個沒辦法回家的人。」"
       }
     },
     "scene_dispatch_neutral": {
       "narrative": "",
       "conditional_next": [
-        { "if_resource_at_least": { "clue": 3 }, "next": "scene_end_truth" },
         { "if_resource_below": { "san": 50 }, "next": "scene_end_broken" },
         { "default": true, "next": "scene_end_neutral" }
+      ]
+    },
+    "scene_dispatch_truth_check": {
+      "narrative": "",
+      "conditional_next": [
+        { "if_resource_at_least": { "clue": 3, "san": 50 }, "next": "scene_end_truth" },
+        { "default": true, "next": "scene_end_good" }
       ]
     },
     "scene_end_neutral": {
