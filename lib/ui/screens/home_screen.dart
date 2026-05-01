@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/game_provider.dart';
+import 'credits_screen.dart';
 import 'scenario_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -12,7 +13,18 @@ class HomeScreen extends ConsumerWidget {
     final scenariosAsync = ref.watch(scenarioListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('異聞錄')),
+      appBar: AppBar(
+        title: const Text('異聞錄'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: '授權與致謝',
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const CreditsScreen()),
+            ),
+          ),
+        ],
+      ),
       body: scenariosAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, st) => Center(
