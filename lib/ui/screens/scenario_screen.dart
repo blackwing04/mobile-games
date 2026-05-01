@@ -22,6 +22,8 @@ class ScenarioScreen extends ConsumerStatefulWidget {
 }
 
 class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   void _syncSceneAudio(Scene scene) {
     final audio = ref.read(audioServiceProvider);
     audio.playBgm(scene.bgm);
@@ -32,6 +34,12 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
     final sfxKey =
         scene.sfxOnEnter == null ? null : SfxKey.tryParse(scene.sfxOnEnter!);
     if (sfxKey != null) audio.playSfx(sfxKey);
+  }
+
+  /// 場景切換時把 ScrollController 拉回頂部，避免長場景的滾動殘留
+  void _scrollToTop() {
+    if (!_scrollController.hasClients) return;
+    _scrollController.jumpTo(0);
   }
 
   @override
@@ -47,6 +55,7 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
     // BGM 留給接手畫面 (HomeScreen) 接手切換 — 零 gap、idempotent 不重啟
     // Ambient (如哭聲循環) 必須停乾淨
     ref.read(audioServiceProvider).stopAmbient();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -61,6 +70,7 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
       gameSessionProvider(scenario).select((s) => s.currentSceneId),
       (prev, next) {
         _syncSceneAudio(scenario.sceneById(next)!);
+        _scrollToTop();
       },
     );
 
@@ -82,6 +92,7 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
               ResourceBar(defs: scenario.resources, values: state.resources),
               Expanded(
                 child: SingleChildScrollView(
+                  controller: _scrollController,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
