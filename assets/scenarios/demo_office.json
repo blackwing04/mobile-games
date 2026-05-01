@@ -28,8 +28,8 @@
             "outcomes": {
               "critical_success": { "next": "scene_clear_view", "effects": [{ "resource": "clue", "delta": 2 }] },
               "success":          { "next": "scene_clear_view", "effects": [{ "resource": "clue", "delta": 1 }] },
-              "partial":          { "next": "scene_blurry_view", "effects": [{ "resource": "san", "delta": -10 }, { "resource": "clue", "delta": 1 }] },
-              "failure":          { "next": "scene_no_view" },
+              "partial":          { "next": "scene_blurry_view", "effects": [{ "resource": "san", "delta": -15 }, { "resource": "clue", "delta": 1 }] },
+              "failure":          { "next": "scene_no_view", "effects": [{ "resource": "san", "delta": -10 }] },
               "fumble":           { "next": "scene_end_first_look", "effects": [{ "resource": "san", "delta": -50 }] }
             }
           }
@@ -50,9 +50,9 @@
             "outcomes": {
               "critical_success": { "next": "scene_call_security", "effects": [{ "resource": "clue", "delta": 1 }] },
               "success":          { "next": "scene_call_security" },
-              "partial":          { "next": "scene_called_but_noticed", "effects": [{ "resource": "san", "delta": -5 }] },
-              "failure":          { "next": "scene_called_but_noticed", "effects": [{ "resource": "san", "delta": -10 }] },
-              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] }
+              "partial":          { "next": "scene_called_but_noticed", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_called_but_noticed", "effects": [{ "resource": "san", "delta": -20 }] },
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -40 }] }
             }
           }
         }
@@ -71,9 +71,9 @@
             "outcomes": {
               "critical_success": { "next": "scene_recall_full", "effects": [{ "resource": "clue", "delta": 2 }] },
               "success":          { "next": "scene_recall_partial", "effects": [{ "resource": "clue", "delta": 1 }] },
-              "partial":          { "next": "scene_recall_partial", "effects": [{ "resource": "san", "delta": -5 }] },
-              "failure":          { "next": "scene_pretend" },
-              "fumble":           { "next": "scene_pretend", "effects": [{ "resource": "san", "delta": -10 }] }
+              "partial":          { "next": "scene_recall_partial", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_pretend", "effects": [{ "resource": "san", "delta": -10 }] },
+              "fumble":           { "next": "scene_pretend", "effects": [{ "resource": "san", "delta": -25 }] }
             }
           }
         },
@@ -119,9 +119,9 @@
             "outcomes": {
               "critical_success": { "next": "scene_passed" },
               "success":          { "next": "scene_passed" },
-              "partial":          { "next": "scene_passed", "effects": [{ "resource": "san", "delta": -15 }] },
-              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -25 }] },
-              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -40 }] }
+              "partial":          { "next": "scene_passed", "effects": [{ "resource": "san", "delta": -20 }] },
+              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] },
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -50 }] }
             }
           }
         },
@@ -157,9 +157,9 @@
             "outcomes": {
               "critical_success": { "next": "scene_dispatch_neutral" },
               "success":          { "next": "scene_dispatch_neutral" },
-              "partial":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -20 }] },
-              "failure":          { "next": "scene_end_caught" },
-              "fumble":           { "next": "scene_end_caught" }
+              "partial":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -25 }] },
+              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -20 }] },
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -35 }] }
             }
           }
         }
@@ -177,9 +177,9 @@
             "outcomes": {
               "critical_success": { "next": "scene_end_good" },
               "success":          { "next": "scene_end_good" },
-              "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -15 }] },
-              "failure":          { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -25 }] },
-              "fumble":           { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -40 }] }
+              "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
+              "failure":          { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -35 }] },
+              "fumble":           { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -50 }] }
             }
           }
         },
@@ -190,9 +190,9 @@
             "outcomes": {
               "critical_success": { "next": "scene_end_lost" },
               "success":          { "next": "scene_end_lost" },
-              "partial":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -20 }] },
-              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] },
-              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -45 }] }
+              "partial":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -25 }] },
+              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -35 }] },
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -55 }] }
             }
           }
         },
@@ -203,9 +203,9 @@
             "outcomes": {
               "critical_success": { "next": "scene_end_good" },
               "success":          { "next": "scene_end_good" },
-              "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -10 }] },
-              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -25 }] },
-              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -40 }] }
+              "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] },
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -50 }] }
             }
           }
         }
@@ -225,9 +225,9 @@
             "outcomes": {
               "critical_success": { "next": "scene_end_good" },
               "success":          { "next": "scene_dispatch_neutral" },
-              "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -15 }] },
-              "failure":          { "next": "scene_end_caught" },
-              "fumble":           { "next": "scene_end_caught" }
+              "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
+              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -40 }] }
             }
           }
         }
