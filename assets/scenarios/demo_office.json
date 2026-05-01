@@ -1,0 +1,335 @@
+{
+  "id": "demo_office",
+  "title": "辦公室的最後一夜",
+  "author": "示範劇本",
+  "estimated_minutes": 10,
+  "resources": [
+    { "id": "san", "name": "神智", "max": 100, "initial": 80, "icon": "🧠" },
+    { "id": "clue", "name": "線索", "initial": 0, "icon": "🔍" }
+  ],
+  "skills": [
+    { "id": "observe", "name": "觀察", "value": 65 },
+    { "id": "stealth", "name": "隱匿", "value": 50 },
+    { "id": "lore", "name": "博學", "value": 55 }
+  ],
+  "start_scene": "scene_start",
+  "scenes": {
+    "scene_start": {
+      "narrative": "公司只剩你一個人。電腦時鐘顯示 23:47。\n\n你伸了個懶腰，正準備關機，卻聽見茶水間傳來細微的啜泣聲。\n\n這層樓只有你。",
+      "choices": [
+        {
+          "label": "起身走向茶水間查看",
+          "skill_check": {
+            "skill": "observe",
+            "outcomes": {
+              "critical_success": {
+                "next": "scene_clear_view",
+                "effects": [{ "resource": "clue", "delta": 2 }]
+              },
+              "success": {
+                "next": "scene_clear_view",
+                "effects": [{ "resource": "clue", "delta": 1 }]
+              },
+              "partial": {
+                "next": "scene_blurry_view",
+                "effects": [
+                  { "resource": "san", "delta": -10 },
+                  { "resource": "clue", "delta": 1 }
+                ]
+              },
+              "failure": {
+                "next": "scene_no_view"
+              },
+              "fumble": {
+                "next": "scene_end_first_look",
+                "effects": [{ "resource": "san", "delta": -50 }]
+              }
+            }
+          }
+        },
+        {
+          "label": "戴上耳機假裝沒聽見",
+          "next": "scene_pretend"
+        }
+      ]
+    },
+    "scene_clear_view": {
+      "narrative": "你緩緩探頭。茶水間的燈忽明忽暗。\n\n是新來的實習生小婷，蹲在地上、面對牆壁哭泣。她沒有發現你。\n\n但她的影子——投在那面牆上的影子——形狀不對。",
+      "choices": [
+        {
+          "label": "走近輕聲呼喚她",
+          "next": "scene_approach"
+        },
+        {
+          "label": "退回去找警衛",
+          "skill_check": {
+            "skill": "stealth",
+            "outcomes": {
+              "critical_success": {
+                "next": "scene_call_security",
+                "effects": [{ "resource": "clue", "delta": 1 }]
+              },
+              "success": { "next": "scene_call_security" },
+              "partial": {
+                "next": "scene_called_but_noticed",
+                "effects": [{ "resource": "san", "delta": -5 }]
+              },
+              "failure": {
+                "next": "scene_called_but_noticed",
+                "effects": [{ "resource": "san", "delta": -10 }]
+              },
+              "fumble": {
+                "next": "scene_end_caught",
+                "effects": [{ "resource": "san", "delta": -30 }]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "scene_blurry_view": {
+      "narrative": "你眯著眼。茶水間的日光燈閃爍得厲害。\n\n你只看見一個模糊的人影蹲著，發出細碎的、像是壓抑的笑聲——不，是哭聲？\n\n你的太陽穴突突地跳。",
+      "choices": [
+        {
+          "label": "試著回想公司是否曾發生過什麼",
+          "skill_check": {
+            "skill": "lore",
+            "outcomes": {
+              "critical_success": {
+                "next": "scene_recall_full",
+                "effects": [{ "resource": "clue", "delta": 2 }]
+              },
+              "success": {
+                "next": "scene_recall_partial",
+                "effects": [{ "resource": "clue", "delta": 1 }]
+              },
+              "partial": {
+                "next": "scene_recall_partial",
+                "effects": [{ "resource": "san", "delta": -5 }]
+              },
+              "failure": { "next": "scene_pretend" },
+              "fumble": {
+                "next": "scene_pretend",
+                "effects": [{ "resource": "san", "delta": -10 }]
+              }
+            }
+          }
+        },
+        {
+          "label": "不管了，收東西走人",
+          "next": "scene_leave_attempt"
+        }
+      ]
+    },
+    "scene_no_view": {
+      "narrative": "你探頭，但茶水間裡空空如也。\n\n是幻聽嗎？你揉揉眼睛，回到座位。\n\n但走回辦公桌的路上，你聽見背後的茶水間又傳來啜泣聲。",
+      "choices": [
+        {
+          "label": "再一次回頭看",
+          "next": "scene_blurry_view"
+        },
+        {
+          "label": "戴上耳機，加快收拾",
+          "next": "scene_leave_attempt"
+        }
+      ]
+    },
+    "scene_pretend": {
+      "narrative": "你深呼吸，戴上耳機，把音量轉到最大。\n\n但音樂中你仍然聽得見——那個聲音，越來越近。\n\n你抬起頭。茶水間的人影站起來了，正緩緩朝你走來。",
+      "choices": [
+        {
+          "label": "假裝盯著螢幕，靜止不動",
+          "skill_check": {
+            "skill": "stealth",
+            "outcomes": {
+              "critical_success": { "next": "scene_passed" },
+              "success": { "next": "scene_passed" },
+              "partial": {
+                "next": "scene_passed",
+                "effects": [{ "resource": "san", "delta": -15 }]
+              },
+              "failure": {
+                "next": "scene_end_caught",
+                "effects": [{ "resource": "san", "delta": -25 }]
+              },
+              "fumble": {
+                "next": "scene_end_caught",
+                "effects": [{ "resource": "san", "delta": -40 }]
+              }
+            }
+          }
+        },
+        {
+          "label": "猛然站起、衝向電梯",
+          "next": "scene_leave_attempt"
+        }
+      ]
+    },
+    "scene_recall_full": {
+      "narrative": "你想起來了。\n\n三年前，這層樓有個女實習生在加班時跳樓。當時公司強壓下來，沒上新聞。\n\n她的座位——就是現在小婷的位置。",
+      "choices": [
+        {
+          "label": "走出去，叫她的名字",
+          "next": "scene_approach"
+        },
+        {
+          "label": "立刻離開公司",
+          "next": "scene_leave_attempt"
+        }
+      ]
+    },
+    "scene_recall_partial": {
+      "narrative": "你模糊地記得，公司前幾年好像出過事。\n\n但具體是什麼，你想不起來。只記得那陣子主管交代「不要問」。\n\n茶水間的聲音突然停了。",
+      "choices": [
+        {
+          "label": "趁安靜離開",
+          "next": "scene_leave_attempt"
+        },
+        {
+          "label": "上前一探究竟",
+          "next": "scene_approach"
+        }
+      ]
+    },
+    "scene_approach": {
+      "narrative": "你走過去，輕聲喊：「⋯⋯小婷？」\n\n她抬起頭。是她的臉，但眼睛裡沒有東西。她對你微笑，慢慢說：\n\n「你也會留下來陪我，對吧？」",
+      "choices": [
+        {
+          "label": "一把拉起她的手腕往電梯衝",
+          "next": "scene_end_good"
+        },
+        {
+          "label": "答應她「好」",
+          "next": "scene_end_lost"
+        },
+        {
+          "label": "後退一步，慢慢說：『我先打電話給你媽媽』",
+          "skill_check": {
+            "skill": "lore",
+            "outcomes": {
+              "critical_success": { "next": "scene_end_good" },
+              "success": { "next": "scene_end_good" },
+              "partial": {
+                "next": "scene_end_neutral",
+                "effects": [{ "resource": "san", "delta": -10 }]
+              },
+              "failure": {
+                "next": "scene_end_neutral",
+                "effects": [{ "resource": "san", "delta": -20 }]
+              },
+              "fumble": { "next": "scene_end_lost" }
+            }
+          }
+        }
+      ]
+    },
+    "scene_call_security": {
+      "narrative": "你壓低呼吸，退回工位旁，撥了警衛室的內線。\n\n十分鐘後，老警衛搖著手電筒上樓，茶水間裡——什麼也沒有。\n\n他沉默了一會，輕聲說：「⋯⋯不是第一次了。明天你就請假吧。」",
+      "choices": [
+        {
+          "label": "默默收拾離開",
+          "next": "scene_end_neutral"
+        }
+      ]
+    },
+    "scene_called_but_noticed": {
+      "narrative": "你才剛拿起電話，那聲音就停了。\n\n你抬頭——茶水間的燈滅了。整層樓陷入黑暗。\n\n只剩你電腦螢幕的微光，和走廊盡頭緩慢逼近的腳步聲。",
+      "choices": [
+        {
+          "label": "衝向電梯",
+          "next": "scene_leave_attempt"
+        },
+        {
+          "label": "躲到桌子底下",
+          "skill_check": {
+            "skill": "stealth",
+            "outcomes": {
+              "critical_success": { "next": "scene_end_neutral" },
+              "success": { "next": "scene_end_neutral" },
+              "partial": {
+                "next": "scene_end_caught",
+                "effects": [{ "resource": "san", "delta": -20 }]
+              },
+              "failure": { "next": "scene_end_caught" },
+              "fumble": { "next": "scene_end_caught" }
+            }
+          }
+        }
+      ]
+    },
+    "scene_passed": {
+      "narrative": "你屏住呼吸。腳步聲在你身後停下，然後⋯⋯經過了。\n\n你不敢轉頭。直到天亮，你才發現自己的指甲在手心裡留下了五道血痕。\n\n第二天，你交了辭呈。",
+      "choices": [
+        {
+          "label": "結束",
+          "next": "scene_end_neutral"
+        }
+      ]
+    },
+    "scene_leave_attempt": {
+      "narrative": "你抓起包包衝向電梯。\n\n按鈕亮起。十一樓⋯⋯十二樓⋯⋯叮——\n\n門開了。電梯裡有人。是小婷，她笑著說：「你也加班到這麼晚啊？」",
+      "choices": [
+        {
+          "label": "進電梯",
+          "next": "scene_end_lost"
+        },
+        {
+          "label": "退一步、按樓梯間的門",
+          "skill_check": {
+            "skill": "stealth",
+            "outcomes": {
+              "critical_success": { "next": "scene_end_good" },
+              "success": { "next": "scene_end_neutral" },
+              "partial": {
+                "next": "scene_end_neutral",
+                "effects": [{ "resource": "san", "delta": -15 }]
+              },
+              "failure": { "next": "scene_end_caught" },
+              "fumble": { "next": "scene_end_caught" }
+            }
+          }
+        }
+      ]
+    },
+    "scene_end_good": {
+      "narrative": "",
+      "ending": {
+        "type": "good",
+        "title": "破曉之前",
+        "description": "你拉著她、半拖半抱地下了十二層樓梯。\n\n警衛室前，她忽然清醒、不知道自己怎麼了。你沒告訴她剛才的事。\n\n隔天小婷請了長假回老家。你知道她是誰，也知道她不是她。但至少——你都活著走出了那棟大樓。"
+      }
+    },
+    "scene_end_neutral": {
+      "narrative": "",
+      "ending": {
+        "type": "neutral",
+        "title": "倖存",
+        "description": "你回到家，洗了一個很長很長的澡。\n\n那夜的事你誰也沒說。第二天上班，茶水間又恢復成普通的茶水間，公司沒有任何異樣。\n\n只是從此之後，你再也沒有加班到晚上十一點之後。"
+      }
+    },
+    "scene_end_caught": {
+      "narrative": "",
+      "ending": {
+        "type": "bad",
+        "title": "她找到你了",
+        "description": "你聽見耳邊有溫熱的呼吸。\n\n「找到你了。」\n\n隔天早上，清潔阿姨在茶水間發現你。你坐在地上，面對牆壁，反覆地、輕聲地哭。\n\n沒有人能讓你說話。"
+      }
+    },
+    "scene_end_lost": {
+      "narrative": "",
+      "ending": {
+        "type": "bad",
+        "title": "陪她",
+        "description": "你說了「好」。\n\n她笑得很開心。十二樓的窗戶是開的，夜風吹進來。\n\n你跟著她走過去。腳步輕得像棉花。\n\n——隔天，公司又少了一個人。"
+      }
+    },
+    "scene_end_first_look": {
+      "narrative": "",
+      "ending": {
+        "type": "bad",
+        "title": "別回頭看",
+        "description": "你只是不小心，多看了一眼。\n\n茶水間裡那個東西的臉，從此再也離不開你的腦海。\n\n你辭職了、搬家了、換了城市、剃了光頭。但每天半夜十一點四十七分，你都會在床上坐起，朝牆角微笑。"
+      }
+    }
+  }
+}

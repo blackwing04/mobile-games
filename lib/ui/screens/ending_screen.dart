@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+
+import '../../engine/models/scene.dart';
+
+class EndingScreen extends StatelessWidget {
+  final Ending ending;
+  final VoidCallback onRestart;
+  final VoidCallback onHome;
+
+  const EndingScreen({
+    super.key,
+    required this.ending,
+    required this.onRestart,
+    required this.onHome,
+  });
+
+  Color get _accent => switch (ending.type) {
+        'good' => const Color(0xFF81C784),
+        'bad' => const Color(0xFF8B0000),
+        _ => const Color(0xFFE0C770),
+      };
+
+  String get _label => switch (ending.type) {
+        'good' => '— 好結局 —',
+        'bad' => '— 壞結局 —',
+        _ => '— 結局 —',
+      };
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                _label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: _accent,
+                  letterSpacing: 4,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                ending.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: _accent,
+                ),
+              ),
+              const SizedBox(height: 32),
+              Text(
+                ending.description,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 17,
+                  height: 1.7,
+                  color: Color(0xFFCFCFCF),
+                ),
+              ),
+              const SizedBox(height: 48),
+              ElevatedButton(
+                onPressed: onRestart,
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: Text('再玩一次'),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextButton(
+                onPressed: onHome,
+                child: const Text('回主選單'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
