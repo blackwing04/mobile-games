@@ -41,6 +41,7 @@ void main() {
         checked++;
       }
     }
-    print('已驗證 $checked 個 fumble 路徑');
+    expect(checked, greaterThanOrEqualTo(5),
+        reason: '應該至少有 5 個 fumble 路徑被檢驗');
   });
 }
