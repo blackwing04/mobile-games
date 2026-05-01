@@ -179,8 +179,8 @@
               "critical_success": { "next": "scene_end_good" },
               "success":          { "next": "scene_end_good" },
               "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -10 }] },
-              "failure":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
-              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] }
+              "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -40 }] }
             }
           }
         }
