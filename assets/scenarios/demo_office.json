@@ -141,7 +141,8 @@
       "bgm": "assets/audio/bgm/entropy-sad-horror-piano-music.mp3",
       "narrative": "你屏住呼吸退回座位，顫抖著撥通了警衛室的內線。十分鐘後，老警衛搖著手電筒，一臉疲憊地上樓巡查，但茶水間裡空無一人。\n\n他沉默地看著你，許久才發出一聲長長的嘆息，將手電筒的光移向別處，輕聲說：「⋯⋯這不是第一次了，也不是最後一個。明天你就請假吧，這裡不適合留太晚。」",
       "choices": [
-        { "label": "聽他的建議，默默收拾離開", "next": "scene_dispatch_neutral" }
+        { "label": "聽他的建議，默默收拾離開", "next": "scene_dispatch_neutral" },
+        { "label": "不聽他的建議，騙他說還有東西沒弄完，回到辦公室", "next": "scene_blurry_view" }
       ]
     },
     "scene_called_but_noticed": {
