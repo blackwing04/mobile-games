@@ -5,15 +5,20 @@ import '../widgets/scene_image.dart';
 
 class EndingScreen extends StatelessWidget {
   final Ending ending;
+  final String? sceneImage;
   final VoidCallback onRestart;
   final VoidCallback onHome;
 
   const EndingScreen({
     super.key,
     required this.ending,
+    this.sceneImage,
     required this.onRestart,
     required this.onHome,
   });
+
+  /// 結局插圖：優先使用 ending.image，沒有就 fallback 到 scene.image
+  String? get _image => ending.image ?? sceneImage;
 
   Color get _accent => switch (ending.type) {
         'good' => const Color(0xFF81C784),
@@ -36,8 +41,8 @@ class EndingScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (ending.image != null) ...[
-                SceneImage(assetPath: ending.image),
+              if (_image != null) ...[
+                SceneImage(assetPath: _image),
                 const SizedBox(height: 24),
               ],
               Text(

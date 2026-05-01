@@ -24,6 +24,7 @@ class ScenarioScreen extends ConsumerWidget {
     if (scene.isEnding) {
       return EndingScreen(
         ending: scene.ending!,
+        sceneImage: scene.image,
         onRestart: notifier.restart,
         onHome: () => Navigator.of(context).pop(),
       );
