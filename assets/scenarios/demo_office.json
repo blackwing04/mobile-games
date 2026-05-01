@@ -146,7 +146,7 @@
     "scene_called_but_noticed": {
       "image": "assets/images/scenarios/demo_office/scene_called_but_noticed.png",
       "bgm": "assets/audio/bgm/building-tension.mp3",
-      "narrative": "你才剛拿起電話，耳邊的哭聲就瞬間消失了。隨即，整層樓的燈光像是被巨手捏碎般同步熄滅，整層樓陷入徹底的黑暗。唯一的光源，只剩下你電腦藍屏那慘淡的微光。\n\n走廊盡頭傳來緩慢、僵硬的腳步聲。一聲、兩聲，正筆直地朝你而來。",
+      "narrative": "你屏住呼吸退回座位，打算打電話通報警衛。\n\n你才剛拿起電話，耳邊的哭聲就瞬間消失了。隨即，整層樓的燈光像是被巨手捏碎般同步熄滅，整層樓陷入徹底的黑暗。唯一的光源，只剩下你電腦藍屏那慘淡的微光。\n\n走廊盡頭傳來緩慢、僵硬的腳步聲。一聲、兩聲，正筆直地朝你而來。",
       "choices": [
         { "label": "顧不得黑暗，全速衝向電梯門", "next": "scene_leave_attempt" },
         {
