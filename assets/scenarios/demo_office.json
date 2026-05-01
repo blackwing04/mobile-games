@@ -176,7 +176,7 @@
             "skill": "resolve",
             "outcomes": {
               "critical_success": { "next": "scene_end_good" },
-              "success":          { "next": "scene_end_good" },
+              "success":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -10 }] },
               "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
               "failure":          { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -35 }] },
               "fumble":           { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -50 }] }
@@ -202,7 +202,7 @@
             "skill": "stealth",
             "outcomes": {
               "critical_success": { "next": "scene_end_good" },
-              "success":          { "next": "scene_end_good" },
+              "success":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -5 }] },
               "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -15 }] },
               "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] },
               "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -50 }] }
