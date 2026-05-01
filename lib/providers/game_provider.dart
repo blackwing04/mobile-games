@@ -48,8 +48,10 @@ class GameSessionNotifier extends StateNotifier<GameState> {
   }
 }
 
-final gameSessionProvider = StateNotifierProvider.family<GameSessionNotifier,
-    GameState, Scenario>((ref, scenario) {
+/// autoDispose: ScenarioScreen pop 後自動釋放 state，下次重進劇本會 fresh GameState.initial
+/// (修「玩完後回主選單再進入會卡在上一輪結局」bug)
+final gameSessionProvider = StateNotifierProvider.autoDispose
+    .family<GameSessionNotifier, GameState, Scenario>((ref, scenario) {
   return GameSessionNotifier(
     scenario: scenario,
     runner: ScenarioRunner(),

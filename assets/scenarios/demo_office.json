@@ -172,15 +172,15 @@
         { "label": "這根本不是人類！抓起她的手腕直接往電梯衝", "next": "scene_end_good" },
         { "label": "看著那對溢滿黑霧的眼窩，你失神地回答：『好』", "next": "scene_end_lost" },
         {
-          "label": "強迫自己冷靜：『別怕，我現在幫妳打電話給妳媽⋯⋯』",
+          "label": "轉頭就跑，什麼也不管，絕不回頭",
           "skill_check": {
-            "skill": "lore",
+            "skill": "stealth",
             "outcomes": {
               "critical_success": { "next": "scene_end_good" },
               "success":          { "next": "scene_end_good" },
               "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -10 }] },
               "failure":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
-              "fumble":           { "next": "scene_end_lost" }
+              "fumble":           { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] }
             }
           }
         }
