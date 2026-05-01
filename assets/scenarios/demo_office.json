@@ -5,7 +5,7 @@
   "author": "Joe & Gemini",
   "estimated_minutes": 10,
   "resources": [
-    { "id": "san", "name": "神智", "max": 100, "initial": 80, "icon": "🧠" },
+    { "id": "san", "name": "神智", "max": 100, "initial": 70, "icon": "🧠" },
     { "id": "clue", "name": "線索", "initial": 0, "icon": "🔍" }
   ],
   "skills": [
