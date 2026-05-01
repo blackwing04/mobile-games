@@ -244,7 +244,7 @@
       }
     },
     "scene_end_truth": {
-      "bgm": "assets/audio/bgm/entropy-sad-horror-piano-music.mp3",
+      "bgm": "assets/audio/bgm/melancholic-piano.mp3",
       "narrative": "",
       "ending": {
         "type": "good",
