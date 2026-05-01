@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../engine/models/scenario.dart';
 import '../../providers/game_provider.dart';
+import '../../services/audio_service.dart';
 import '../widgets/choice_button.dart';
 import '../widgets/dice_overlay.dart';
 import '../widgets/narrative_text.dart';
@@ -10,16 +11,44 @@ import '../widgets/resource_bar.dart';
 import '../widgets/scene_image.dart';
 import 'ending_screen.dart';
 
-class ScenarioScreen extends ConsumerWidget {
+class ScenarioScreen extends ConsumerStatefulWidget {
   final Scenario scenario;
 
   const ScenarioScreen({super.key, required this.scenario});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ScenarioScreen> createState() => _ScenarioScreenState();
+}
+
+class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final state = ref.read(gameSessionProvider(widget.scenario));
+    final scene = widget.scenario.sceneById(state.currentSceneId)!;
+    ref.read(audioServiceProvider).playBgm(scene.bgm);
+  }
+
+  @override
+  void dispose() {
+    ref.read(audioServiceProvider).stop();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scenario = widget.scenario;
     final state = ref.watch(gameSessionProvider(scenario));
     final notifier = ref.read(gameSessionProvider(scenario).notifier);
     final scene = scenario.sceneById(state.currentSceneId)!;
+
+    ref.listen<String>(
+      gameSessionProvider(scenario).select((s) => s.currentSceneId),
+      (prev, next) {
+        final nextScene = scenario.sceneById(next)!;
+        ref.read(audioServiceProvider).playBgm(nextScene.bgm);
+      },
+    );
 
     if (scene.isEnding) {
       return EndingScreen(

@@ -17,6 +17,7 @@
   "scenes": {
     "scene_start": {
       "image": "assets/images/scenarios/demo_office/scene_start.png",
+      "bgm": "assets/audio/bgm/the_mountain-lonely.mp3",
       "narrative": "深夜裡你獨自在公司裡加班，看著你改了第 7 版的方案，你心想終於快結束了。\n\n你撐著疲憊的身軀，準備打下最後幾行字時——\n\n螢幕毫無預警地跳出淡藍色的死機畫面，你腦中瞬間斷線——剛完成的文件還沒存檔。\n\n你脫力地癱坐在工位上，看向手錶：23:47。\n\n正當你陷入窒息般的沉默時，茶水間傳來一聲細微的摩擦聲，隨後是斷斷續續、極力壓抑的啜泣。\n\n你明明記得其他同事都走光了。你屏住呼吸，眼角餘光不自覺地往茶水間的陰影瞄去。",
       "choices": [
         {
@@ -37,6 +38,7 @@
     },
     "scene_clear_view": {
       "image": "assets/images/scenarios/demo_office/scene_clear_view.png",
+      "bgm": "assets/audio/bgm/building-tension.mp3",
       "narrative": "你壓下狂跳的心臟，屏息走向茶水間。門縫中漏出日光燈忽明忽暗的殘影，伴隨著電流刺耳的吱吱聲。\n\n透過那道窄縫，你看見一個長髮女生背對著你，縮在飲水機旁的陰影裡顫抖。從那件熟悉的米色針織衫，你認出那是你平時負責帶的實習生，小婷。\n\n但那股莫名的違和感讓你停下了腳步。你將門推開些許，視線隨著閃爍的燈光掃過室內——牆上、地板、飲水機，所有物品都在燈光下投出搖晃的影子，唯獨小婷，她腳下空無一物。\n\n她沒有影子。\n\n寒意瞬間從腳底竄上脊椎，你突然感覺後頸一涼，一股力道不明、卻極度清晰的束縛感勒住了你的脖子，彷彿有人正從你背後慢慢收緊雙手。",
       "choices": [
         { "label": "強撐著恐懼，試著喚醒她", "next": "scene_approach" },
@@ -77,6 +79,7 @@
     },
     "scene_recall_full": {
       "image": "assets/images/scenarios/demo_office/scene_recall_full.png",
+      "bgm": "assets/audio/bgm/entropy-sad-horror-piano-music.mp3",
       "narrative": "大腦在恐懼中像翻攪的舊檔案櫃。你想起來了。三年前，這層樓有個實習生在連續加班兩週後，在深夜從十二樓跳了下去。當時公司高層為了維護上市股價，強行壓下了所有新聞，甚至在那個工位旁擺滿了趨吉避凶的綠色盆栽。\n\n那個女生的座位，就在現在小婷的位置上。\n\n那張照片裡的米色針織衫，與眼前的人影重合在一起。",
       "choices": [
         { "label": "走出去，叫她的名字", "next": "scene_approach" },
@@ -85,6 +88,7 @@
     },
     "scene_recall_partial": {
       "image": "assets/images/scenarios/demo_office/scene_recall_partial.png",
+      "bgm": "assets/audio/bgm/per-sempre-noi.mp3",
       "narrative": "你模糊地記得，公司幾年前好像出過什麼嚴重的職災事故。但具體是什麼，當時的主管總是交代大家「不要多問」。你只記得那陣子茶水間莫名地整修了很久，所有人都避開這裡用餐。\n\n茶水間那令人不安的啜泣聲，突然毫無預警地停下了。那種寂靜，比哭聲更沈重。",
       "choices": [
         { "label": "趁現在一片安靜，趕快離開", "next": "scene_leave_attempt" },
@@ -93,6 +97,7 @@
     },
     "scene_no_view": {
       "image": "assets/images/scenarios/demo_office/scene_no_view.png",
+      "bgm": "assets/audio/bgm/flourescent-light_All.wav",
       "narrative": "你緊張地探頭，但茶水間裡空空如也。日光燈發出平淡的嗡鳴聲，冷水機的指示燈顯示著正常的運作狀態。\n\n是幻聽嗎？你揉揉發燙的太陽穴，以為只是加班太累造成的幻覺。但當你轉身走回座位的路上，身後原本寂靜的茶水間，再次傳來了那聲清晰、帶著顫抖的啜泣。\n\n這一次，那聲音似乎就在你耳邊。",
       "choices": [
         { "label": "不可能是幻覺，再一次回頭看清楚", "next": "scene_blurry_view" },
@@ -101,6 +106,7 @@
     },
     "scene_pretend": {
       "image": "assets/images/scenarios/demo_office/scene_pretend.png",
+      "bgm": "assets/audio/bgm/building-tension.mp3",
       "narrative": "你深呼吸，指尖顫抖著將耳機戴上，將音樂音量轉到震耳欲聾。但即使如此，音樂的節奏中依然夾雜著那個聲音——而且，越來越近。\n\n你抬起頭。茶水間那個僵硬的人影已經站了起來，正以一種極其緩慢且不自然的姿勢，拖著沉重的步履朝你的工位走來。",
       "choices": [
         {
@@ -121,6 +127,7 @@
     },
     "scene_passed": {
       "image": "assets/images/scenarios/demo_office/scene_passed.png",
+      "bgm": "assets/audio/bgm/frozen-in-the-nebula-liminal-dark-eerie-space.mp3",
       "narrative": "你摒住呼吸，連睫毛都不敢顫動。那股帶著霉味的冰冷氣息停在你身後很久，久到你以為時間已經凝固。最後，腳步聲緩緩經過了你，消失在走廊盡頭。\n\n你不敢轉頭。直到東方的天空泛起魚肚白，你才發現自己的指甲深深嵌進了手心。那一夜，你活了下來，但有些東西已經在你體內徹底壞掉了。",
       "choices": [
         { "label": "這班我不上了，結束這一切", "next": "scene_end_neutral" }
@@ -128,6 +135,7 @@
     },
     "scene_call_security": {
       "image": "assets/images/scenarios/demo_office/scene_call_security.png",
+      "bgm": "assets/audio/bgm/entropy-sad-horror-piano-music.mp3",
       "narrative": "你屏住呼吸退回座位，顫抖著撥通了警衛室的內線。十分鐘後，老警衛搖著手電筒，一臉疲憊地上樓巡查，但茶水間裡空無一人。\n\n他沉默地看著你，許久才發出一聲長長的嘆息，將手電筒的光移向別處，輕聲說：「⋯⋯這不是第一次了，也不是最後一個。明天你就請假吧，這裡不適合留太晚。」",
       "choices": [
         { "label": "聽他的建議，默默收拾離開", "next": "scene_end_neutral" }
@@ -135,6 +143,7 @@
     },
     "scene_called_but_noticed": {
       "image": "assets/images/scenarios/demo_office/scene_called_but_noticed.png",
+      "bgm": "assets/audio/bgm/building-tension.mp3",
       "narrative": "你才剛拿起電話，耳邊的哭聲就瞬間消失了。隨即，整層樓的燈光像是被巨手捏碎般同步熄滅，整層樓陷入徹底的黑暗。唯一的光源，只剩下你電腦藍屏那慘淡的微光。\n\n走廊盡頭傳來緩慢、僵硬的腳步聲。一聲、兩聲，正筆直地朝你而來。",
       "choices": [
         { "label": "顧不得黑暗，全速衝向電梯門", "next": "scene_leave_attempt" },
@@ -155,6 +164,7 @@
     },
     "scene_approach": {
       "image": "assets/images/scenarios/demo_office/scene_approach.png",
+      "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
       "narrative": "你艱難地吞嚥，被勒住的幻覺讓嗓音變得沙啞：「⋯⋯小婷？這麼晚了，怎麼還沒回去？」\n\n她顫抖的肩膀猛然停住，接著緩緩轉過頭。眼前的景象讓你倒吸一口涼氣，腳步不自覺地往後踉蹌。小婷沒有眼睛——準確來說，她的眼框只剩下兩個深不見底的空洞，彷彿被人硬生生摘走了眼球，兩行鮮血順著臉頰流下。\n\n你強壓下作嘔的衝動，試圖找出一種合理的解釋：討債公司？家庭暴力？但下一秒，你便知道自己錯得離譜。那對眼窩開始滲出濃稠的黑霧。她露出乖巧的微笑，聲音卻像從地底傳來：\n\n「前輩，這個報表我一個人做不完⋯⋯你也會留下來陪我，對吧？」",
       "choices": [
         { "label": "這根本不是人類！抓起她的手腕直接往電梯衝", "next": "scene_end_good" },
@@ -176,6 +186,7 @@
     },
     "scene_leave_attempt": {
       "image": "assets/images/scenarios/demo_office/scene_leave_attempt.png",
+      "bgm": "assets/audio/bgm/building-tension.mp3",
       "narrative": "你抓起包包，幾乎是連滾帶爬地衝向電梯間。在空曠的走廊上，你的腳步聲響亮得令人心慌。電梯按鈕發出冰冷的紅光。十一樓⋯⋯十二樓⋯⋯「叮」的一聲，金屬門緩緩滑開，電梯內白熾燈亮得刺眼。\n\n裡面站著一個人。是小婷，她正低頭滑著手機，螢幕的微光映照著她那張毫無血色的臉。她抬起頭，對你露出一個僵硬的微笑：「前輩，你也要下班啦？一起走吧？」",
       "choices": [
         { "label": "別無選擇，硬著頭皮進電梯", "next": "scene_end_lost" },
@@ -196,6 +207,7 @@
     },
     "scene_end_good": {
       "image": "assets/images/scenarios/demo_office/scene_end_good.png",
+      "bgm": "assets/audio/bgm/music-pain.mp3",
       "narrative": "",
       "ending": {
         "type": "good",
@@ -205,6 +217,7 @@
     },
     "scene_end_neutral": {
       "image": "assets/images/scenarios/demo_office/scene_end_neutral.png",
+      "bgm": "assets/audio/bgm/sad-strings.mp3",
       "narrative": "",
       "ending": {
         "type": "neutral",
@@ -214,6 +227,7 @@
     },
     "scene_end_lost": {
       "image": "assets/images/scenarios/demo_office/scene_end_lost.png",
+      "bgm": "assets/audio/bgm/halloween-bgmkill-me-babydark.mp3",
       "narrative": "",
       "ending": {
         "type": "bad",
@@ -223,6 +237,7 @@
     },
     "scene_end_caught": {
       "image": "assets/images/scenarios/demo_office/scene_end_caught.png",
+      "bgm": "assets/audio/bgm/horror-ambience.mp3",
       "narrative": "",
       "ending": {
         "type": "bad",
@@ -232,6 +247,7 @@
     },
     "scene_end_first_look": {
       "image": "assets/images/scenarios/demo_office/scene_end_first_look.png",
+      "bgm": "assets/audio/bgm/feedeorfano-terror.mp3",
       "narrative": "",
       "ending": {
         "type": "bad",

@@ -28,9 +28,13 @@ class Scene {
   final Ending? ending;
   final String? chapterId;
 
-  /// 場景插圖的 asset 路徑，如 "assets/images/scenarios/demo_office/scene_start.webp"
+  /// 場景插圖的 asset 路徑，如 "assets/images/scenarios/demo_office/scene_start.png"
   /// 為 null 時 UI 不顯示圖片區、敘事文字直接全寬呈現
   final String? image;
+
+  /// 背景音樂的 asset 路徑，如 "assets/audio/bgm/the_mountain-lonely.mp3"
+  /// 為 null 時停止 BGM；與前一場景相同時不重啟（連續播放）
+  final String? bgm;
 
   const Scene({
     required this.id,
@@ -39,6 +43,7 @@ class Scene {
     this.ending,
     this.chapterId,
     this.image,
+    this.bgm,
   });
 
   factory Scene.fromJson(String id, Map<String, dynamic> json) => Scene(
@@ -52,6 +57,7 @@ class Scene {
             : Ending.fromJson(json['ending'] as Map<String, dynamic>),
         chapterId: json['chapter'] as String?,
         image: json['image'] as String?,
+        bgm: json['bgm'] as String?,
       );
 
   bool get isEnding => ending != null;
