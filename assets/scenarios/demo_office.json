@@ -26,7 +26,7 @@
           "skill_check": {
             "skill": "observe",
             "outcomes": {
-              "critical_success": { "next": "scene_clear_view", "effects": [{ "resource": "clue", "delta": 2 }] },
+              "critical_success": { "next": "scene_clear_view", "effects": [{ "resource": "clue", "delta": 2 }, { "resource": "san", "delta": 5 }] },
               "success":          { "next": "scene_clear_view", "effects": [{ "resource": "clue", "delta": 1 }] },
               "partial":          { "next": "scene_blurry_view", "effects": [{ "resource": "san", "delta": -15 }, { "resource": "clue", "delta": 1 }] },
               "failure":          { "next": "scene_no_view", "effects": [{ "resource": "san", "delta": -10 }] },
@@ -48,7 +48,7 @@
           "skill_check": {
             "skill": "stealth",
             "outcomes": {
-              "critical_success": { "next": "scene_call_security", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "critical_success": { "next": "scene_call_security", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": 10 }] },
               "success":          { "next": "scene_call_security" },
               "partial":          { "next": "scene_called_but_noticed", "effects": [{ "resource": "san", "delta": -15 }] },
               "failure":          { "next": "scene_called_but_noticed", "effects": [{ "resource": "san", "delta": -20 }] },
@@ -69,7 +69,7 @@
           "skill_check": {
             "skill": "lore",
             "outcomes": {
-              "critical_success": { "next": "scene_recall_full", "effects": [{ "resource": "clue", "delta": 2 }] },
+              "critical_success": { "next": "scene_recall_full", "effects": [{ "resource": "clue", "delta": 2 }, { "resource": "san", "delta": 10 }] },
               "success":          { "next": "scene_recall_partial", "effects": [{ "resource": "clue", "delta": 1 }] },
               "partial":          { "next": "scene_recall_partial", "effects": [{ "resource": "san", "delta": -15 }] },
               "failure":          { "next": "scene_leave_attempt", "effects": [{ "resource": "san", "delta": -10 }] },
@@ -117,7 +117,7 @@
           "skill_check": {
             "skill": "stealth",
             "outcomes": {
-              "critical_success": { "next": "scene_passed" },
+              "critical_success": { "next": "scene_passed", "effects": [{ "resource": "san", "delta": 10 }] },
               "success":          { "next": "scene_passed" },
               "partial":          { "next": "scene_passed", "effects": [{ "resource": "san", "delta": -20 }] },
               "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] },
@@ -155,7 +155,7 @@
           "skill_check": {
             "skill": "stealth",
             "outcomes": {
-              "critical_success": { "next": "scene_dispatch_neutral" },
+              "critical_success": { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": 10 }] },
               "success":          { "next": "scene_dispatch_neutral" },
               "partial":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -25 }] },
               "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -20 }] },
@@ -175,7 +175,7 @@
           "skill_check": {
             "skill": "resolve",
             "outcomes": {
-              "critical_success": { "next": "scene_end_good" },
+              "critical_success": { "next": "scene_end_good", "effects": [{ "resource": "san", "delta": 15 }] },
               "success":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -10 }] },
               "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
               "failure":          { "next": "scene_end_broken", "effects": [{ "resource": "san", "delta": -35 }] },
@@ -201,7 +201,7 @@
           "skill_check": {
             "skill": "stealth",
             "outcomes": {
-              "critical_success": { "next": "scene_end_good" },
+              "critical_success": { "next": "scene_end_good", "effects": [{ "resource": "san", "delta": 10 }] },
               "success":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -5 }] },
               "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -15 }] },
               "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -30 }] },
@@ -223,7 +223,7 @@
           "skill_check": {
             "skill": "stealth",
             "outcomes": {
-              "critical_success": { "next": "scene_end_good" },
+              "critical_success": { "next": "scene_end_good", "effects": [{ "resource": "san", "delta": 15 }] },
               "success":          { "next": "scene_dispatch_neutral" },
               "partial":          { "next": "scene_dispatch_neutral", "effects": [{ "resource": "san", "delta": -20 }] },
               "failure":          { "next": "scene_end_caught", "effects": [{ "resource": "san", "delta": -25 }] },
