@@ -44,7 +44,9 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
 
   @override
   void dispose() {
-    ref.read(audioServiceProvider).stopAll();
+    // BGM 留給接手畫面 (HomeScreen) 接手切換 — 零 gap、idempotent 不重啟
+    // Ambient (如哭聲循環) 必須停乾淨
+    ref.read(audioServiceProvider).stopAmbient();
     super.dispose();
   }
 

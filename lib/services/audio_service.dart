@@ -47,6 +47,9 @@ enum SfxKey {
 /// - SFX：一次性短音效（按鍵、骰子、結果提示、電梯叮）
 /// - Ambient：帶間隔循環的環境聲（如哭聲，scene_blurry_view 用）
 class AudioService {
+  /// 主選單 BGM。刻意選用與 scene_start 同一首，從首頁進劇本時零切歌、無縫銜接。
+  static const String homeBgmPath = 'assets/audio/bgm/the_mountain-lonely.mp3';
+
   final AudioPlayer _bgmPlayer = AudioPlayer();
   final AudioPlayer _sfxPlayer = AudioPlayer();
   final AudioPlayer _ambientPlayer = AudioPlayer();

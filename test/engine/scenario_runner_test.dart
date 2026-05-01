@@ -120,13 +120,20 @@ void main() {
       // 強制擲到 1 → 任何 skill 都是 critical_success
       final runner = ScenarioRunner(diceRoller: _FixedDiceRoller(1));
       var state = GameState.initial(demo);
+      final startSceneId = state.currentSceneId;
       final scene = runner.currentScene(state);
       final checkChoice = scene.choices.firstWhere((c) => c.isCheck);
       final expectedNext = checkChoice
           .skillCheck!.outcomes[DiceOutcome.criticalSuccess]!.next;
       state = runner.rollSkillCheck(state, checkChoice);
       expect(state.lastRoll?.outcome, DiceOutcome.criticalSuccess);
+      // 擲骰後 currentSceneId 暫不變，pendingNextSceneId 暫存目標場景
+      expect(state.currentSceneId, startSceneId);
+      expect(state.pendingNextSceneId, expectedNext);
+      // 玩家按「繼續」(dismissDiceResult) 才推進
+      state = runner.dismissDiceResult(state);
       expect(state.currentSceneId, expectedNext);
+      expect(state.pendingNextSceneId, isNull);
     });
 
     test('檢定型選項用大失敗路徑時，會推進並套用負面 effects', () {

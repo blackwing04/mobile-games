@@ -1,15 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../engine/models/scenario.dart';
 import '../../providers/game_provider.dart';
+import '../../services/audio_service.dart';
 import 'credits_screen.dart';
 import 'scenario_screen.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(audioServiceProvider).playBgm(AudioService.homeBgmPath);
+  }
+
+  Future<void> _openScenario(Scenario scenario) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => ScenarioScreen(scenario: scenario)),
+    );
+    // 從劇本退出回主選單 — 重新切回主選單 BGM (idempotent，相同則不重啟)
+    if (mounted) {
+      ref.read(audioServiceProvider).playBgm(AudioService.homeBgmPath);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final scenariosAsync = ref.watch(scenarioListProvider);
 
     return Scaffold(
@@ -46,13 +69,7 @@ class HomeScreen extends ConsumerWidget {
               return Card(
                 child: InkWell(
                   borderRadius: BorderRadius.circular(8),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => ScenarioScreen(scenario: s),
-                      ),
-                    );
-                  },
+                  onTap: () => _openScenario(s),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
