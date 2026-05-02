@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'services/audio_service.dart';
-import 'ui/screens/home_screen.dart';
+import 'ui/screens/splash_screen.dart';
 import 'ui/theme/app_theme.dart';
 
 class MobileGamesApp extends ConsumerStatefulWidget {
@@ -51,7 +51,7 @@ class _MobileGamesAppState extends ConsumerState<MobileGamesApp>
       title: '異聞錄',
       theme: AppTheme.dark,
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }

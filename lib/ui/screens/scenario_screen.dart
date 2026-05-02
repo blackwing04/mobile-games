@@ -85,45 +85,48 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(scenario.title)),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              ResourceBar(defs: scenario.resources, values: state.resources),
-              Expanded(
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SceneImage(assetPath: scene.image),
-                      NarrativeText(scene.narrative),
-                      const SizedBox(height: 8),
-                      ...scene.choices
-                          .where((c) => c.isVisibleFor(state.resources))
-                          .map(
-                            (c) => ChoiceButton(
-                              choice: c,
-                              scenario: scenario,
-                              onPressed: () => notifier.selectChoice(c),
+      body: SafeArea(
+        top: false,
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                ResourceBar(defs: scenario.resources, values: state.resources),
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SceneImage(assetPath: scene.image),
+                        NarrativeText(scene.narrative),
+                        const SizedBox(height: 8),
+                        ...scene.choices
+                            .where((c) => c.isVisibleFor(state.resources))
+                            .map(
+                              (c) => ChoiceButton(
+                                choice: c,
+                                scenario: scenario,
+                                onPressed: () => notifier.selectChoice(c),
+                              ),
                             ),
-                          ),
-                      const SizedBox(height: 32),
-                    ],
+                        const SizedBox(height: 32),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          if (state.lastRoll != null && state.pendingChoiceLabel != null)
-            DiceOverlay(
-              result: state.lastRoll!,
-              triggerLabel: state.pendingChoiceLabel!,
-              onContinue: notifier.dismissDice,
-              resourceDeltas: state.lastRollResourceDeltas,
-              resources: scenario.resources,
+              ],
             ),
-        ],
+            if (state.lastRoll != null && state.pendingChoiceLabel != null)
+              DiceOverlay(
+                result: state.lastRoll!,
+                triggerLabel: state.pendingChoiceLabel!,
+                onContinue: notifier.dismissDice,
+                resourceDeltas: state.lastRollResourceDeltas,
+                resources: scenario.resources,
+              ),
+          ],
+        ),
       ),
     );
   }
