@@ -83,6 +83,25 @@ class AudioService {
 
   Future<void> stopBgm() => playBgm(null);
 
+  /// App 切到背景時暫停 BGM (不清空 _currentBgmPath，回前景能 resume)
+  Future<void> pauseBgm() async {
+    try {
+      await _bgmPlayer.pause();
+      await _ambientPlayer.pause();
+    } catch (e) {
+      if (kDebugMode) debugPrint('AudioService.pauseBgm failed: $e');
+    }
+  }
+
+  Future<void> resumeBgm() async {
+    try {
+      if (_currentBgmPath != null) await _bgmPlayer.play();
+      if (_currentAmbientPath != null) await _ambientPlayer.play();
+    } catch (e) {
+      if (kDebugMode) debugPrint('AudioService.resumeBgm failed: $e');
+    }
+  }
+
   // ── SFX ──────────────────────────────────────────────────────────
 
   /// 一次性 SFX。重複呼叫會打斷上一次（短音效 OK，不需要 overlap）。

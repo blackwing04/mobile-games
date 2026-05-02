@@ -12,11 +12,24 @@ dependencies:
   flutter_riverpod: ^2.6.1
   cupertino_icons: ^1.0.8
   just_audio: ^0.9.42
+  wakelock_plus: ^1.2.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.1
+
+# 等你 1024×1024 icon 來，跑 `dart run flutter_launcher_icons` 自動生成全平台尺寸
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  background_color_ios: "#000000"
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/icons/app_icon.png"
 
 flutter:
   uses-material-design: true
