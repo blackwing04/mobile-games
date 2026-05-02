@@ -5,6 +5,7 @@
   "subtitle": "卷一 · 23:47",
   "author": "Joe & Gemini",
   "estimated_minutes": 10,
+  "cover_image": "assets/images/scenarios/demo_office/cover.jpg",
   "resources": [
     { "id": "san", "name": "神智", "max": 100, "initial": 70, "icon": "🧠" },
     { "id": "clue", "name": "線索", "initial": 0, "icon": "🔍" }

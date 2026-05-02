@@ -24,7 +24,7 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  static const _splashBgPath = 'assets/images/splash/splash_bg.png';
+  static const _splashBgPath = 'assets/images/loading.jpg';
   static const _scene1ImgPath =
       'assets/images/scenarios/demo_office/scene_start.png';
   static const _minSplashDuration = Duration(milliseconds: 2200);

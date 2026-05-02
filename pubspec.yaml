@@ -23,11 +23,9 @@ dev_dependencies:
 # 等你 1024×1024 icon 來，跑 `dart run flutter_launcher_icons` 自動生成全平台尺寸
 flutter_launcher_icons:
   android: "ic_launcher"
-  ios: true
+  ios: false  # 等 iOS 平台資料夾建好後 (Mac 上 flutter create --platforms=ios) 再開 true
   image_path: "assets/icons/app_icon.png"
   min_sdk_android: 21
-  remove_alpha_ios: true
-  background_color_ios: "#000000"
   adaptive_icon_background: "#000000"
   adaptive_icon_foreground: "assets/icons/app_icon.png"
 
@@ -35,7 +33,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/scenarios/
+    - assets/images/
     - assets/images/scenarios/demo_office/
-    - assets/images/splash/
+    - assets/icons/
     - assets/audio/bgm/
     - assets/audio/sfx/
