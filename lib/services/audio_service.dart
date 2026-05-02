@@ -50,9 +50,14 @@ class AudioService {
   /// 主選單 BGM。刻意選用與 scene_start 同一首，從首頁進劇本時零切歌、無縫銜接。
   static const String homeBgmPath = 'assets/audio/bgm/the_mountain-lonely.mp3';
 
-  final AudioPlayer _bgmPlayer = AudioPlayer();
-  final AudioPlayer _sfxPlayer = AudioPlayer();
-  final AudioPlayer _ambientPlayer = AudioPlayer();
+  // Lazy 初始化避免 test 環境 platform channel 不存在時直接爆掉
+  AudioPlayer? _bgmPlayerInternal;
+  AudioPlayer? _sfxPlayerInternal;
+  AudioPlayer? _ambientPlayerInternal;
+
+  AudioPlayer get _bgmPlayer => _bgmPlayerInternal ??= AudioPlayer();
+  AudioPlayer get _sfxPlayer => _sfxPlayerInternal ??= AudioPlayer();
+  AudioPlayer get _ambientPlayer => _ambientPlayerInternal ??= AudioPlayer();
 
   String? _currentBgmPath;
   String? _currentAmbientPath;
@@ -166,9 +171,10 @@ class AudioService {
   void dispose() {
     _ambientTimer?.cancel();
     _ambientSub?.cancel();
-    _bgmPlayer.dispose();
-    _sfxPlayer.dispose();
-    _ambientPlayer.dispose();
+    // 各 player 包 try/catch — test 環境 platform channel 不存在時不會炸
+    try { _bgmPlayerInternal?.dispose(); } catch (_) {}
+    try { _sfxPlayerInternal?.dispose(); } catch (_) {}
+    try { _ambientPlayerInternal?.dispose(); } catch (_) {}
   }
 }
 
