@@ -8,15 +8,21 @@ import '../widgets/scene_image.dart';
 class EndingScreen extends ConsumerWidget {
   final Ending ending;
   final String? sceneImage;
-  final VoidCallback onRestart;
+
+  /// 「再玩一次」callback。null 時隱藏該按鈕 (用於 CollectionScreen 回顧模式)
+  final VoidCallback? onRestart;
   final VoidCallback onHome;
+
+  /// 回顧模式 — 「回主選單」按鈕 label 改為「返回」
+  final bool viewOnly;
 
   const EndingScreen({
     super.key,
     required this.ending,
     this.sceneImage,
-    required this.onRestart,
+    this.onRestart,
     required this.onHome,
+    this.viewOnly = false,
   });
 
   /// 結局插圖：優先使用 ending.image，沒有就 fallback 到 scene.image
@@ -80,26 +86,28 @@ class EndingScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 48),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ElevatedButton(
-                  onPressed: () {
-                    ref.read(audioServiceProvider).playSfx(SfxKey.uiClick);
-                    onRestart();
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 4),
-                    child: Text('再玩一次'),
+              if (onRestart != null) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ref.read(audioServiceProvider).playSfx(SfxKey.uiClick);
+                      onRestart!();
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 4),
+                      child: Text('再玩一次'),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 12),
+                const SizedBox(height: 12),
+              ],
               TextButton(
                 onPressed: () {
                   ref.read(audioServiceProvider).playSfx(SfxKey.uiClick);
                   onHome();
                 },
-                child: const Text('回主選單'),
+                child: Text(viewOnly ? '返回' : '回主選單'),
               ),
             ],
           ),

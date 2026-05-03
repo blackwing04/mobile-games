@@ -5,6 +5,7 @@ import '../../engine/models/scenario.dart';
 import '../../engine/models/scene.dart';
 import '../../providers/game_provider.dart';
 import '../../services/unlock_service.dart';
+import 'ending_screen.dart';
 
 /// 結局蒐集畫面 — 顯示所有章節 × 所有結局的解鎖狀態。
 /// 全解鎖時顯示「23:47 · 起源」super ending 入口。
@@ -224,7 +225,7 @@ class _ScenarioSection extends StatelessWidget {
           // Endings list
           for (final e in endings)
             _EndingTile(
-              ending: e.value.ending!,
+              scene: e.value,
               isUnlocked: unlocked.contains('${scenario.id}:${e.key}'),
               isTruth: scenario.truthEndingId == e.key,
             ),
@@ -264,27 +265,42 @@ class _ScenarioSection extends StatelessWidget {
 }
 
 class _EndingTile extends StatelessWidget {
-  final Ending ending;
+  final Scene scene;
   final bool isUnlocked;
   final bool isTruth;
 
   const _EndingTile({
-    required this.ending,
+    required this.scene,
     required this.isUnlocked,
     required this.isTruth,
   });
 
-  Color get _accent => switch (ending.type) {
+  Ending get _ending => scene.ending!;
+
+  Color get _accent => switch (_ending.type) {
         'good' => const Color(0xFF81C784),
         'bad' => const Color(0xFF8B0000),
         _ => const Color(0xFFE0C770),
       };
 
-  String get _typeLabel => switch (ending.type) {
+  String get _typeLabel => switch (_ending.type) {
         'good' => '✅',
         'bad' => '❌',
         _ => '⚪',
       };
+
+  void _openPreview(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => EndingScreen(
+          ending: _ending,
+          sceneImage: scene.image,
+          viewOnly: true,
+          onHome: () => Navigator.of(context).pop(),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -313,47 +329,56 @@ class _EndingTile extends StatelessWidget {
         ),
       );
     }
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => _openPreview(context),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(_typeLabel, style: const TextStyle(fontSize: 14)),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  ending.title,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: _accent,
+              Row(
+                children: [
+                  Text(_typeLabel, style: const TextStyle(fontSize: 14)),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _ending.title,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: _accent,
+                      ),
+                    ),
                   ),
-                ),
+                  if (isTruth)
+                    const Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: Icon(Icons.auto_awesome,
+                          size: 16, color: Color(0xFFE0C770)),
+                    ),
+                  const SizedBox(width: 6),
+                  Icon(Icons.chevron_right,
+                      size: 18, color: Colors.white.withValues(alpha: 0.3)),
+                ],
               ),
-              if (isTruth)
-                const Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Icon(Icons.auto_awesome,
-                      size: 16, color: Color(0xFFE0C770)),
+              if (_ending.description.isNotEmpty) ...[
+                const SizedBox(height: 6),
+                Text(
+                  _ending.description,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF888888),
+                    height: 1.6,
+                  ),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
+              ],
             ],
           ),
-          if (ending.description.isNotEmpty) ...[
-            const SizedBox(height: 6),
-            Text(
-              ending.description,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color(0xFF888888),
-                height: 1.6,
-              ),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ],
+        ),
       ),
     );
   }
