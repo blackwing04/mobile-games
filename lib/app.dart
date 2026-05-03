@@ -48,7 +48,7 @@ class _MobileGamesAppState extends ConsumerState<MobileGamesApp>
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '異聞錄',
+      title: '異聞錄：2347',
       theme: AppTheme.dark,
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
