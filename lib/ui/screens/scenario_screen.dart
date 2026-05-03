@@ -5,6 +5,7 @@ import '../../engine/models/scenario.dart';
 import '../../engine/models/scene.dart';
 import '../../providers/game_provider.dart';
 import '../../services/audio_service.dart';
+import '../../services/unlock_service.dart';
 import '../widgets/choice_button.dart';
 import '../widgets/dice_overlay.dart';
 import '../widgets/narrative_text.dart';
@@ -69,8 +70,13 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
     ref.listen<String>(
       gameSessionProvider(scenario).select((s) => s.currentSceneId),
       (prev, next) {
-        _syncSceneAudio(scenario.sceneById(next)!);
+        final nextScene = scenario.sceneById(next)!;
+        _syncSceneAudio(nextScene);
         _scrollToTop();
+        // 玩家走到 ending → 標記為已解鎖 (CollectionScreen 顯示)
+        if (nextScene.isEnding) {
+          ref.read(unlockServiceProvider).markUnlocked(scenario.id, next);
+        }
       },
     );
 

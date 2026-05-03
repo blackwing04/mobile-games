@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../engine/models/scenario.dart';
 import '../../providers/game_provider.dart';
 import '../../services/audio_service.dart';
+import 'collection_screen.dart';
 import 'credits_screen.dart';
 import 'scenario_screen.dart';
 
@@ -59,6 +60,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: const Text('異聞錄'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.menu_book_outlined),
+            tooltip: '結局蒐集',
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const CollectionScreen()),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.info_outline),
             tooltip: '授權與致謝',

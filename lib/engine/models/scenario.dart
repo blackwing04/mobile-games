@@ -27,6 +27,14 @@ class Scenario {
   final String? author;
   final int? estimatedMinutes;
   final String? coverImage;
+
+  /// 真結局/隱藏結局的解法提示 — CollectionScreen 玩家點開才顯示
+  /// 因為真結局機率低 (~1-2%)，給 hint 是「告訴玩家目標」但仍需執行運氣
+  final String? truthEndingHint;
+
+  /// 該 scenario 的真結局 / 隱藏結局 scene id (CollectionScreen 高亮顯示)
+  final String? truthEndingId;
+
   final List<ResourceDef> resources;
   final List<SkillDef> skills;
   final String startScene;
@@ -40,6 +48,8 @@ class Scenario {
     this.author,
     this.estimatedMinutes,
     this.coverImage,
+    this.truthEndingHint,
+    this.truthEndingId,
     required this.resources,
     required this.skills,
     required this.startScene,
@@ -56,6 +66,8 @@ class Scenario {
       author: json['author'] as String?,
       estimatedMinutes: json['estimated_minutes'] as int?,
       coverImage: json['cover_image'] as String?,
+      truthEndingHint: json['truth_ending_hint'] as String?,
+      truthEndingId: json['truth_ending_id'] as String?,
       resources: ((json['resources'] as List<dynamic>?) ?? const [])
           .map((e) => ResourceDef.fromJson(e as Map<String, dynamic>))
           .toList(growable: false),
