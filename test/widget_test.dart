@@ -18,7 +18,7 @@ class _FakeAudioService extends AudioService {
   @override
   Future<void> resumeBgm() async {}
   @override
-  Future<void> playSfx(SfxKey key) async {}
+  void playSfx(SfxKey key) {}
   @override
   Future<void> playAmbient(String? assetPath,
       {Duration interval = const Duration(seconds: 3)}) async {}

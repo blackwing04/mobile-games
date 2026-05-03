@@ -60,11 +60,16 @@ class AudioService {
   static const String homeBgmPath = 'assets/audio/bgm/horror-dark.mp3';
 
   AudioPlayer? _bgmPlayerInternal;
-  AudioPlayer? _sfxPlayerInternal;
   AudioPlayer? _ambientPlayerInternal;
 
+  /// SFX Pool — 4 個 player round-robin 輪流播放
+  /// 解決「連點 SFX 互相 race / 阻塞 / truncate」的核心問題
+  /// 每個 player 各自處理自己的 play 命令，多軌真並行
+  static const int _sfxPoolSize = 4;
+  final List<AudioPlayer> _sfxPool = [];
+  int _sfxRoundRobinIdx = 0;
+
   AudioPlayer get _bgmPlayer => _bgmPlayerInternal ??= _createBgmPlayer();
-  AudioPlayer get _sfxPlayer => _sfxPlayerInternal ??= _createSfxPlayer();
   AudioPlayer get _ambientPlayer =>
       _ambientPlayerInternal ??= _createAmbientPlayer();
 
@@ -90,12 +95,18 @@ class AudioService {
     return p;
   }
 
-  AudioPlayer _createSfxPlayer() {
-    final p = AudioPlayer(playerId: 'sfx');
+  AudioPlayer _createSfxPlayer(int index) {
+    final p = AudioPlayer(playerId: 'sfx_$index');
     p.setAudioContext(_sfxContext);
     p.setReleaseMode(ReleaseMode.release);
     p.setPlayerMode(PlayerMode.lowLatency);
     return p;
+  }
+
+  void _ensureSfxPool() {
+    while (_sfxPool.length < _sfxPoolSize) {
+      _sfxPool.add(_createSfxPlayer(_sfxPool.length));
+    }
   }
 
   AudioPlayer _createAmbientPlayer() {
@@ -168,10 +179,17 @@ class AudioService {
 
   // ── SFX ──────────────────────────────────────────────────────────
 
-  /// 一次性 SFX。audioplayers low-latency 模式立刻發聲、跟 BGM 並行不打架。
-  Future<void> playSfx(SfxKey key) async {
+  /// 一次性 SFX。從 pool 拿下一個 player 播放，連點不阻塞、不互相 truncate。
+  /// 用 fire-and-forget — 不 await，避免 caller 連續呼叫時被排隊等待。
+  void playSfx(SfxKey key) {
     try {
-      await _sfxPlayer.play(AssetSource(key.assetSourcePath));
+      _ensureSfxPool();
+      final player = _sfxPool[_sfxRoundRobinIdx];
+      _sfxRoundRobinIdx = (_sfxRoundRobinIdx + 1) % _sfxPoolSize;
+      // 不 await — 多 player 各自處理 play 命令，並行
+      player.play(AssetSource(key.assetSourcePath)).catchError((Object e) {
+        if (kDebugMode) debugPrint('AudioService.playSfx(${key.name}) failed: $e');
+      });
     } catch (e) {
       if (kDebugMode) debugPrint('AudioService.playSfx(${key.name}) failed: $e');
     }
@@ -236,8 +254,11 @@ class AudioService {
     _ambientTimer?.cancel();
     _ambientCompleteSub?.cancel();
     try { _bgmPlayerInternal?.dispose(); } catch (_) {}
-    try { _sfxPlayerInternal?.dispose(); } catch (_) {}
     try { _ambientPlayerInternal?.dispose(); } catch (_) {}
+    for (final p in _sfxPool) {
+      try { p.dispose(); } catch (_) {}
+    }
+    _sfxPool.clear();
   }
 }
 
