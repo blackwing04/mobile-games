@@ -297,6 +297,7 @@ class _EndingTile extends StatelessWidget {
           sceneImage: scene.image,
           viewOnly: true,
           onHome: () => Navigator.of(context).pop(),
+          isTruth: isTruth,
         ),
       ),
     );

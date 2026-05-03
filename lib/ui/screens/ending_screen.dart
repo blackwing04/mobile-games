@@ -16,6 +16,10 @@ class EndingScreen extends ConsumerWidget {
   /// 回顧模式 — 「回主選單」按鈕 label 改為「返回」
   final bool viewOnly;
 
+  /// 是否為該章節的真結局 (scenario.truthEndingId == 當前 sceneId)
+  /// true 時上方 label 顯示「— 真結局 —」取代「— 好結局 —」之類
+  final bool isTruth;
+
   const EndingScreen({
     super.key,
     required this.ending,
@@ -23,6 +27,7 @@ class EndingScreen extends ConsumerWidget {
     this.onRestart,
     required this.onHome,
     this.viewOnly = false,
+    this.isTruth = false,
   });
 
   /// 結局插圖：優先使用 ending.image，沒有就 fallback 到 scene.image
@@ -34,11 +39,14 @@ class EndingScreen extends ConsumerWidget {
         _ => const Color(0xFFE0C770),
       };
 
-  String get _label => switch (ending.type) {
-        'good' => '— 好結局 —',
-        'bad' => '— 壞結局 —',
-        _ => '— 結局 —',
-      };
+  String get _label {
+    if (isTruth) return '— 真結局 —';
+    return switch (ending.type) {
+      'good' => '— 好結局 —',
+      'bad' => '— 壞結局 —',
+      _ => '— 結局 —',
+    };
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

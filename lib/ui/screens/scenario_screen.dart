@@ -86,6 +86,7 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
         sceneImage: scene.image,
         onRestart: notifier.restart,
         onHome: () => Navigator.of(context).pop(),
+        isTruth: scenario.truthEndingId == state.currentSceneId,
       );
     }
 
