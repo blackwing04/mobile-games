@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_soloud/flutter_soloud.dart';
 
 import '../engine/dice/dice_roller.dart';
 
@@ -21,8 +21,7 @@ enum SfxKey {
   final String filename;
   const SfxKey(this.jsonKey, this.filename);
 
-  /// audioplayers 的 AssetSource 路徑 (不含 'assets/' prefix)
-  String get assetSourcePath => 'audio/sfx/$filename';
+  String get assetPath => 'assets/audio/sfx/$filename';
 
   static SfxKey fromOutcome(DiceOutcome outcome) => switch (outcome) {
         DiceOutcome.criticalSuccess => SfxKey.outcomeCritical,
@@ -40,138 +39,105 @@ enum SfxKey {
   }
 }
 
-/// 把 scenario JSON 內常用的「assets/audio/...」路徑轉成 audioplayers 需要的
-/// 「audio/...」格式 (audioplayers 不要 assets/ prefix)
-String _normalizeAssetPath(String fullPath) {
-  if (fullPath.startsWith('assets/')) {
-    return fullPath.substring('assets/'.length);
-  }
-  return fullPath;
-}
-
-/// 音訊服務 — 用 audioplayers (遊戲音訊業界標準) 取代 just_audio
+/// 音訊服務 — 用 flutter_soloud (Flutter 官方推薦遊戲音訊套件)
 ///
-/// 三個獨立 player，BGM/SFX/Ambient 並行不打架:
-/// - BGM: ReleaseMode.loop 連續循環
-/// - SFX: 一次性，PlayerMode.lowLatency (Android 用 SoundPool)
-/// - Ambient: 帶間隔的循環 (用 onPlayerComplete 觸發 timer)
+/// 架構優勢 (相對 audioplayers):
+/// - **載一次、play 多 voice**: source 預載到記憶體後，每次 play 是觸發新 voice，
+///   多 voice 並行根本沒 race condition (不像 audioplayers 是 per-player 排程)
+/// - **Gapless looping**: BGM 循環無 gap
+/// - **Atomic 切歌**: stop(oldHandle) + play(newSource) 原子操作，不會卡舊 BGM
+/// - **Low latency**: 對連點 SFX 完全勝任
 class AudioService {
   /// 主選單 BGM — 異聞錄系列共用，跨章節跨劇本維持品牌識別
   static const String homeBgmPath = 'assets/audio/bgm/horror-dark.mp3';
 
-  AudioPlayer? _bgmPlayerInternal;
-  AudioPlayer? _ambientPlayerInternal;
+  final SoLoud _soloud = SoLoud.instance;
+  bool _initialized = false;
+  bool _initFailed = false;
 
-  /// SFX Pool — 4 個 player round-robin 輪流播放
-  /// 解決「連點 SFX 互相 race / 阻塞 / truncate」的核心問題
-  /// 每個 player 各自處理自己的 play 命令，多軌真並行
-  static const int _sfxPoolSize = 4;
-  final List<AudioPlayer> _sfxPool = [];
-  int _sfxRoundRobinIdx = 0;
+  /// asset path → loaded AudioSource cache (避免重複 load 同檔)
+  final Map<String, AudioSource> _sourceCache = {};
 
-  AudioPlayer get _bgmPlayer => _bgmPlayerInternal ??= _createBgmPlayer();
-  AudioPlayer get _ambientPlayer =>
-      _ambientPlayerInternal ??= _createAmbientPlayer();
-
-  /// BGM 用的 audio context — gain focus 獨佔，因為 BGM 是長音流
-  /// audioplayers 高階 API，內部自動 map 到對的 Android/iOS 設定
-  static final AudioContext _bgmContext = AudioContextConfig(
-    focus: AudioContextConfigFocus.gain,
-    route: AudioContextConfigRoute.system,
-  ).build();
-
-  /// SFX 用的 audio context — mixWithOthers，跟 BGM 真並行混音不打架
-  /// 這是 audioplayers 官方推薦給「遊戲音效」場景的設定
-  static final AudioContext _sfxContext = AudioContextConfig(
-    focus: AudioContextConfigFocus.mixWithOthers,
-    route: AudioContextConfigRoute.system,
-  ).build();
-
-  AudioPlayer _createBgmPlayer() {
-    final p = AudioPlayer(playerId: 'bgm');
-    p.setAudioContext(_bgmContext);
-    p.setReleaseMode(ReleaseMode.loop);
-    p.setPlayerMode(PlayerMode.mediaPlayer);
-    return p;
-  }
-
-  AudioPlayer _createSfxPlayer(int index) {
-    final p = AudioPlayer(playerId: 'sfx_$index');
-    p.setAudioContext(_sfxContext);
-    p.setReleaseMode(ReleaseMode.release);
-    p.setPlayerMode(PlayerMode.lowLatency);
-    return p;
-  }
-
-  void _ensureSfxPool() {
-    while (_sfxPool.length < _sfxPoolSize) {
-      _sfxPool.add(_createSfxPlayer(_sfxPool.length));
-    }
-  }
-
-  AudioPlayer _createAmbientPlayer() {
-    final p = AudioPlayer(playerId: 'ambient');
-    p.setAudioContext(_sfxContext); // ambient 也用 sfx context 不搶 focus
-    p.setReleaseMode(ReleaseMode.release);
-    p.setPlayerMode(PlayerMode.mediaPlayer);
-    return p;
-  }
-
+  SoundHandle? _bgmHandle;
+  SoundHandle? _ambientHandle;
   String? _currentBgmPath;
   String? _currentAmbientPath;
-  StreamSubscription<void>? _ambientCompleteSub;
   Timer? _ambientTimer;
   Duration _ambientInterval = const Duration(seconds: 3);
 
   AudioService();
 
+  Future<void> _ensureInit() async {
+    if (_initialized || _initFailed) return;
+    try {
+      await _soloud.init();
+      _initialized = true;
+    } catch (e) {
+      _initFailed = true;
+      if (kDebugMode) debugPrint('SoLoud init failed: $e');
+    }
+  }
+
+  Future<AudioSource?> _getSource(String assetPath) async {
+    final cached = _sourceCache[assetPath];
+    if (cached != null) return cached;
+    try {
+      final source = await _soloud.loadAsset(assetPath);
+      _sourceCache[assetPath] = source;
+      return source;
+    } catch (e) {
+      if (kDebugMode) debugPrint('SoLoud loadAsset $assetPath failed: $e');
+      return null;
+    }
+  }
+
   // ── BGM ──────────────────────────────────────────────────────────
 
   Future<void> playBgm(String? assetPath) async {
-    if (assetPath == _currentBgmPath) return;
+    if (assetPath == _currentBgmPath && _bgmHandle != null) return;
+
+    await _ensureInit();
+    if (!_initialized) return;
+
+    // 先 stop 舊 BGM (atomic 切歌)
+    final old = _bgmHandle;
+    _bgmHandle = null;
     _currentBgmPath = assetPath;
+    if (old != null) {
+      try { await _soloud.stop(old); } catch (_) {}
+    }
+
+    if (assetPath == null) return;
 
     try {
-      if (assetPath == null) {
-        await _bgmPlayer.stop();
-        return;
-      }
-      await _bgmPlayer.play(AssetSource(_normalizeAssetPath(assetPath)));
+      final source = await _getSource(assetPath);
+      if (source == null) return;
+      _bgmHandle = await _soloud.play(source, looping: true);
     } catch (e) {
       if (kDebugMode) debugPrint('AudioService.playBgm failed: $e');
     }
   }
 
-  /// Splash 用 — 預載 source (asset 已 load 到 memory) 後立刻 play。
-  /// 不等「真發聲」(那個會被 audio engine 排程，等不到也沒意義)，
-  /// source ready 就跳 home，audio 接續播放零延遲。
-  Future<void> preloadBgm(String assetPath) async {
-    if (assetPath == _currentBgmPath) return;
-    _currentBgmPath = assetPath;
-
-    try {
-      await _bgmPlayer.setSource(AssetSource(_normalizeAssetPath(assetPath)));
-      await _bgmPlayer.resume();
-    } catch (e) {
-      if (kDebugMode) debugPrint('AudioService.preloadBgm failed: $e');
-    }
-  }
+  /// Splash 用 — SoLoud loadAsset 已是「預載到 memory」、play 立刻發聲
+  Future<void> preloadBgm(String assetPath) => playBgm(assetPath);
 
   Future<void> stopBgm() => playBgm(null);
 
   Future<void> pauseBgm() async {
+    if (!_initialized) return;
     try {
-      await _bgmPlayerInternal?.pause();
-      await _ambientPlayerInternal?.pause();
+      if (_bgmHandle != null) _soloud.setPause(_bgmHandle!, true);
+      if (_ambientHandle != null) _soloud.setPause(_ambientHandle!, true);
     } catch (e) {
       if (kDebugMode) debugPrint('AudioService.pauseBgm failed: $e');
     }
   }
 
   Future<void> resumeBgm() async {
+    if (!_initialized) return;
     try {
-      if (_currentBgmPath != null) await _bgmPlayerInternal?.resume();
-      if (_currentAmbientPath != null) await _ambientPlayerInternal?.resume();
+      if (_bgmHandle != null) _soloud.setPause(_bgmHandle!, false);
+      if (_ambientHandle != null) _soloud.setPause(_ambientHandle!, false);
     } catch (e) {
       if (kDebugMode) debugPrint('AudioService.resumeBgm failed: $e');
     }
@@ -179,30 +145,35 @@ class AudioService {
 
   // ── SFX ──────────────────────────────────────────────────────────
 
-  /// 一次性 SFX。從 pool 拿下一個 player 播放，連點不阻塞、不互相 truncate。
-  /// 用 fire-and-forget — 不 await，避免 caller 連續呼叫時被排隊等待。
+  /// 一次性 SFX — SoLoud 每次 play 創新 voice，連點完全並行不阻塞
   void playSfx(SfxKey key) {
+    _playSfxAsync(key);
+  }
+
+  Future<void> _playSfxAsync(SfxKey key) async {
+    await _ensureInit();
+    if (!_initialized) return;
     try {
-      _ensureSfxPool();
-      final player = _sfxPool[_sfxRoundRobinIdx];
-      _sfxRoundRobinIdx = (_sfxRoundRobinIdx + 1) % _sfxPoolSize;
-      // 不 await — 多 player 各自處理 play 命令，並行
-      player.play(AssetSource(key.assetSourcePath)).catchError((Object e) {
-        if (kDebugMode) debugPrint('AudioService.playSfx(${key.name}) failed: $e');
-      });
+      final source = await _getSource(key.assetPath);
+      if (source == null) return;
+      await _soloud.play(source);
     } catch (e) {
-      if (kDebugMode) debugPrint('AudioService.playSfx(${key.name}) failed: $e');
+      if (kDebugMode) {
+        debugPrint('AudioService.playSfx(${key.name}) failed: $e');
+      }
     }
   }
 
   // ── Ambient (帶間隔循環) ─────────────────────────────────────────
 
-  /// 帶間隔的循環環境音。null = 停止。同 path 不重啟。
   Future<void> playAmbient(
     String? assetPath, {
     Duration interval = const Duration(seconds: 3),
   }) async {
     if (assetPath == _currentAmbientPath) return;
+
+    await _ensureInit();
+    if (!_initialized) return;
 
     await _stopAmbientInternal();
     _currentAmbientPath = assetPath;
@@ -210,25 +181,25 @@ class AudioService {
 
     if (assetPath == null) return;
 
+    await _playAmbientOnce();
+  }
+
+  Future<void> _playAmbientOnce() async {
+    final path = _currentAmbientPath;
+    if (path == null) return;
     try {
-      // 監聽播放完成 → 設 timer 等 interval → 重播
-      _ambientCompleteSub = _ambientPlayer.onPlayerComplete.listen((_) {
-        _ambientTimer?.cancel();
-        _ambientTimer = Timer(_ambientInterval, () async {
-          if (_currentAmbientPath != assetPath) return; // 已被切換
-          try {
-            await _ambientPlayer
-                .play(AssetSource(_normalizeAssetPath(assetPath)));
-          } catch (e) {
-            if (kDebugMode) {
-              debugPrint('AudioService ambient replay failed: $e');
-            }
-          }
-        });
+      final source = await _getSource(path);
+      if (source == null) return;
+      _ambientHandle = await _soloud.play(source);
+      // 用音長 + interval 排程下一次播 (SoLoud 沒原生 onComplete callback)
+      final length = _soloud.getLength(source);
+      _ambientTimer?.cancel();
+      _ambientTimer = Timer(length + _ambientInterval, () {
+        if (_currentAmbientPath != path) return; // 已被切換
+        _playAmbientOnce();
       });
-      await _ambientPlayer.play(AssetSource(_normalizeAssetPath(assetPath)));
     } catch (e) {
-      if (kDebugMode) debugPrint('AudioService.playAmbient failed: $e');
+      if (kDebugMode) debugPrint('AudioService ambient play failed: $e');
     }
   }
 
@@ -237,11 +208,11 @@ class AudioService {
   Future<void> _stopAmbientInternal() async {
     _ambientTimer?.cancel();
     _ambientTimer = null;
-    await _ambientCompleteSub?.cancel();
-    _ambientCompleteSub = null;
-    try {
-      await _ambientPlayerInternal?.stop();
-    } catch (_) {}
+    final old = _ambientHandle;
+    _ambientHandle = null;
+    if (old != null) {
+      try { await _soloud.stop(old); } catch (_) {}
+    }
   }
 
   // ── 全停 ────────────────────────────────────────────────────────
@@ -252,13 +223,8 @@ class AudioService {
 
   void dispose() {
     _ambientTimer?.cancel();
-    _ambientCompleteSub?.cancel();
-    try { _bgmPlayerInternal?.dispose(); } catch (_) {}
-    try { _ambientPlayerInternal?.dispose(); } catch (_) {}
-    for (final p in _sfxPool) {
-      try { p.dispose(); } catch (_) {}
-    }
-    _sfxPool.clear();
+    try { _soloud.deinit(); } catch (_) {}
+    _sourceCache.clear();
   }
 }
 
