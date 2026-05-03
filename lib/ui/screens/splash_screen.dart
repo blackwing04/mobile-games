@@ -35,8 +35,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // _buildTasks 只 build callback list，不真執行 (callback 內才用 context)
+    // 所以 initState 階段就能 init，不用等 PostFrameCallback
+    _tasks = _buildTasks();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _tasks = _buildTasks();
       _bootstrap();
     });
   }
