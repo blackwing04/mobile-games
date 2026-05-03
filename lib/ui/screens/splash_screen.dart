@@ -7,15 +7,6 @@ import '../../services/audio_service.dart';
 import 'home_screen.dart';
 
 /// App 啟動 splash 畫面 — 載入 BGM + scene_start 圖，避免進場後才開始 stream 造成卡頓 / 無聲。
-///
-/// 階段:
-///   1. 立即播 home BGM (music engine 開始 buffer)
-///   2. precache scene_start 圖 (玩家點劇本第一秒就有圖)
-///   3. 至少停留 2 秒給品牌呈現
-///   4. 跳 HomeScreen
-///
-/// 待 user 補 splash 底圖到 assets/images/splash/splash_bg.png 後，
-/// 自動取代純文字 placeholder。
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
@@ -23,31 +14,50 @@ class SplashScreen extends ConsumerStatefulWidget {
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends ConsumerState<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen>
+    with SingleTickerProviderStateMixin {
   static const _splashBgPath = 'assets/images/loading.jpg';
   static const _scene1ImgPath =
       'assets/images/scenarios/demo_office/scene_start.png';
-  static const _minSplashDuration = Duration(milliseconds: 2200);
+  static const _minSplashDuration = Duration(milliseconds: 2500);
+
+  late final AnimationController _progressController;
 
   @override
   void initState() {
     super.initState();
-    // 立刻啟動 BGM — audio engine 開始 buffer
-    ref.read(audioServiceProvider).playBgm(AudioService.homeBgmPath);
-
+    _progressController = AnimationController(
+      vsync: this,
+      duration: _minSplashDuration,
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _bootstrap();
     });
   }
 
+  @override
+  void dispose() {
+    _progressController.dispose();
+    super.dispose();
+  }
+
   Future<void> _bootstrap() async {
-    // 並行: precache 第一場景圖 + 至少 2.2 秒 splash
+    _progressController.forward();
+    final audio = ref.read(audioServiceProvider);
+
+    // 並行三條 — 全部完成才 navigate:
+    //   1. precache 第一場景圖
+    //   2. 真 await playBgm — 等 setAsset/play 完成才繼續 (不再 fire-and-forget)
+    //      加 5 秒 timeout 防 audio engine 卡死整個 splash
+    //   3. 進度條動畫至少跑完 (=_minSplashDuration)
     await Future.wait([
-      precacheImage(const AssetImage(_scene1ImgPath), context).catchError((e) {
-        // 圖載入失敗也不卡住啟動
-        return;
-      }),
-      Future.delayed(_minSplashDuration),
+      precacheImage(const AssetImage(_scene1ImgPath), context)
+          .catchError((Object _) {}),
+      audio
+          .playBgm(AudioService.homeBgmPath)
+          .timeout(const Duration(seconds: 5), onTimeout: () {})
+          .catchError((Object _) {}),
+      _progressController.forward().orCancel.catchError((Object _) {}),
     ]);
 
     if (!mounted) return;
@@ -63,7 +73,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // 預留底圖位 — 檔案不存在時 fallback 純黑
+          // 底圖 — 檔案不存在時 fallback 純黑
           Image.asset(
             _splashBgPath,
             fit: BoxFit.cover,
@@ -71,7 +81,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           ),
           // 暗化遮罩，讓文字可讀
           Container(color: Colors.black.withValues(alpha: 0.55)),
-          // 標題 + loading
           SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -96,21 +105,37 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                   ),
                 ),
                 const Spacer(),
-                const SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Color(0xFF6B7178),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  '載入中⋯⋯',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF888888),
-                    letterSpacing: 4,
+                // 進度條
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 48),
+                  child: AnimatedBuilder(
+                    animation: _progressController,
+                    builder: (context, _) {
+                      return Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(2),
+                            child: LinearProgressIndicator(
+                              value: _progressController.value,
+                              minHeight: 4,
+                              backgroundColor: const Color(0xFF1C1C1C),
+                              valueColor: const AlwaysStoppedAnimation(
+                                Color(0xFFE0C770),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            '${(_progressController.value * 100).toInt()}%',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF888888),
+                              letterSpacing: 2,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: 64),

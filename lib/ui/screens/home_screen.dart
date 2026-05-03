@@ -32,6 +32,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Future<void> _openScenario(Scenario scenario) async {
+    // 強制 invalidate 確保進入劇本時 state 是 fresh GameState.initial
+    // (autoDispose family 在某些 timing 下會 race condition 沒釋放)
+    ref.invalidate(gameSessionProvider(scenario));
     await Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => ScenarioScreen(scenario: scenario)),
     );
