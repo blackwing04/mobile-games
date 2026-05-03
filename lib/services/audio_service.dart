@@ -68,36 +68,19 @@ class AudioService {
   AudioPlayer get _ambientPlayer =>
       _ambientPlayerInternal ??= _createAmbientPlayer();
 
-  /// BGM 用的 audio context — 持續持有 audio focus、跟系統其他 audio 混音
-  static final AudioContext _bgmContext = AudioContext(
-    android: AudioContextAndroid(
-      isSpeakerphoneOn: false,
-      stayAwake: false,
-      contentType: AndroidContentType.music,
-      usageType: AndroidUsageType.media,
-      audioFocus: AndroidAudioFocus.gain,
-    ),
-    iOS: AudioContextIOS(
-      category: AVAudioSessionCategory.playback,
-      options: const {AVAudioSessionOptions.mixWithOthers},
-    ),
-  );
+  /// BGM 用的 audio context — gain focus 獨佔，因為 BGM 是長音流
+  /// audioplayers 高階 API，內部自動 map 到對的 Android/iOS 設定
+  static final AudioContext _bgmContext = AudioContextConfig(
+    focus: AudioContextConfigFocus.gain,
+    route: AudioContextConfigRoute.system,
+  ).build();
 
-  /// SFX 用的 audio context — 完全不 request audio focus，
-  /// 確保 SFX 播放時 BGM 不被中斷 (核心修法)
-  static final AudioContext _sfxContext = AudioContext(
-    android: AudioContextAndroid(
-      isSpeakerphoneOn: false,
-      stayAwake: false,
-      contentType: AndroidContentType.sonification,
-      usageType: AndroidUsageType.assistanceSonification,
-      audioFocus: AndroidAudioFocus.none,
-    ),
-    iOS: AudioContextIOS(
-      category: AVAudioSessionCategory.ambient,
-      options: const {AVAudioSessionOptions.mixWithOthers},
-    ),
-  );
+  /// SFX 用的 audio context — mixWithOthers，跟 BGM 真並行混音不打架
+  /// 這是 audioplayers 官方推薦給「遊戲音效」場景的設定
+  static final AudioContext _sfxContext = AudioContextConfig(
+    focus: AudioContextConfigFocus.mixWithOthers,
+    route: AudioContextConfigRoute.system,
+  ).build();
 
   AudioPlayer _createBgmPlayer() {
     final p = AudioPlayer(playerId: 'bgm');
