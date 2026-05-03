@@ -51,7 +51,8 @@ class AudioService {
   /// 主選單 BGM — 異聞錄系列共用，跨章節跨劇本維持品牌識別
   static const String homeBgmPath = 'assets/audio/bgm/horror-dark.mp3';
 
-  final SoLoud _soloud = SoLoud.instance;
+  // late final 避免 fake AudioService (test 環境) 觸發 SoLoud FFI library load
+  late final SoLoud _soloud = SoLoud.instance;
   bool _initialized = false;
   bool _initFailed = false;
 
