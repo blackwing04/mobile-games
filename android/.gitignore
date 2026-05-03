@@ -12,3 +12,8 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+
+# 例外: 固定 debug keystore (commit 進 repo 確保所有 build 同簽章，
+# user 安裝新 APK 不會撞「簽章衝突」。debug keystore password 是
+# 業界標準 'android'，公開無風險，僅開發測試用)
+!app/debug.keystore
