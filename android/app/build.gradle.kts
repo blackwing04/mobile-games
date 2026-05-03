@@ -20,20 +20,28 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.blackwing.yiwenlu_2347"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
+    // 固定 debug keystore (commit 進 repo) — 確保所有 CI build / 本地 build
+    // 都用同一把 key 簽，user 安裝新 APK 時 Android 不會說「簽章衝突要先解除安裝」
+    // debug keystore 公開無風險 (password 都是 "android" 業界默認)，僅供開發測試。
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
+            // TODO: 真上架前換成 release keystore (user 自己保管)
             signingConfig = signingConfigs.getByName("debug")
         }
     }

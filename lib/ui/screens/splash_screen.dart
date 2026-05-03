@@ -19,7 +19,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   static const _splashBgPath = 'assets/images/loading.jpg';
   static const _scene1ImgPath =
       'assets/images/scenarios/demo_office/scene_start.png';
-  static const _minSplashDuration = Duration(milliseconds: 2500);
+  static const _minSplashDuration = Duration(milliseconds: 3000);
 
   late final AnimationController _progressController;
 
@@ -53,9 +53,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     await Future.wait([
       precacheImage(const AssetImage(_scene1ImgPath), context)
           .catchError((Object _) {}),
+      // 用 preloadBgm 等到 audio engine 真的發聲才 resolve
       audio
-          .playBgm(AudioService.homeBgmPath)
-          .timeout(const Duration(seconds: 5), onTimeout: () {})
+          .preloadBgm(AudioService.homeBgmPath)
           .catchError((Object _) {}),
       _progressController.forward().orCancel.catchError((Object _) {}),
     ]);

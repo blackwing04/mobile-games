@@ -86,6 +86,26 @@ class AudioService {
     }
   }
 
+  /// 預載並等到真正開始發聲。Splash 用，確保進 home 時音樂已經響。
+  /// playBgm 是 fire-and-forget 風格 (play() 只 schedule)，preloadBgm 會
+  /// 等 audio engine 進入 playing 狀態才 resolve，最多 4 秒 timeout。
+  Future<void> preloadBgm(String assetPath) async {
+    if (assetPath == _currentBgmPath && _bgmPlayer.playing) return;
+    _currentBgmPath = assetPath;
+
+    try {
+      await _bgmPlayer.setAsset(assetPath);
+      await _bgmPlayer.setLoopMode(LoopMode.one);
+      await _bgmPlayer.play();
+      // 等 audio engine 真的開始發聲
+      await _bgmPlayer.playerStateStream
+          .firstWhere((s) => s.playing)
+          .timeout(const Duration(seconds: 4));
+    } catch (e) {
+      if (kDebugMode) debugPrint('AudioService.preloadBgm failed: $e');
+    }
+  }
+
   Future<void> stopBgm() => playBgm(null);
 
   /// App 切到背景時暫停 BGM (不清空 _currentBgmPath，回前景能 resume)
