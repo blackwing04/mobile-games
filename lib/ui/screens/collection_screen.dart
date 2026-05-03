@@ -76,8 +76,24 @@ class _CollectionBodyState extends ConsumerState<_CollectionBody> {
     return n;
   }
 
-  bool get _allUnlocked =>
-      _totalEndings > 0 && _unlockedCount == _totalEndings;
+  /// 真結局解鎖數 = 玩家走到「該章節真結局 (truthEndingId)」的章節數
+  int get _truthEndingsUnlocked {
+    var n = 0;
+    for (final s in _publicScenarios) {
+      final truthId = s.truthEndingId;
+      if (truthId == null) continue;
+      if (_unlocked.contains('${s.id}:$truthId')) n++;
+    }
+    return n;
+  }
+
+  /// 有真結局設定的章節總數 (= 解鎖第 5 章需要的真結局數)
+  int get _totalTruthEndings =>
+      _publicScenarios.where((s) => s.truthEndingId != null).length;
+
+  /// 解鎖第 5 章 super ending = 全部章節真結局都拿到
+  bool get _superEndingUnlocked =>
+      _totalTruthEndings > 0 && _truthEndingsUnlocked == _totalTruthEndings;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +116,11 @@ class _CollectionBodyState extends ConsumerState<_CollectionBody> {
               unlocked: _unlocked,
             ),
           const SizedBox(height: 16),
-          _SuperEndingCard(unlocked: _allUnlocked),
+          _SuperEndingCard(
+            unlocked: _superEndingUnlocked,
+            truthUnlocked: _truthEndingsUnlocked,
+            truthTotal: _totalTruthEndings,
+          ),
         ],
       ),
     );
@@ -387,7 +407,14 @@ class _EndingTile extends StatelessWidget {
 
 class _SuperEndingCard extends StatelessWidget {
   final bool unlocked;
-  const _SuperEndingCard({required this.unlocked});
+  final int truthUnlocked;
+  final int truthTotal;
+
+  const _SuperEndingCard({
+    required this.unlocked,
+    required this.truthUnlocked,
+    required this.truthTotal,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -408,7 +435,7 @@ class _SuperEndingCard extends StatelessWidget {
                 children: [
                   Icon(Icons.star, size: 18, color: Color(0xFFE0C770)),
                   SizedBox(width: 8),
-                  Text('全結局蒐集完成',
+                  Text('真結局蒐集完成',
                       style: TextStyle(
                         fontSize: 13,
                         color: Color(0xFFE0C770),
@@ -431,7 +458,7 @@ class _SuperEndingCard extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               const Text(
-                '你拼出了所有故事的碎片。\n那個東西⋯⋯它最初是怎麼出現的？',
+                '四人血脈相連、殊途同歸。\n你終於要回到那個地方——詛咒最初的源頭。',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 13,
@@ -469,22 +496,32 @@ class _SuperEndingCard extends StatelessWidget {
                 size: 32, color: Colors.white.withValues(alpha: 0.2)),
             const SizedBox(height: 12),
             const Text(
-              '當你看完所有結局⋯⋯',
+              '當你拿到所有章節的真結局⋯⋯',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
                 color: Color(0xFF666666),
-                letterSpacing: 6,
+                letterSpacing: 4,
               ),
             ),
             const SizedBox(height: 6),
             const Text(
-              '會有什麼出現？',
+              '會解鎖一條真正的故事線。',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12,
                 color: Color(0xFF555555),
-                letterSpacing: 4,
+                letterSpacing: 3,
+              ),
+            ),
+            const SizedBox(height: 14),
+            Text(
+              '真結局進度  $truthUnlocked / $truthTotal',
+              style: const TextStyle(
+                fontSize: 12,
+                color: Color(0xFF8B1A1A),
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
