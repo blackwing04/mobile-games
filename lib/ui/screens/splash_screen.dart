@@ -6,7 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../services/audio_service.dart';
 import 'home_screen.dart';
 
-/// App 啟動 splash 畫面 — 載入 BGM + scene_start 圖，避免進場後才開始 stream 造成卡頓 / 無聲。
+/// App 啟動 splash — 真實 step-based 載入進度條
+///
+/// 每個 bootstrap task 完成 → progress 跳一格。
+/// 跟假的「線性 N 秒動畫」不同，進度條真實反映預載完成度。
+/// task 全完成才出現「點擊繼續」(iOS audio 解鎖 + navigate)。
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
@@ -14,53 +18,51 @@ class SplashScreen extends ConsumerStatefulWidget {
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends ConsumerState<SplashScreen>
-    with SingleTickerProviderStateMixin {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   static const _splashBgPath = 'assets/images/loading.jpg';
   static const _scene1ImgPath =
       'assets/images/scenarios/demo_office/scene_start.png';
   static const _scene1BgmPath =
       'assets/audio/bgm/the_mountain-lonely.mp3';
-  static const _minSplashDuration = Duration(milliseconds: 3000);
 
-  late final AnimationController _progressController;
-  bool _ready = false; // bootstrap 完成等 user tap 才 navigate (iOS audio policy)
+  /// 每個 task 對應一段進度
+  late final List<_BootTask> _tasks;
+  int _completedSteps = 0;
+  double get _progress =>
+      _tasks.isEmpty ? 0 : _completedSteps / _tasks.length;
+  bool _ready = false;
 
   @override
   void initState() {
     super.initState();
-    _progressController = AnimationController(
-      vsync: this,
-      duration: _minSplashDuration,
-    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _tasks = _buildTasks();
       _bootstrap();
     });
   }
 
-  @override
-  void dispose() {
-    _progressController.dispose();
-    super.dispose();
+  List<_BootTask> _buildTasks() {
+    final audio = ref.read(audioServiceProvider);
+    return [
+      _BootTask('預載開場圖',
+          () => precacheImage(const AssetImage(_scene1ImgPath), context)),
+      _BootTask('預載主選單音樂',
+          () => audio.preloadSource(AudioService.homeBgmPath)),
+      _BootTask('預載第一場景音樂',
+          () => audio.preloadSource(_scene1BgmPath)),
+    ];
   }
 
   Future<void> _bootstrap() async {
-    _progressController.forward();
-    final audio = ref.read(audioServiceProvider);
-
-    // 並行四條 — bootstrap 期間預載 BGM source 到記憶體 (不 play、避開 iOS gesture 限制)
-    // user 點繼續時 playBgm 直接觸發 cached voice，舊手機也能立刻發聲
-    await Future.wait([
-      precacheImage(const AssetImage(_scene1ImgPath), context)
-          .catchError((Object _) {}),
-      audio
-          .preloadSource(AudioService.homeBgmPath)
-          .catchError((Object _) {}),
-      audio
-          .preloadSource(_scene1BgmPath)
-          .catchError((Object _) {}),
-      _progressController.forward().orCancel.catchError((Object _) {}),
-    ]);
+    // 並行跑所有 task，每個完成 (成功 or 失敗) bump 進度
+    await Future.wait(_tasks.map((task) async {
+      try {
+        await task.run();
+      } catch (e) {
+        // 載入失敗也算「跑完了」(splash 不能因為單一資源 fail 卡死)
+      }
+      if (mounted) setState(() => _completedSteps++);
+    }));
 
     if (!mounted) return;
     setState(() => _ready = true);
@@ -69,7 +71,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   Future<void> _enterApp() async {
     if (!_ready) return;
     final audio = ref.read(audioServiceProvider);
-    // user tap 觸發了 — 此時 audio context 解鎖 (iOS 也能播)
+    // user tap 觸發 — iOS audio context 解鎖、SoLoud play 立刻發聲
     audio.playBgm(AudioService.homeBgmPath);
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
@@ -87,13 +89,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // 底圖 — 檔案不存在時 fallback 純黑
             Image.asset(
               _splashBgPath,
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => const SizedBox.shrink(),
             ),
-            // 暗化遮罩，讓文字可讀
             Container(color: Colors.black.withValues(alpha: 0.55)),
             SafeArea(
               child: Column(
@@ -119,16 +119,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     ),
                   ),
                   const Spacer(),
-                  // 進度條 / 點擊繼續 (bootstrap 完成後切換)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 48),
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 400),
                       child: _ready
                           ? const _TapToEnter(key: ValueKey('tap'))
-                          : _ProgressIndicator(
+                          : _RealProgressIndicator(
                               key: const ValueKey('progress'),
-                              controller: _progressController,
+                              progress: _progress,
                             ),
                     ),
                   ),
@@ -143,45 +142,51 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   }
 }
 
-class _ProgressIndicator extends StatelessWidget {
-  final AnimationController controller;
-  const _ProgressIndicator({super.key, required this.controller});
+class _BootTask {
+  final String label;
+  final Future<void> Function() run;
+  _BootTask(this.label, this.run);
+}
+
+class _RealProgressIndicator extends StatelessWidget {
+  final double progress;
+  const _RealProgressIndicator({super.key, required this.progress});
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, _) {
-        return Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(2),
-              child: LinearProgressIndicator(
-                value: controller.value,
+    return Column(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(2),
+          child: TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+            tween: Tween(begin: 0, end: progress),
+            builder: (context, value, _) {
+              return LinearProgressIndicator(
+                value: value,
                 minHeight: 4,
                 backgroundColor: const Color(0xFF1C1C1C),
                 valueColor:
                     const AlwaysStoppedAnimation(Color(0xFFE0C770)),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              '${(controller.value * 100).toInt()}%',
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color(0xFF888888),
-                letterSpacing: 2,
-              ),
-            ),
-          ],
-        );
-      },
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          '載入中⋯⋯ ${(progress * 100).toInt()}%',
+          style: const TextStyle(
+            fontSize: 12,
+            color: Color(0xFF888888),
+            letterSpacing: 2,
+          ),
+        ),
+      ],
     );
   }
 }
 
-/// bootstrap 完成後顯示「點擊任意處繼續」+ 微微脈動效果
-/// (iOS Safari 必須先有 user gesture 才能解鎖 audio autoplay)
 class _TapToEnter extends StatefulWidget {
   const _TapToEnter({super.key});
 
@@ -227,7 +232,6 @@ class _TapToEnterState extends State<_TapToEnter>
           ),
         ),
         const SizedBox(height: 16),
-        // iPhone Safari 玩家提示 — 硬體靜音模式會 mute Web Audio (iOS 系統限制)
         Text(
           '🔇 iPhone 玩家：請確認手機靜音開關未開啟',
           style: TextStyle(
