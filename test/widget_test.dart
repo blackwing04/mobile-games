@@ -12,6 +12,8 @@ class _FakeAudioService extends AudioService {
   @override
   Future<void> preloadBgm(String assetPath) async {}
   @override
+  Future<void> preloadSource(String assetPath) async {}
+  @override
   Future<void> stopBgm() async {}
   @override
   Future<void> pauseBgm() async {}
