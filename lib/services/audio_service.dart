@@ -47,8 +47,9 @@ enum SfxKey {
 /// - SFX：一次性短音效（按鍵、骰子、結果提示、電梯叮）
 /// - Ambient：帶間隔循環的環境聲（如哭聲，scene_blurry_view 用）
 class AudioService {
-  /// 主選單 BGM。刻意選用與 scene_start 同一首，從首頁進劇本時零切歌、無縫銜接。
-  static const String homeBgmPath = 'assets/audio/bgm/the_mountain-lonely.mp3';
+  /// 主選單 BGM — 異聞錄系列共用，跨章節跨劇本維持品牌識別。
+  /// 玩家進劇本時會切到該章節的劇情 BGM (建立「進入故事」的氛圍轉換)。
+  static const String homeBgmPath = 'assets/audio/bgm/horror-dark.mp3';
 
   // Lazy 初始化避免 test 環境 platform channel 不存在時直接爆掉
   AudioPlayer? _bgmPlayerInternal;
