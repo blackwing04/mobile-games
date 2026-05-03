@@ -68,22 +68,56 @@ class AudioService {
   AudioPlayer get _ambientPlayer =>
       _ambientPlayerInternal ??= _createAmbientPlayer();
 
+  /// BGM 用的 audio context — 持續持有 audio focus、跟系統其他 audio 混音
+  static final AudioContext _bgmContext = AudioContext(
+    android: AudioContextAndroid(
+      isSpeakerphoneOn: false,
+      stayAwake: false,
+      contentType: AndroidContentType.music,
+      usageType: AndroidUsageType.media,
+      audioFocus: AndroidAudioFocus.gain,
+    ),
+    iOS: AudioContextIOS(
+      category: AVAudioSessionCategory.playback,
+      options: const {AVAudioSessionOptions.mixWithOthers},
+    ),
+  );
+
+  /// SFX 用的 audio context — 完全不 request audio focus，
+  /// 確保 SFX 播放時 BGM 不被中斷 (核心修法)
+  static final AudioContext _sfxContext = AudioContext(
+    android: AudioContextAndroid(
+      isSpeakerphoneOn: false,
+      stayAwake: false,
+      contentType: AndroidContentType.sonification,
+      usageType: AndroidUsageType.assistanceSonification,
+      audioFocus: AndroidAudioFocus.none,
+    ),
+    iOS: AudioContextIOS(
+      category: AVAudioSessionCategory.ambient,
+      options: const {AVAudioSessionOptions.mixWithOthers},
+    ),
+  );
+
   AudioPlayer _createBgmPlayer() {
     final p = AudioPlayer(playerId: 'bgm');
+    p.setAudioContext(_bgmContext);
     p.setReleaseMode(ReleaseMode.loop);
-    p.setPlayerMode(PlayerMode.mediaPlayer); // 長音檔用 MediaPlayer
+    p.setPlayerMode(PlayerMode.mediaPlayer);
     return p;
   }
 
   AudioPlayer _createSfxPlayer() {
     final p = AudioPlayer(playerId: 'sfx');
+    p.setAudioContext(_sfxContext);
     p.setReleaseMode(ReleaseMode.release);
-    p.setPlayerMode(PlayerMode.lowLatency); // Android SoundPool, 立刻發聲
+    p.setPlayerMode(PlayerMode.lowLatency);
     return p;
   }
 
   AudioPlayer _createAmbientPlayer() {
     final p = AudioPlayer(playerId: 'ambient');
+    p.setAudioContext(_sfxContext); // ambient 也用 sfx context 不搶 focus
     p.setReleaseMode(ReleaseMode.release);
     p.setPlayerMode(PlayerMode.mediaPlayer);
     return p;
