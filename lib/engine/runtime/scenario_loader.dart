@@ -8,26 +8,33 @@ class ScenarioLoader {
   /// 用 Flutter 標準 AssetManifest API 自動掃出所有 assets/scenarios/*.json
   /// (Flutter 3.13+ 把 manifest 改成 .bin 格式，這個 API 自動處理跨版本差異)
   ///
-  /// 排序：dev_* 開頭的 scenario 排最後（避免污染主選單第一位）
+  /// 排序規則 (從前到後)：
+  /// 1. dev_* 開頭的 scenario 永遠排最後（避免污染主選單第一位）
+  /// 2. 非 dev 之間以 Scenario.episode 排序 (Ch1=1, Ch2=2, ..., epilogue=99)
+  /// 3. episode 相同 → 用檔名排
   Future<List<Scenario>> loadAll() async {
     final manifest = await AssetManifest.loadFromAssetBundle(rootBundle);
 
     final paths = manifest
         .listAssets()
         .where((k) => k.startsWith('assets/scenarios/') && k.endsWith('.json'))
-        .toList()
-      ..sort((a, b) {
-        final aDev = _isDev(a);
-        final bDev = _isDev(b);
-        if (aDev != bDev) return aDev ? 1 : -1;
-        return a.compareTo(b);
-      });
+        .toList();
 
-    final scenarios = <Scenario>[];
+    final loaded = <_LoadedScenario>[];
     for (final path in paths) {
-      scenarios.add(await loadFromAsset(path));
+      loaded.add(_LoadedScenario(path, await loadFromAsset(path)));
     }
-    return scenarios;
+
+    loaded.sort((a, b) {
+      final aDev = _isDev(a.path);
+      final bDev = _isDev(b.path);
+      if (aDev != bDev) return aDev ? 1 : -1;
+      final episodeCmp = a.scenario.episode.compareTo(b.scenario.episode);
+      if (episodeCmp != 0) return episodeCmp;
+      return a.path.compareTo(b.path);
+    });
+
+    return loaded.map((e) => e.scenario).toList(growable: false);
   }
 
   static bool _isDev(String path) {
@@ -45,4 +52,10 @@ class ScenarioLoader {
     final json = jsonDecode(jsonString) as Map<String, dynamic>;
     return Scenario.fromJson(json);
   }
+}
+
+class _LoadedScenario {
+  final String path;
+  final Scenario scenario;
+  const _LoadedScenario(this.path, this.scenario);
 }

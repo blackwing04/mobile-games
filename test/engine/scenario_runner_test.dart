@@ -21,67 +21,74 @@ class _FixedDiceRoller extends DiceRoller {
       );
 }
 
-void main() {
-  late Scenario demo;
+Scenario _loadFromFile(String path) =>
+    ScenarioLoader.parse(File(path).readAsStringSync());
 
-  setUpAll(() {
-    final raw = File('assets/scenarios/demo_office.json').readAsStringSync();
-    demo = ScenarioLoader.parse(raw);
-  });
-
-  group('Scenario JSON parsing', () {
-    test('demo_office 載入成功，含必要欄位', () {
-      expect(demo.id, 'demo_office');
-      expect(demo.title, isNotEmpty);
-      expect(demo.scenes, isNotEmpty);
-      expect(demo.startScene, isNotEmpty);
-      expect(demo.scenes.containsKey(demo.startScene), isTrue);
+/// 對單一 scenario 跑 JSON 完整性檢查 — 場景指針、技能引用、conditional_next 都驗到
+void _runScenarioIntegrityChecks(String name, Scenario s) {
+  group('$name JSON integrity', () {
+    test('$name 載入成功，含必要欄位', () {
+      expect(s.id, isNotEmpty);
+      expect(s.title, isNotEmpty);
+      expect(s.scenes, isNotEmpty);
+      expect(s.startScene, isNotEmpty);
+      expect(s.scenes.containsKey(s.startScene), isTrue,
+          reason: '$name 的 start_scene "${s.startScene}" 不存在於 scenes');
     });
 
-    test('所有 choice 的 next 都指向實際存在的場景', () {
-      for (final scene in demo.scenes.values) {
+    test('$name 所有 choice / skill_check / conditional_next 的 next 都指向實際存在的場景',
+        () {
+      for (final scene in s.scenes.values) {
         for (final choice in scene.choices) {
           if (choice.next != null) {
             expect(
-              demo.scenes.containsKey(choice.next),
+              s.scenes.containsKey(choice.next),
               isTrue,
-              reason: '${scene.id} 的選項 "${choice.label}" 指向不存在場景 ${choice.next}',
+              reason:
+                  '$name ${scene.id} 的選項 "${choice.label}" 指向不存在場景 ${choice.next}',
             );
           }
           if (choice.skillCheck != null) {
             for (final entry in choice.skillCheck!.outcomes.entries) {
               if (entry.value.next != null) {
                 expect(
-                  demo.scenes.containsKey(entry.value.next),
+                  s.scenes.containsKey(entry.value.next),
                   isTrue,
                   reason:
-                      '${scene.id} 的檢定結果 ${entry.key} 指向不存在場景 ${entry.value.next}',
+                      '$name ${scene.id} 的檢定結果 ${entry.key} 指向不存在場景 ${entry.value.next}',
                 );
               }
             }
           }
         }
+        for (final cn in scene.conditionalNext) {
+          expect(
+            s.scenes.containsKey(cn.next),
+            isTrue,
+            reason: '$name ${scene.id} 的 conditional_next 指向不存在場景 ${cn.next}',
+          );
+        }
       }
     });
 
-    test('所有 skill_check 引用的 skill 都有定義', () {
-      final skillIds = demo.skills.map((s) => s.id).toSet();
-      for (final scene in demo.scenes.values) {
+    test('$name 所有 skill_check 引用的 skill 都有定義', () {
+      final skillIds = s.skills.map((sk) => sk.id).toSet();
+      for (final scene in s.scenes.values) {
         for (final choice in scene.choices) {
           if (choice.skillCheck != null) {
             expect(
               skillIds.contains(choice.skillCheck!.skill),
               isTrue,
-              reason: '未定義的技能：${choice.skillCheck!.skill}',
+              reason: '$name 未定義的技能：${choice.skillCheck!.skill}',
             );
           }
         }
       }
     });
 
-    test('demo_office 至少觸發過 5 種 outcome 的劇本分支', () {
+    test('$name 至少觸發過 5 種 outcome 的劇本分支', () {
       final touched = <DiceOutcome>{};
-      for (final scene in demo.scenes.values) {
+      for (final scene in s.scenes.values) {
         for (final choice in scene.choices) {
           if (choice.skillCheck != null) {
             touched.addAll(choice.skillCheck!.outcomes.keys);
@@ -91,11 +98,39 @@ void main() {
       expect(touched, containsAll(DiceOutcome.values));
     });
 
-    test('至少 3 個結局場景', () {
-      final endings = demo.scenes.values.where((s) => s.isEnding).toList();
+    test('$name 至少 3 個結局場景', () {
+      final endings = s.scenes.values.where((sc) => sc.isEnding).toList();
       expect(endings.length, greaterThanOrEqualTo(3));
     });
+
+    test('$name truth_ending_id (若有) 指向真的存在的結局', () {
+      if (s.truthEndingId == null) return;
+      final scene = s.scenes[s.truthEndingId];
+      expect(scene, isNotNull,
+          reason: '$name truth_ending_id "${s.truthEndingId}" 不存在');
+      expect(scene!.isEnding, isTrue,
+          reason: '$name truth_ending_id "${s.truthEndingId}" 不是結局場景');
+    });
+
+    test('$name 所有 conditional_next 都有兜底 default 規則', () {
+      for (final scene in s.scenes.values) {
+        if (scene.conditionalNext.isEmpty) continue;
+        final hasDefault = scene.conditionalNext.any((cn) => cn.isDefault);
+        expect(hasDefault, isTrue,
+            reason: '$name router 場景 ${scene.id} 缺少 default 規則 (玩家可能卡死)');
+      }
+    });
   });
+}
+
+void main() {
+  // 在 main() 同步階段就 load (因為 group()/test() 是 registration-time 立即註冊，
+  // setUpAll 會晚於 group registration 執行 → 不能在 setUpAll 裡 load)
+  final demo = _loadFromFile('assets/scenarios/demo_office.json');
+  final ch02 = _loadFromFile('assets/scenarios/ch02_school.json');
+
+  _runScenarioIntegrityChecks('demo_office', demo);
+  _runScenarioIntegrityChecks('ch02_school', ch02);
 
   group('ScenarioRunner', () {
     test('初始狀態：current = startScene、資源為各自 initial', () {

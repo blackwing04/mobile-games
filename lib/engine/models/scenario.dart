@@ -28,6 +28,10 @@ class Scenario {
   final int? estimatedMinutes;
   final String? coverImage;
 
+  /// 異聞錄系列的章節順序 — Ch1 = 1, Ch2 = 2 ... epilogue = 99
+  /// HomeScreen carousel 用此排序，沒設則排在最後 (預設 999)
+  final int episode;
+
   /// 真結局/隱藏結局的解法提示 — CollectionScreen 玩家點開才顯示
   /// 因為真結局機率低 (~1-2%)，給 hint 是「告訴玩家目標」但仍需執行運氣
   final String? truthEndingHint;
@@ -48,6 +52,7 @@ class Scenario {
     this.author,
     this.estimatedMinutes,
     this.coverImage,
+    this.episode = 999,
     this.truthEndingHint,
     this.truthEndingId,
     required this.resources,
@@ -66,6 +71,7 @@ class Scenario {
       author: json['author'] as String?,
       estimatedMinutes: json['estimated_minutes'] as int?,
       coverImage: json['cover_image'] as String?,
+      episode: json['episode'] as int? ?? 999,
       truthEndingHint: json['truth_ending_hint'] as String?,
       truthEndingId: json['truth_ending_id'] as String?,
       resources: ((json['resources'] as List<dynamic>?) ?? const [])
