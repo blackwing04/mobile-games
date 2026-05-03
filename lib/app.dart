@@ -51,6 +51,18 @@ class _MobileGamesAppState extends ConsumerState<MobileGamesApp>
       title: '異聞錄：2347',
       theme: AppTheme.dark,
       debugShowCheckedModeBanner: false,
+      // 桌面瀏覽器寬螢幕限制最大寬度，模擬手機尺寸；手機端 (寬度 < 480dp) 不影響
+      builder: (context, child) {
+        return ColoredBox(
+          color: Colors.black,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: child,
+            ),
+          ),
+        );
+      },
       home: const SplashScreen(),
     );
   }

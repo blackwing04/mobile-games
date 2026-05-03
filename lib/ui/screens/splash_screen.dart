@@ -201,19 +201,33 @@ class _TapToEnterState extends State<_TapToEnter>
 
   @override
   Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: Tween(begin: 0.45, end: 1.0).animate(
-        CurvedAnimation(parent: _pulse, curve: Curves.easeInOut),
-      ),
-      child: const Text(
-        '點 擊 任 意 處 繼 續',
-        style: TextStyle(
-          fontSize: 14,
-          color: Color(0xFFE0C770),
-          letterSpacing: 6,
-          fontWeight: FontWeight.w500,
+    return Column(
+      children: [
+        FadeTransition(
+          opacity: Tween(begin: 0.45, end: 1.0).animate(
+            CurvedAnimation(parent: _pulse, curve: Curves.easeInOut),
+          ),
+          child: const Text(
+            '點 擊 任 意 處 繼 續',
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xFFE0C770),
+              letterSpacing: 6,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
-      ),
+        const SizedBox(height: 16),
+        // iPhone Safari 玩家提示 — 硬體靜音模式會 mute Web Audio (iOS 系統限制)
+        Text(
+          '🔇 iPhone 玩家：請確認手機靜音開關未開啟',
+          style: TextStyle(
+            fontSize: 11,
+            color: Colors.white.withValues(alpha: 0.4),
+            letterSpacing: 1,
+          ),
+        ),
+      ],
     );
   }
 }
