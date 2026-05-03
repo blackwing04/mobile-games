@@ -121,6 +121,15 @@ class AudioService {
   /// Splash 用 — SoLoud loadAsset 已是「預載到 memory」、play 立刻發聲
   Future<void> preloadBgm(String assetPath) => playBgm(assetPath);
 
+  /// 純預載 source 到記憶體 (不 play)。Splash bootstrap 期間呼叫，
+  /// user 點繼續時 playBgm 直接 play cached source — 對舊手機 (大伯 iPhone)
+  /// 解 cold start 「過 2 個畫面才有聲」的問題。
+  Future<void> preloadSource(String assetPath) async {
+    await _ensureInit();
+    if (!_initialized) return;
+    await _getSource(assetPath);
+  }
+
   Future<void> stopBgm() => playBgm(null);
 
   Future<void> pauseBgm() async {

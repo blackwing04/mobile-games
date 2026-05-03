@@ -19,6 +19,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
   static const _splashBgPath = 'assets/images/loading.jpg';
   static const _scene1ImgPath =
       'assets/images/scenarios/demo_office/scene_start.png';
+  static const _scene1BgmPath =
+      'assets/audio/bgm/the_mountain-lonely.mp3';
   static const _minSplashDuration = Duration(milliseconds: 3000);
 
   late final AnimationController _progressController;
@@ -44,11 +46,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   Future<void> _bootstrap() async {
     _progressController.forward();
+    final audio = ref.read(audioServiceProvider);
 
-    // 並行三條 — 但 audio 不在 bootstrap 內提前觸發 (iOS Safari 會擋)
-    // 改為 user tap 「點擊繼續」時才播 BGM
+    // 並行四條 — bootstrap 期間預載 BGM source 到記憶體 (不 play、避開 iOS gesture 限制)
+    // user 點繼續時 playBgm 直接觸發 cached voice，舊手機也能立刻發聲
     await Future.wait([
       precacheImage(const AssetImage(_scene1ImgPath), context)
+          .catchError((Object _) {}),
+      audio
+          .preloadSource(AudioService.homeBgmPath)
+          .catchError((Object _) {}),
+      audio
+          .preloadSource(_scene1BgmPath)
           .catchError((Object _) {}),
       _progressController.forward().orCancel.catchError((Object _) {}),
     ]);
