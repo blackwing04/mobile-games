@@ -268,7 +268,8 @@
 最終決斷（**Gemini 原寫 1-2 階，整合時要：補 5 階 / id 對應 v1 結局 / skill rename / clue 門檻校準 / san 雙軸**）：
 
 1. **「你不是我哥⋯⋯（根據線索識破謊言）」** — `[需 Clue ≥ 2]`
-   → scene_true_ending（**整合：對應 scene_end_truth + 加 san ≥ X 條件 + clue 門檻校準到 IP canon ≥3**）
+   → 🚧 **使用者 design intent**：識破後不直通真結局，中間還要 2 場 — 追逐場景 + 一道檢定。整合時 Choice 1 路徑：識破 → 追逐場景（Gemini 待寫）→ 檢定場景（Gemini 待寫）→ scene_end_truth
+   → 最終對應 scene_end_truth（**整合：加 san ≥ X 條件 + clue 門檻校準到 IP canon ≥3**）
 2. **「相信眼前的哥哥」** → scene_bad_ending_fall（**整合：對應 scene_end_lost_soul + 加 san 大扣**）
 3. **「（閉上眼大喊）這一切都是假的！通通消失！」** — willpower 檢定（**整合：rename 為 resolve；補 5 階**）
    - 成功 → scene_normal_ending（**整合：對應 scene_end_rescued / scene_end_safe_home 看情境**）
