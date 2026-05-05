@@ -13,9 +13,9 @@
 | 項目 | 計數 |
 |------|------|
 | 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
-| v2 已收 narrative | 5 (start / wait_classroom / classroom_wake / door_stuck / phone_again) |
-| v2 已引用未定義 | 8 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static / final_ascent) |
-| **Route A 已累積** | **13**（光這條線就已 13）|
+| v2 已收 narrative | 6 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent) |
+| v2 已引用未定義 | 8 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static / the_climax) |
+| **Route A 已累積** | **14**（光這條線就已 14）|
 | Route B / C / 結局 / router | 尚未開始 |
 | 樂觀總計預估 | 30+ |
 
@@ -54,7 +54,8 @@
 | scene_hide_fail | scene_door_stuck 躲桌底失敗 | ⏳ 等 narrative |
 | scene_monster_glimpse | scene_door_stuck 手電筒成功 | ⏳ 等 narrative |
 | scene_phone_drop | scene_door_stuck 手電筒失敗 | ⏳ 等 narrative |
-| scene_final_ascent | scene_phone_again 三選項共同 next | ⏳ 等 narrative |
+| scene_final_ascent | scene_phone_again 三選項共同 next | ✅ 已收 |
+| scene_the_climax | scene_final_ascent 兩選項 4 結果共同 next | ⏳ 等 narrative |
 
 ---
 
@@ -209,3 +210,40 @@
    - 失敗 → scene_final_ascent [san-10]（對面沉默後的尖銳笑聲）
 2. **「（求救）哥！這學校不對勁！你快點過來接我！」** → scene_final_ascent
 3. **「好，我現在上去找你⋯⋯（放下手機，神情恍惚）」** → scene_final_ascent（**Gemini 註：自動判定失敗，朝壞結局偏移** — 整合時加 san 大扣 + 旗標）
+
+---
+
+## scene_final_ascent (v2 ✅ 已收，新場景)
+
+> 妳的話音落下後，電話那頭遲遲沒有回應。
+>
+> 妳保持著通話的姿勢，耳朵緊貼著冰冷的手機螢幕。原本應該傳來哥哥回覆的頻道，此時卻安靜得像是一個被抽乾空氣的黑洞，連剛才那種微弱的迴響都消失得無影無蹤。
+>
+> 「⋯⋯喂？哥？你有在聽嗎？」
+>
+> 妳忍不住再次對著話筒追問，聲音在死寂的教室裡顯得格外單薄。回應妳的依然只有那種讓人背脊發涼的沈默。緊接著，手機螢幕無預警地閃爍了兩下，隨即徹底熄滅，化為一片漆黑的鏡面。
+>
+> 就在通訊中斷的瞬間，那扇剛才妳怎麼拉都拉不動的門，突然發出「喀擦」一聲，自己緩緩打開了。外面透進來的暗紅光線像是一條血紅色的舌頭，鋪在漆黑的教室地板上。
+>
+> 妳知道不能再待下去了，無論天台上有什麼，都比留在這間被惡意填滿的教室好。妳深吸一口氣，抓緊書包，跌跌撞撞地衝出教室。
+>
+> 走廊的景象讓妳頭皮發麻——原本熟悉的長廊似乎被強行「拉長」了，兩側的教室門像是一排排歪斜的墓碑。那種濃郁得近乎黏稠的紅光從窗外滲透進來，將地面塗滿了濕滑的暗紅色，每跑一步，腳下都會發出「噗滋、噗滋」的怪異磨擦聲。
+>
+> 「這到底怎麼回事⋯⋯」妳邊跑邊在心裡嘀咕，試圖理清這一切詭異的現象。
+>
+> 妳衝進樓梯間，記憶中牆上原本標示著「4F」的字樣，現在卻莫名被換成一個掛鐘，上面依然停留在 23:47。妳不敢停下來思考，只能不斷往上爬，那是唯一還有光亮的地方。
+>
+> 終於，妳推開了通往天台的那扇沉重鐵門。
+>
+> 強風瞬間灌進妳的領口，凍得妳打了個寒顫。妳看見在那片血紅色的天空下，一個熟悉的背影正靜靜地站在天台邊緣，背對著妳。
+>
+> 那是哥哥。他穿著早上出門時的那件外套，手裡拿著一支妳最愛喝的手搖飲，冰塊撞擊杯壁的「叮、叮」聲，在狂風中竟然聽得清清楚楚，彷彿那聲音是直接在妳腦袋裡響起的。
+
+選項（**Gemini 原寫 2 階，整合時要補 5 階**；**兩個選項都 observe，整合時可考慮第 2 個換 listen / common_sense 做差異化**）：
+
+1. **「（止步）你剛才不是說你在校門口？為什麼現在在這裡？」** — observe 檢定
+   - 成功 → scene_the_climax [clue+1]（影子長度與光影方向完全不符 + 聲音不自然的重音疊加）
+   - 失敗 → scene_the_climax [san-10]（風沙迷眼，沒看清對方緩慢轉頭時頸部清脆骨裂聲）
+2. **「（觀察）先不要靠近，觀察周圍。」** — observe 檢定
+   - 成功 → scene_the_climax [clue+1]（飲品封膜標籤寫著 23:47，天台圍欄緩緩向外融化）
+   - 失敗 → scene_the_climax [san-10]（腳下天台地面微微跳動，像有心跳）
