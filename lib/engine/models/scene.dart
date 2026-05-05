@@ -29,7 +29,7 @@ class Scene {
   final Ending? ending;
   final String? chapterId;
 
-  /// 場景插圖的 asset 路徑，如 "assets/images/scenarios/demo_office/scene_start.png"
+  /// 場景插圖的 asset 路徑，如 "assets/images/scenarios/ch01_office/scene_start.png"
   /// 為 null 時 UI 不顯示圖片區、敘事文字直接全寬呈現
   final String? image;
 

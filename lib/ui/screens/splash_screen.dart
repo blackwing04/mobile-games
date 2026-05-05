@@ -21,7 +21,7 @@ class SplashScreen extends ConsumerStatefulWidget {
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   static const _splashBgPath = 'assets/images/loading.jpg';
   static const _scene1ImgPath =
-      'assets/images/scenarios/demo_office/scene_start.png';
+      'assets/images/scenarios/ch01_office/scene_start.png';
   static const _scene1BgmPath =
       'assets/audio/bgm/the_mountain-lonely.mp3';
 

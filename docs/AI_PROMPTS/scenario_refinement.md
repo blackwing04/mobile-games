@@ -94,7 +94,7 @@
 
 ## 元資料
 
-- ID: demo_office
+- ID: ch01_office
 - 作者: Joe & Gemini
 - 預估時長: 10 分鐘
 - 起始場景: scene_start

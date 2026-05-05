@@ -64,7 +64,7 @@ d100 基底 + 5 階結果，給劇本提供豐富分支：
 
 ## 劇本格式
 
-劇本是純 JSON，放在 `assets/scenarios/`。Schema 範例見 `assets/scenarios/demo_office.json`。每個劇本獨立宣告：
+劇本是純 JSON，放在 `assets/scenarios/`。Schema 範例見 `assets/scenarios/ch01_office.json`。每個劇本獨立宣告：
 - `resources`：本劇本使用的資源（如神智、線索、HP）
 - `skills`：技能名稱與起始值
 - `scenes`：場景樹，每個場景含 `narrative` 文字、`choices` 列表（含可選的 `skill_check`）、可選的 `ending`

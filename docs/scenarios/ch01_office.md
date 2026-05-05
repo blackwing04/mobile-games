@@ -6,7 +6,7 @@
 > **規則**：可改文字（敘事、選項、結局描述），不可改結構（場景 ID、路由、骰子效果）。
 > **完成後**：必須依照原 JSON Schema 輸出新版本給遊戲引擎使用。
 >
-> 對應 JSON：`assets/scenarios/demo_office.json`
+> 對應 JSON：`assets/scenarios/ch01_office.json`
 
 ---
 
@@ -14,7 +14,7 @@
 
 | 欄位 | 值 |
 |------|-----|
-| `id` | `demo_office` |
+| `id` | `ch01_office` |
 | `title` | 辦公室的最後一夜 |
 | `author` | 示範劇本 |
 | `estimated_minutes` | 10 |

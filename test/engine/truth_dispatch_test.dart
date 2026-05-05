@@ -15,7 +15,7 @@ class _Fixed implements DiceRoller {
 
 void main() {
   test('truth dispatch: clue>=3 AND san>=50 應走 scene_end_truth', () {
-    final json = jsonDecode(File('assets/scenarios/demo_office.json').readAsStringSync()) as Map<String, dynamic>;
+    final json = jsonDecode(File('assets/scenarios/ch01_office.json').readAsStringSync()) as Map<String, dynamic>;
     final demo = Scenario.fromJson(json);
     final runner = ScenarioRunner(diceRoller: _Fixed(1)); // 強制 critical
 
@@ -44,7 +44,7 @@ void main() {
   });
 
   test('truth dispatch 邊界: clue=3 san=50 應走 truth', () {
-    final json = jsonDecode(File('assets/scenarios/demo_office.json').readAsStringSync()) as Map<String, dynamic>;
+    final json = jsonDecode(File('assets/scenarios/ch01_office.json').readAsStringSync()) as Map<String, dynamic>;
     final demo = Scenario.fromJson(json);
     final runner = ScenarioRunner(diceRoller: _Fixed(1));
 

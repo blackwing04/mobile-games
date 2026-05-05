@@ -5,7 +5,7 @@
 > 1. 本檔（`scenario_design.md`） — 你的角色與工作流
 > 2. `docs/IP_BIBLE.md` — IP 整套設定（必讀）
 > 3. `docs/EPISODE_BLUEPRINT.md` — 每篇規格藍圖
-> 4. `docs/scenarios/demo_office_canonical.md` — Ch1 完整 canonical MD（對齊範例）
+> 4. `docs/scenarios/ch01_office_canonical.md` — Ch1 完整 canonical MD（對齊範例）
 >
 > （可選，第 5 則訊息）：`docs/scenarios/ch02_school_canonical.md` — Ch2 範例（第二個 worked example）
 >
@@ -229,6 +229,6 @@
 
 ## 第一個任務
 
-請確認你已完整讀完前 4 份文件（本檔 + IP_BIBLE + EPISODE_BLUEPRINT + demo_office_canonical），按**第 1 步**輸出你理解的 IP 核心。
+請確認你已完整讀完前 4 份文件（本檔 + IP_BIBLE + EPISODE_BLUEPRINT + ch01_office_canonical），按**第 1 步**輸出你理解的 IP 核心。
 
 不要動手設計新章節。等使用者拍板「你理解對了」之後，再進第 2 步。

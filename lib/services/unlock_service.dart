@@ -26,7 +26,26 @@ class UnlockService {
       ..clear()
       ..addAll(prefs.getStringList(_kEndingsKey) ?? const []);
     _superEndingSeen = prefs.getBool(_kSuperEndingSeenKey) ?? false;
+    await _migrateLegacyKeys(prefs);
     _loaded = true;
+  }
+
+  /// 把舊版 `demo_office:*` key 遷移到 `ch01_office:*`，玩家不丟失解鎖進度。
+  /// 只在第一次 load 時執行；遷移後 prefs 內就只剩新 key。
+  Future<void> _migrateLegacyKeys(SharedPreferences prefs) async {
+    const legacyPrefix = 'demo_office:';
+    const newPrefix = 'ch01_office:';
+    final hasLegacy = _cache.any((k) => k.startsWith(legacyPrefix));
+    if (!hasLegacy) return;
+    final migrated = _cache.map((k) {
+      return k.startsWith(legacyPrefix)
+          ? '$newPrefix${k.substring(legacyPrefix.length)}'
+          : k;
+    }).toSet();
+    _cache
+      ..clear()
+      ..addAll(migrated);
+    await prefs.setStringList(_kEndingsKey, _cache.toList());
   }
 
   static String _key(String scenarioId, String sceneId) =>

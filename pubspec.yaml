@@ -35,7 +35,7 @@ flutter:
   assets:
     - assets/scenarios/
     - assets/images/
-    - assets/images/scenarios/demo_office/
+    - assets/images/scenarios/ch01_office/
     - assets/icons/
     - assets/audio/bgm/
     - assets/audio/sfx/

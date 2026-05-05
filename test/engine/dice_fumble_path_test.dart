@@ -15,7 +15,7 @@ class _Fixed implements DiceRoller {
 
 void main() {
   test('每個 scene 的 skill_check 強制 fumble 後，dismissDice 推進到的場景是 fumble.next', () async {
-    final json = jsonDecode(File('assets/scenarios/demo_office.json').readAsStringSync()) as Map<String, dynamic>;
+    final json = jsonDecode(File('assets/scenarios/ch01_office.json').readAsStringSync()) as Map<String, dynamic>;
     final demo = Scenario.fromJson(json);
     final runner = ScenarioRunner(diceRoller: _Fixed(100)); // 100 = 永遠 fumble
 

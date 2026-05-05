@@ -126,10 +126,10 @@ void _runScenarioIntegrityChecks(String name, Scenario s) {
 void main() {
   // 在 main() 同步階段就 load (因為 group()/test() 是 registration-time 立即註冊，
   // setUpAll 會晚於 group registration 執行 → 不能在 setUpAll 裡 load)
-  final demo = _loadFromFile('assets/scenarios/demo_office.json');
+  final demo = _loadFromFile('assets/scenarios/ch01_office.json');
   final ch02 = _loadFromFile('assets/scenarios/ch02_school.json');
 
-  _runScenarioIntegrityChecks('demo_office', demo);
+  _runScenarioIntegrityChecks('ch01_office', demo);
   _runScenarioIntegrityChecks('ch02_school', ch02);
 
   group('ScenarioRunner', () {

@@ -1,6 +1,6 @@
 # 異聞錄·辦公室的最後一夜 — 文案對照表
 
-> 此文件由 `assets/scenarios/demo_office.json` 自動匯出。
+> 此文件由 `assets/scenarios/ch01_office.json` 自動匯出。
 > 用途：補圖時 cross-check 圖片內容與內文是否相符。
 > 路由場景 (`scene_dispatch_*`) 不列入因為玩家看不到。
 
