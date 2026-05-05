@@ -16,7 +16,7 @@
 |----------|--------|---------|------|
 | scene_start | ✅ JSON 已套 v2 | ✅ 已收 | 含「別理會任何人的聲音」伏筆 |
 | scene_wait_classroom | v1 在 JSON | ✅ 已收 | 3 選項：看時鐘 / 撞門 / 趴睡 |
-| scene_phone_again | v1 在 JSON | ⏳ 等寫 | **需回扣「別理會任何人的聲音」伏筆** |
+| scene_phone_again | v1 在 JSON | ✅ 已收 | 含「天台」誘導 + 哥哥語氣反差 |
 | scene_walk_to_rooftop | v1 在 JSON | ⏳ 等寫 | Wave 2 終局 |
 | scene_corridor_search | v1 在 JSON | ⏳ 等寫 | Route B 入口 |
 | scene_corridor_deep | v1 在 JSON | ⏳ 等寫 |  |
@@ -39,6 +39,7 @@
 | scene_hide_fail | scene_door_stuck 躲桌底失敗 | ⏳ 等 narrative |
 | scene_monster_glimpse | scene_door_stuck 手電筒成功 | ⏳ 等 narrative |
 | scene_phone_drop | scene_door_stuck 手電筒失敗 | ⏳ 等 narrative |
+| scene_final_ascent | scene_phone_again 三選項共同 next | ⏳ 等 narrative |
 
 ---
 
@@ -169,3 +170,27 @@
 3. **「（強壓恐懼）是誰在那裡？打開手機手電筒照過去！」** — observe 檢定
    - 成功 → scene_monster_glimpse [clue+1, san-15]
    - 失敗 → scene_phone_drop
+
+---
+
+## scene_phone_again (v2 ✅ 已收，覆蓋 v1)
+
+> 就在那股冰冷的感覺快要貼上妳的後頸時，手心裡的手機猛然震動，強烈的震感讓妳整隻手發麻。螢幕閃爍著:「哥哥」。
+>
+> 妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。
+>
+> 「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」
+>
+> 妳聽著那溫柔的嗓音，看著眼前這間陷入死寂黑暗、連門把都扭不動的教室。
+>
+> 哥哥剛才說⋯⋯夕陽很漂亮？
+>
+> 就在妳遲疑的瞬間，背後那個「喀、喀」的掛鐘聲突然加快了。原本打不開的教室門，竟然在此時發出「喀擦」一聲，自己緩緩推開了一道縫隙，露出外面那條血紅色的長廊。
+
+選項（**Gemini 原寫 2 階，整合時要補 5 階**）：
+
+1. **「（質問）你剛才不是叫我別出去嗎？為什麼現在又要我去天台？」** — observe 檢定
+   - 成功 → scene_final_ascent [clue+1]（電話背景音與掛鐘聲完全重合）
+   - 失敗 → scene_final_ascent [san-10]（對面沉默後的尖銳笑聲）
+2. **「（求救）哥！這學校不對勁！你快點過來接我！」** → scene_final_ascent
+3. **「好，我現在上去找你⋯⋯（放下手機，神情恍惚）」** → scene_final_ascent（**Gemini 註：自動判定失敗，朝壞結局偏移** — 整合時加 san 大扣 + 旗標）
