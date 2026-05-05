@@ -234,7 +234,7 @@
    - 失敗 → scene_dispatch_clue_check [san-10]
    - 大失敗 → scene_dispatch_clue_check [san-20]（對面沉默後的尖銳笑聲）
 2. **「（求救）哥！這學校不對勁！你快點過來接我！」** → scene_dispatch_clue_check
-3. **「好，我現在上去找你⋯⋯（放下手機，神情恍惚）」** → scene_dispatch_clue_check [san-25]（神情恍惚，朝壞結局偏移）
+3. **「好，我現在上去找你⋯⋯」** → scene_dispatch_clue_check [san-25]（妹妹被聲音帶偏，朝壞結局偏移 — 玩家不知道）
 
 ---
 

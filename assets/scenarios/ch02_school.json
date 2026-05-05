@@ -737,7 +737,7 @@
           "next": "scene_dispatch_clue_check"
         },
         {
-          "label": "好，我現在上去找你⋯⋯（放下手機，神情恍惚）",
+          "label": "好，我現在上去找你⋯⋯",
           "next": "scene_dispatch_clue_check",
           "effects": [
             {
@@ -1030,7 +1030,7 @@
           "next": "scene_dispatch_clue_check"
         },
         {
-          "label": "好，我現在上去找你⋯⋯（放下手機，神情恍惚）",
+          "label": "好，我現在上去找你⋯⋯",
           "next": "scene_dispatch_clue_check",
           "effects": [
             {
