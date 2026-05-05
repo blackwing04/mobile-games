@@ -362,6 +362,6 @@
 >
 > 隔天，這座廢棄校舍的門口只留下一隻掉落的鞋子，而妳，再也沒有出現過。
 
-**整合時對應**：scene_end_lost_school (壞結局，失蹤類型 — 非墜樓，非無盡校園鏡中我，而是被陰影拖走的失蹤變體)
+**整合時對應**：scene_end_lost_school (壞結局，失蹤類型 — 被陰影拖入地板)
 
-> ⚠️ 注意：此場景 narrative **不是墜樓**（IP-canon「signature 死法 = 墜樓」是 scene_end_lost_soul 的 canon，從 scene_the_climax 第 2 選項「相信哥哥」直接觸發；此場是失蹤類型，對應 scene_end_lost_school，與 Wave 3 鏡中我同型）。
+> ✅ IP-canon 已鬆綁（2026-05 update）：失神結局形式不再限定一致，可以是墜樓 / 失蹤 / 被吞噬等。此場「被陰影拖入地板裂縫」即合法的失神變體。
