@@ -15,7 +15,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | 線路 | 收斂方式 |
 |------|---------|
 | **Route A 主線**（留教室）| 已收齊 — wait_classroom → phone_again → final_ascent → climax → 三結局 |
-| **Route B**（找哥哥）| 走廊探索 1-2 場 → **「哥哥第二通電話」hook 插入「我在天台等」**→ 接回 final_ascent → climax 主線 |
+| **Route B**（找哥哥 → 困永遠的樓梯）| 玩家想下樓但**永遠到不了一樓**（樓層 F 標誌全變掛鐘 23:47）+ 背後被東西盯。1 場 endless_stairs + 2 選項：聽哥哥去天台 → 接主版 phone_again 回主線；打火災警鈴 → 中性偏壞《校警救援》結局 |
 | **Route C**（試圖離校 → 被詛咒擋）| 玩家點 scene_start Choice 3「直接回家」→ **詛咒不讓任何人逃**，直接 → `scene_door_stuck_impatient` 變體 → 併進 Route A 主線。**完全不寫 leave_school / phone_at_gate** |
 | **detour 失敗**（door_locked_fate / hide_fail / phone_drop / scare_clock 等）| 大多直通 scene_bad_ending_lost；或 san 大扣後 loop back 主流程 |
 | **detour 成功**（hide_success / monster_glimpse 等）| 折回 scene_corridor_search 或 scene_phone_again 主軸 |
@@ -42,9 +42,9 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | 項目 | 計數 |
 |------|------|
 | 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
-| v2 已收 narrative | 16 (start / wait_classroom / classroom_wake / door_stuck / door_stuck_impatient / phone_again / phone_again_hide / phone_again_escape / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost / sms_or_call / end_curse_spread) |
-| v2 已引用未定義 | 3 (scare_clock / monster_glimpse / phone_static) |
-| **Route A + C 合流累積（含結局 + SMS + 3 phone variants + 2 door variants）** | **18** |
+| v2 已收 narrative | 16 (Route A + C 合流) |
+| v2 已引用未定義 | 6 (scare_clock / monster_glimpse / phone_static / endless_stairs / endless_stairs_search / phone_again_stairs)|
+| **Route A + B + C 合流累積（含結局 + SMS + 4 phone variants + 2 door variants + 2 stairs variants）** | **22** |
 | Route B / C / 結局 / router | 尚未開始 |
 | 樂觀總計預估 | 30+ |
 
@@ -62,9 +62,9 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | scene_wait_classroom | v1 在 JSON | ✅ 已收 | 3 選項：看時鐘 / 撞門 / 趴睡 |
 | scene_phone_again | v1 在 JSON | ✅ 已收 | 含「天台」誘導 + 哥哥語氣反差 |
 | scene_walk_to_rooftop | v1 在 JSON | ⏳ 等寫 | Wave 2 終局 |
-| scene_corridor_search | v1 在 JSON | ⏳ 等寫 | Route B 入口 |
-| scene_corridor_deep | v1 在 JSON | ⏳ 等寫 |  |
-| scene_mirror_self | v1 在 JSON | ⏳ 等寫 | Wave 3 終局 |
+| ~~scene_corridor_search~~ | v1 在 JSON | ❌ **廢棄** — Route B 改設計為「困永遠的樓梯」(scene_endless_stairs)，走廊探索場景不寫 |
+| ~~scene_corridor_deep~~ | v1 在 JSON | ❌ **廢棄** — 同上 |
+| ~~scene_mirror_self~~ | v1 在 JSON | ❌ **廢棄** — Wave 3 鏡中我合併到 climax 主線（已在 scene_the_climax 處理）|
 | ~~scene_leave_school~~ | v1 在 JSON | ❌ **廢棄** — 使用者拍板：Route C 改為「試圖離校但被詛咒擋」，直接接 door_stuck_impatient |
 | ~~scene_phone_at_gate~~ | v1 在 JSON | ❌ **廢棄** — 同上，沒有校門口接電話橋段 |
 | 4 個 router (dispatch) | v1 在 JSON | 通常不需改 | 視結局數值有沒有調再說 |
@@ -78,6 +78,9 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | scene_scare_clock | scene_wait_classroom 看時鐘失敗 | ⏳ 等 narrative |
 | scene_door_stuck | scene_wait_classroom + scene_classroom_wake 撞門失敗（已不安 perspective）| ✅ 已收 |
 | scene_door_stuck_impatient | **NEW**：scene_start Choice 3 直接回家入口（不耐煩 perspective）— 跟 scene_door_stuck 共用後段，僅開頭微調 | ✅ 已收 |
+| scene_endless_stairs | **NEW Route B 主場景**：wait_classroom Choice 2 撞門成功入口。永遠下不到一樓 + F 標誌變 23:47 + 背後被盯。選項 1 「轉念聽哥哥，去天台」 → phone_again_stairs；選項 2 「打火災警鈴」→ scene_end_rescued | ⏳ 等 narrative |
+| scene_endless_stairs_search | **NEW**：scene_start Choice 2 入口（主動找哥哥 perspective）— 跟 endless_stairs 共用 narrative，選項 1 改為「打給哥哥」→ phone_again_stairs（主動撥）；選項 2 共用「打火災警鈴」 | ⏳ 等 narrative |
+| scene_phone_again_stairs | **NEW phone_again 變體**：endless_stairs 兩變體選項 1 共同 next。樓梯間 perspective — narrative 同主版但**拿掉「教室門推開露出血紅長廊」結尾段** | ⏳ 整合期可從主版 derive |
 | scene_phone_static | scene_classroom_wake 打電話失敗 | ⏳ 等 narrative |
 | ~~scene_door_locked_fate~~ | ~~scene_door_stuck 撞前門失敗~~ | ❌ 拿掉 — 改直接接 scene_end_curse_spread |
 | scene_phone_again_hide | scene_door_stuck 躲桌底成功（重命名自 scene_hide_success，narrative 微縮 + 選項外提）| ✅ 已收 |
@@ -128,7 +131,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 選項：
 
 1. **「聽哥哥的話，留在教室等他」** → scene_wait_classroom
-2. **「電話和時鐘都太奇怪了，出去找哥哥」** → scene_corridor_search
+2. **「電話和時鐘都太奇怪了，出去找哥哥」** → scene_endless_stairs_search（**改 routing**：原 corridor_search → endless_stairs_search，Route B 重新設計為「困永遠的樓梯」）
 3. **「我又不是小孩子了，有什麼事回家再講不行喔，直接回家」** → scene_door_stuck_impatient（**詛咒擋下，沒能離開**）
 
 ---
@@ -155,7 +158,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
    - 成功 → scene_phone_again [clue+1]
    - 失敗 → scene_scare_clock [san-15]
 2. **「這地方待不下去，不等了，立刻離開教室」** — strength 檢定（使用者指示：原寫 stealth 改 strength）
-   - 成功 → scene_corridor_search
+   - 成功 → scene_endless_stairs（**改 routing**：原 corridor_search → endless_stairs，Route B 重新設計）
    - 失敗 → scene_door_stuck [san-10]
 3. **「哥哥說過別理會聲音⋯⋯我乾脆趴著睡一下好了」** — observe 檢定（待商議：邏輯上比較像 common_sense / resolve）
    - 成功 → scene_classroom_wake
@@ -182,7 +185,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 選項（**Gemini 原寫 2 階，整合時要補 5 階**）：
 
 1. **「不敢再待下去了，用盡全力撞開門衝出去！」** — strength 檢定
-   - 成功 → scene_corridor_search
+   - 成功 → scene_endless_stairs（**改 routing**：原 corridor_search → endless_stairs）
    - 失敗 → scene_door_stuck [san-10]
 2. **「冷靜點，先打電話給哥哥問他在哪」** — observe 檢定
    - 成功 → scene_phone_again [clue+1]（**Open Q1：clue 來源非 canon 反差跡象**）
@@ -225,7 +228,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
    - 失敗 → scene_end_curse_spread [san-25]
 
 > 📝 **routing 不一致說明（使用者拍板：A 接受）**：
-> - `scene_wait_classroom` Choice 2 撞門 strength 成功 → `scene_corridor_search`（Route B 探索）
+> - `scene_wait_classroom` Choice 2 撞門 strength 成功 → `scene_endless_stairs`（進 Route B 困樓梯）
 > - `scene_door_stuck` Choice 1 撞前門 strength 成功 → `scene_phone_again_escape`（Route A 收回）
 >
 > Narrative 解釋：door_stuck 是「已被詛咒纏深一次」狀態（門變沉重 + 怪聲音逼近），撞出去也被電話拉回主線；wait_classroom 撞門是「還沒被纏深」，可進 Route B。詛咒越纏越深 = 自由度遞減，IP-canon 對齊。
@@ -571,11 +574,66 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 
 ## 📞 phone_again 變體 family — 整合期統一處理
 
-三個變體（`scene_phone_again` / `scene_phone_again_hide` / `scene_phone_again_escape`）整合方案：
+四個變體（`scene_phone_again` / `_hide` / `_escape` / `_stairs`）整合方案：
 
 | 整合 to-do | 處理方式 |
 |-----------|---------|
-| 圖片資源 | 三變體共用同一張電話螢幕特寫 / 23:47 圖 |
+| 圖片資源 | 四變體共用同一張電話螢幕特寫 / 23:47 圖 |
 | narrative 中段 | 各場各自寫一份完整 narrative（接受重複，因為玩家在不同路線只會看到一個版本）|
-| 後段選項 | hide / escape 兩變體共用「警戒 / 前進」(resolve) 選項 — 可能用 `scene_routeA_phone_choice` router 收斂；主版 phone_again 後段是「質問 / 求救 / 神情恍惚」三選 → final_ascent，保留差異 |
-| 5 階補完 | 三變體的所有 resolve / observe 檢定都補 critical_success / partial / fumble |
+| 後段選項 | hide / escape 共用「警戒 / 前進」(resolve)；主版 + stairs 共用「質問 / 求救 / 神情恍惚」(observe) — 可能用 router 收斂 |
+| stairs 變體特殊 | narrative 同主版但**拿掉結尾「教室門推開露出血紅長廊」段**（樓梯間 perspective 不需教室門 visual） |
+| 5 階補完 | 四變體所有 resolve / observe 檢定都補 critical_success / partial / fumble |
+
+---
+
+## 🌀 Route B 設計：困永遠的樓梯（使用者拍板）
+
+### 結構（1 場主場景 + 共用結局）
+
+```
+scene_start Choice 2「出去找哥哥」 ─→ scene_endless_stairs_search (主動 perspective)
+                                                  │
+wait_classroom Choice 2 撞門成功 ──→ scene_endless_stairs (被動 perspective)
+                                                  │
+                                共用 narrative：
+                                - 永遠下不到一樓
+                                - 樓梯間樓層 F 標誌全變成掛鐘 23:47
+                                - 妹妹感覺背後被東西盯上
+                                                  │
+                            ┌─────────────────────┴────────────────┐
+                            │                                       │
+                  Choice 1（兩變體不同）                  Choice 2（共用）
+                            │                                       │
+                            ├─ search 變體：「打給哥哥」（主動撥）   │
+                            │       └─→ scene_phone_again_stairs    │
+                            │                                       │
+                            └─ main 變體：「轉念聽哥哥，去天台」     │
+                                    └─→ scene_phone_again_stairs    │
+                                                                    │
+                                                            「打破火災警鈴求救」
+                                                                    │
+                                                                    └─→ scene_end_rescued
+                                                                       (中性偏壞《校園救援》— 重寫)
+```
+
+### scene_endless_stairs / scene_endless_stairs_search
+
+⏳ **narrative 待 Gemini 寫**。設計大綱：
+- Wave 1+2 加壓融合：樓梯永無止盡 + 樓層標誌都被掛鐘 23:47 取代 + 妹妹背後被東西盯
+- 「背後被東西盯」呼應 phone_again_stairs 開頭「冰冷感快貼上後頸」（narrative 連貫）
+- 兩變體 narrative 100% 共用，唯一差異 = 選項 1 動作（search = 打給哥哥 / main = 轉念聽哥哥）
+- 選項 2 共用「打破火災警鈴求救」 → scene_end_rescued
+
+### scene_phone_again_stairs
+
+⏳ **整合期可從主版 derive**。差異：
+- narrative = scene_phone_again 主版 - 結尾「教室門推開露出血紅長廊」段
+- 後段選項組同主版（質問 / 求救 / 神情恍惚 → final_ascent）
+- 圖片同主版
+
+### scene_end_rescued — 重寫指示
+
+⏳ **narrative 待 Gemini 寫**。性質改為**中性偏壞《校園救援》**：
+- 火災警鈴響起 → 警衛 / 教師趕到 → 妹妹被救出
+- **後續：精神嚴重受挫 → 轉學 → 一輩子受影響**
+- 跟 normal_escape (《無盡校園》中性循環) 性質區別：rescued 是「物理救出但精神毀了」，normal_escape 是「以為逃出實在循環中」
