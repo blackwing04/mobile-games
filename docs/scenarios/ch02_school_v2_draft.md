@@ -1,0 +1,130 @@
+# Ch2「下課之後」v2 精修版 — WIP draft
+
+> 🚧 **這是 Gemini 精修中的 v2 版本累積區，未整合到 `ch02_school.json`。**
+>
+> 工作流：Gemini 寫一場 → 使用者監督拍板 → 累積到本檔 → 全部寫完一次性整合（補 5 階 + routing 驗證 + 同步 canonical MD）→ 覆蓋 v1。
+>
+> v1 (現行 JSON) 跟 v2 並存期間，Web / APK 跑的還是 v1，玩家無感。
+
+---
+
+## 🔄 進度追蹤
+
+### 既有場景（v1 → v2 重寫狀態）
+
+| Scene ID | v1 狀態 | v2 狀態 | 備註 |
+|----------|--------|---------|------|
+| scene_start | ✅ JSON 已套 v2 | ✅ 已收 | 含「別理會任何人的聲音」伏筆 |
+| scene_wait_classroom | v1 在 JSON | ✅ 已收 | 3 選項：看時鐘 / 撞門 / 趴睡 |
+| scene_phone_again | v1 在 JSON | ⏳ 等寫 | **需回扣「別理會任何人的聲音」伏筆** |
+| scene_walk_to_rooftop | v1 在 JSON | ⏳ 等寫 | Wave 2 終局 |
+| scene_corridor_search | v1 在 JSON | ⏳ 等寫 | Route B 入口 |
+| scene_corridor_deep | v1 在 JSON | ⏳ 等寫 |  |
+| scene_mirror_self | v1 在 JSON | ⏳ 等寫 | Wave 3 終局 |
+| scene_leave_school | v1 在 JSON | ⏳ 等寫 | Route C 入口 |
+| scene_phone_at_gate | v1 在 JSON | ⏳ 等寫 |  |
+| 4 個 router (dispatch) | v1 在 JSON | 通常不需改 | 視結局數值有沒有調再說 |
+| 7 個結局 | v1 在 JSON | ⏳ 等寫 |  |
+
+### 新增場景（v2 引入，v1 沒有）
+
+| Scene ID | 引用來源 | 狀態 |
+|----------|---------|------|
+| scene_classroom_wake | scene_wait_classroom 趴睡成功 | ✅ 已收 |
+| scene_scare_clock | scene_wait_classroom 看時鐘失敗 | ⏳ 等 narrative |
+| scene_door_stuck | scene_wait_classroom + scene_classroom_wake 撞門失敗 | ⏳ 等 narrative |
+| scene_phone_static | scene_classroom_wake 打電話失敗 | ⏳ 等 narrative |
+
+---
+
+## 📋 Open questions（等使用者拍板）
+
+| # | 問題 | 影響 |
+|---|------|------|
+| 1 | scene_classroom_wake observe 成功 `clue+1` — clue 來源不對應 IP_BIBLE 4 個 canon「反差跡象」。要 (a) 擴 canon list 加新跡象 / (b) 改成 `san+5` 非 clue 獎勵？ | 真結局 (clue ≥3) 達成難度 |
+| 2 | Wave 1 顯現時機：scene_start 已經寫了時鐘停 + 影子融入陰影；scene_wait_classroom 又加秒針顫動 + 夕陽變血色 — Wave 1 加壓快，後面 Wave 2/3 對比強度會否被稀釋？ | 整體節奏 |
+| 3 | 「趴著睡」失敗 → `scene_end_lost_school`：但「無盡校園」結局 canon 是「跟著鏡中我走」(Wave 3 終局)。趴睡導致無盡校園邏輯不順 — 要 (a) 接受混用 / (b) 新增「夢魘」結局 / (c) 改走 `scene_end_curse_spread`？ | 結局意涵一致性 |
+
+---
+
+## 🚧 整合到 v1 時必做的清單
+
+整合 v2 → `ch02_school.json` 時：
+
+1. ☐ 所有 skill_check 補 5 階（critical_success / success / partial / failure / fumble）— Gemini 通常只給 2 階。整合時參考既有 v1 effects 比例補
+2. ☐ Routing 完整性 — `flutter test` 跑 JSON integrity，確認所有 next 都指到實際 scene
+3. ☐ Skill ID 校驗 — 全部 skill_check 用的 skill 都在統一 8 技能表內
+4. ☐ 同步 `ch02_school_canonical.md`
+5. ☐ 確認 episode = 2、truth_ending_id = scene_end_truth、resources 沒變
+6. ☐ 整合完跑一輪 flutter analyze + flutter test
+
+---
+
+# 已收場景（依寫作順序累積）
+
+## scene_start (v2 ✅ **已整合進 JSON**)
+
+> 內容已寫進 `assets/scenarios/ch02_school.json` + `ch02_school_canonical.md`。本檔不重複貼。
+
+選項：
+
+1. **「聽哥哥的話，留在教室等他」** → scene_wait_classroom
+2. **「電話和時鐘都太奇怪了，出去找哥哥」** → scene_corridor_search
+3. **「我又不是小孩子了，有什麼事回家再講不行喔，直接回家」** → scene_leave_school
+
+---
+
+## scene_wait_classroom (v2 ✅ 已收，待整合)
+
+> 妳嘆了口氣，坐回座位，把耳機塞進耳朵。妳決定給哥哥五分鐘，如果他沒出現，妳就自己去搭公車回家。
+>
+> 教室門口傳來幾聲零星的腳步聲。最後一個離開的同學在拉上門前，隔著門窗跟妳揮了揮手，口型似乎是在說「明天見」。妳點了點頭，勉強擠出一個微笑，心裡卻在想：這學校今天靜得讓人耳鳴。
+>
+> 妳再次抬頭看向黑板旁的掛鐘。
+>
+> 指針依然停在 23:47。但這一次妳注意到，那根黑色的秒針正在劇烈地顫動著。它像是想要往前跳，卻被某種看不見的力量死死拽住，在寂靜的教室裡發出極其細微的「喀——喀——」聲。
+>
+> 妳皺起眉，下意識地掏出手機確認：17:03。
+>
+> 才過了三分鐘。但妳轉頭看向窗外，那抹原本應該緩緩沉落的橘紅夕陽，現在竟然像是融化的蠟一樣，在天邊拉出了幾道詭異的血色條紋。
+>
+> 妳看著那些斜射進教室的光影，光影的夾角和妳剛才坐下時似乎一模一樣，沒有絲毫移動。一種強烈的違和感像冷水般從腳底竄上脊椎，妳感到一陣莫名的不適，連呼吸都變得有些侷促。
+
+選項（**Gemini 原寫 2 階，整合時要補 5 階**）：
+
+1. **「走過去仔細看那個掛鐘到底怎麼了」** — observe 檢定
+   - 成功 → scene_phone_again [clue+1]
+   - 失敗 → scene_scare_clock [san-15]
+2. **「這地方待不下去，不等了，立刻離開教室」** — strength 檢定（使用者指示：原寫 stealth 改 strength）
+   - 成功 → scene_corridor_search
+   - 失敗 → scene_door_stuck [san-10]
+3. **「哥哥說過別理會聲音⋯⋯我乾脆趴著睡一下好了」** — observe 檢定（待商議：邏輯上比較像 common_sense / resolve）
+   - 成功 → scene_classroom_wake
+   - 失敗 → scene_end_lost_school（**Open Q3：邏輯爭議**）
+
+---
+
+## scene_classroom_wake (v2 ✅ 已收，新場景)
+
+> 妳的手枕在課桌上，耳機裡的旋律漸漸變得遙遠。就在快要失去意識進入夢鄉時，妳的身體猛然抽搐了一下。
+>
+> 那是一種類似墜落感的生理警訊。妳沒有聽到任何聲音，但冷汗瞬間浸透了妳的後背。妳僵坐在位子上不敢動彈，那種感覺極其強烈——彷彿在教室後方那些看不見的陰影角落裡，正有人在暗處死死地盯著妳，目光冰冷且充滿惡意。
+>
+> 妳驚慌地抬起頭，下意識地看向手錶：17:15。
+>
+> 按照常理，現在應該是夕陽最亮的時候，但窗外的陽光卻不知在何時消失了。整間教室陷入了一片死寂的黑暗，那種黑並非入夜後的自然黑，而是一種像墨水般濃稠、帶著窒息感的混濁。
+>
+> 剛才那種暖橘色的光影完全不見了，取而代之的是手錶螢幕發出的微弱白光，在絕對的黑暗中顯得孤零零的。妳環顧四周，課桌椅的輪廓在黑暗中扭曲變形，像是一座座沉默的墓碑。
+>
+> 妳感覺喉嚨乾澀，心臟狂跳的聲音在寂靜的教室裡震耳欲聾。
+>
+> 妳猛地抓起書包站了起來，椅子在空曠的教室裡劃出一聲刺耳的「吱——」聲。這聲音大得誇張，彷彿在向暗處那個「窺視者」宣告妳已經醒了。
+
+選項（**Gemini 原寫 2 階，整合時要補 5 階**）：
+
+1. **「不敢再待下去了，用盡全力撞開門衝出去！」** — strength 檢定
+   - 成功 → scene_corridor_search
+   - 失敗 → scene_door_stuck [san-10]
+2. **「冷靜點，先打電話給哥哥問他在哪」** — observe 檢定
+   - 成功 → scene_phone_again [clue+1]（**Open Q1：clue 來源非 canon 反差跡象**）
+   - 失敗 → scene_phone_static [san-5]
