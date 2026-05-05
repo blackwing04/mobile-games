@@ -28,7 +28,11 @@ class ScenarioRunner {
     if (choice.next == null) {
       throw ArgumentError('非檢定型選項必須有 next 場景：${choice.label}');
     }
-    final newResources = _applyEffects(state.resources, choice.effects);
+    final newResources = _applyEffects(
+      state.resources,
+      choice.effects,
+      defs: state.scenario.resources,
+    );
     return state.copyWith(
       currentSceneId: choice.next,
       resources: newResources,
@@ -54,10 +58,16 @@ class ScenarioRunner {
     final result = _diceRoller.roll(skill.value);
     final outcome = check.outcomeFor(result.outcome);
 
-    final afterChoiceEffects =
-        _applyEffects(state.resources, choice.effects);
-    final afterOutcomeEffects =
-        _applyEffects(afterChoiceEffects, outcome.effects);
+    final afterChoiceEffects = _applyEffects(
+      state.resources,
+      choice.effects,
+      defs: state.scenario.resources,
+    );
+    final afterOutcomeEffects = _applyEffects(
+      afterChoiceEffects,
+      outcome.effects,
+      defs: state.scenario.resources,
+    );
 
     // 計算本次擲骰造成的 resource 變動 (僅保留有實際變化的 entry)
     final deltas = <String, int>{};
@@ -113,14 +123,30 @@ class ScenarioRunner {
 
   Map<String, int> _applyEffects(
     Map<String, int> current,
-    List<ResourceEffect> effects,
-  ) {
+    List<ResourceEffect> effects, {
+    List<ResourceDef>? defs,
+  }) {
     if (effects.isEmpty) return current;
     final next = Map<String, int>.from(current);
     for (final effect in effects) {
       final old = next[effect.resource] ?? 0;
-      next[effect.resource] = old + effect.delta;
+      var newValue = old + effect.delta;
+      // 根據 ResourceDef.max clamp 上限 (clue cap、san max 等)
+      // 下限統一 clamp 到 0 (避免 san 跌成負數造成 dispatcher 混亂)
+      if (defs != null) {
+        final def = _findDef(defs, effect.resource);
+        if (def?.max != null && newValue > def!.max!) newValue = def.max!;
+      }
+      if (newValue < 0) newValue = 0;
+      next[effect.resource] = newValue;
     }
     return next;
+  }
+
+  ResourceDef? _findDef(List<ResourceDef> defs, String id) {
+    for (final d in defs) {
+      if (d.id == id) return d;
+    }
+    return null;
   }
 }

@@ -10,7 +10,8 @@ class ResourceBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (defs.isEmpty) return const SizedBox.shrink();
+    final visibleDefs = defs.where((d) => !d.hidden).toList(growable: false);
+    if (visibleDefs.isEmpty) return const SizedBox.shrink();
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -23,7 +24,7 @@ class ResourceBar extends StatelessWidget {
       child: Wrap(
         spacing: 16,
         runSpacing: 6,
-        children: defs.map((def) {
+        children: visibleDefs.map((def) {
           final value = values[def.id] ?? 0;
           final maxText = def.max != null ? '/${def.max}' : '';
           return Row(
