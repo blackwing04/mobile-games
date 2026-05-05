@@ -13,9 +13,9 @@
 | 項目 | 計數 |
 |------|------|
 | 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
-| v2 已收 narrative | 6 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent) |
-| v2 已引用未定義 | 8 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static / the_climax) |
-| **Route A 已累積** | **14**（光這條線就已 14）|
+| v2 已收 narrative | 7 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent / the_climax) |
+| v2 已引用未定義 | 7 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static) |
+| **Route A 已累積（含結局）** | **15**（含 3 個結局收斂）|
 | Route B / C / 結局 / router | 尚未開始 |
 | 樂觀總計預估 | 30+ |
 
@@ -55,7 +55,8 @@
 | scene_monster_glimpse | scene_door_stuck 手電筒成功 | ⏳ 等 narrative |
 | scene_phone_drop | scene_door_stuck 手電筒失敗 | ⏳ 等 narrative |
 | scene_final_ascent | scene_phone_again 三選項共同 next | ✅ 已收 |
-| scene_the_climax | scene_final_ascent 兩選項 4 結果共同 next | ⏳ 等 narrative |
+| scene_the_climax | scene_final_ascent 兩選項 4 結果共同 next | ✅ 已收 |
+| scene_true_ending / scene_bad_ending_fall / scene_normal_ending | scene_the_climax 三選項分流 | ⚠️ Gemini 命名，整合時對應 v1 既有 scene_end_truth / scene_end_lost_soul / scene_end_rescued |
 
 ---
 
@@ -247,3 +248,30 @@
 2. **「（觀察）先不要靠近，觀察周圍。」** — observe 檢定
    - 成功 → scene_the_climax [clue+1]（飲品封膜標籤寫著 23:47，天台圍欄緩緩向外融化）
    - 失敗 → scene_the_climax [san-10]（腳下天台地面微微跳動，像有心跳）
+
+---
+
+## scene_the_climax (v2 ✅ 已收，新場景 — Route A 收斂結局 dispatcher)
+
+> 透過天台機房玻璃上的倒影，他看見了站在門口的妳。那個背影微微一頓，接著，他緩緩地轉過身來。
+>
+> 那張臉確實是妳熟悉的哥哥，他舉起拿著手搖飲的手對著妳搖了搖。
+>
+> 「妹，妳在那邊發什麼呆？過來呀，我買了妳最愛喝的飲料，妳看這夕陽多美，我們看完再一起回家吧。」
+>
+> 他溫柔地說著，但妳注意到他的嘴型與聲音有著詭異的延遲，那種殘響像是不斷重疊的幻聽。此時，他腳下的影子竟像怪物般，正沿著天台地板朝妳緩緩爬過來。
+>
+> 見妳遲遲不肯過去，他指了指手腕上的手錶，那上面的指針正瘋狂倒轉，最後死死地卡在 23:47。
+>
+> 「快點，妹妹。妳再不過來⋯⋯夕陽就要下山了喔。」
+
+最終決斷（**Gemini 原寫 1-2 階，整合時要：補 5 階 / id 對應 v1 結局 / skill rename / clue 門檻校準 / san 雙軸**）：
+
+1. **「你不是我哥⋯⋯（根據線索識破謊言）」** — `[需 Clue ≥ 2]`
+   → scene_true_ending（**整合：對應 scene_end_truth + 加 san ≥ X 條件 + clue 門檻校準到 IP canon ≥3**）
+2. **「相信眼前的哥哥」** → scene_bad_ending_fall（**整合：對應 scene_end_lost_soul + 加 san 大扣**）
+3. **「（閉上眼大喊）這一切都是假的！通通消失！」** — willpower 檢定（**整合：rename 為 resolve；補 5 階**）
+   - 成功 → scene_normal_ending（**整合：對應 scene_end_rescued / scene_end_safe_home 看情境**）
+   - 失敗 → 待 Gemini 補（**整合建議：失敗 → scene_end_lost_soul 或 scene_end_curse_spread**）
+
+> ⚠️ **IP-canon 風險**：第 1 選項 narrative 提到「妳會聽見真正的電話鈴聲將妳喚醒」 — 整合時 narrative 要明確寫成「真哥哥真電話打斷詛咒」，避免被讀成「最後是夢」（IP_BIBLE 6.2「嚴格避免」第 7 條）。
