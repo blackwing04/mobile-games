@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,6 +8,7 @@ import '../../services/ad_service.dart';
 import '../../services/audio_service.dart';
 import 'collection_screen.dart';
 import 'credits_screen.dart';
+import 'debug_scene_browser_screen.dart';
 import 'scenario_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -69,7 +71,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('異聞錄'),
+        title: GestureDetector(
+          // Debug: 長按標題開啟場景瀏覽器（release build 直接 noop）
+          onLongPress:
+              kDebugMode ? () => showDebugSceneBrowser(context) : null,
+          child: const Text('異聞錄'),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.menu_book_outlined),
