@@ -32,8 +32,13 @@
 |----------|---------|------|
 | scene_classroom_wake | scene_wait_classroom 趴睡成功 | ✅ 已收 |
 | scene_scare_clock | scene_wait_classroom 看時鐘失敗 | ⏳ 等 narrative |
-| scene_door_stuck | scene_wait_classroom + scene_classroom_wake 撞門失敗 | ⏳ 等 narrative |
+| scene_door_stuck | scene_wait_classroom + scene_classroom_wake 撞門失敗 | ✅ 已收 |
 | scene_phone_static | scene_classroom_wake 打電話失敗 | ⏳ 等 narrative |
+| scene_door_locked_fate | scene_door_stuck 撞前門失敗 | ⏳ 等 narrative |
+| scene_hide_success | scene_door_stuck 躲桌底成功 | ⏳ 等 narrative |
+| scene_hide_fail | scene_door_stuck 躲桌底失敗 | ⏳ 等 narrative |
+| scene_monster_glimpse | scene_door_stuck 手電筒成功 | ⏳ 等 narrative |
+| scene_phone_drop | scene_door_stuck 手電筒失敗 | ⏳ 等 narrative |
 
 ---
 
@@ -128,3 +133,39 @@
 2. **「冷靜點，先打電話給哥哥問他在哪」** — observe 檢定
    - 成功 → scene_phone_again [clue+1]（**Open Q1：clue 來源非 canon 反差跡象**）
    - 失敗 → scene_phone_static [san-5]
+
+---
+
+## scene_door_stuck (v2 ✅ 已收，新場景)
+
+> 妳走到教室後門，伸手握住把手向下按，準備離開這間讓妳越來越不安的空間。
+>
+> 沒反應。把手像是卡死了一樣一動不動。
+>
+> 妳愣了一下，心想大概是這棟舊大樓的門鎖太老舊，或者是門板受潮變形了。妳稍微加重了力道，試著再次拉動門把，但門扉依然緊緊地咬在門框裡，毫無動靜。
+>
+> 妳皺起眉，調整了一下姿勢，雙手扣住門把並用腳抵住牆壁，深吸一口氣後拼命向後一拽——
+>
+> 一次、兩次、三次。除了金屬件在妳用力下發出乾澀、尖銳的磨擦聲外，這扇門依然沉重得像是跟整面牆壁焊死在一起。妳的呼吸漸漸變得急促，掌心因為過度用力而感到一陣刺痛。
+>
+> 這不合理。就算門板變形，連門把都完全動不了也太扯了。
+>
+> 就在妳腦中閃過這個念頭，準備轉向教室前門試試看時，背後的黑暗中傳來了一聲輕響。
+>
+> 「喀。」
+>
+> 是掛鐘。那個停在 23:47 的秒針發出了咬碎枯木般的聲音。
+>
+> 緊接著，另一種聲音在死寂的教室裡響起：那是一種濕漉漉的東西，正貼著磨石子地板緩慢磨擦的聲音。它從教室最後一排的陰影裡，一吋一吋地，朝著正背對黑暗的妳移動過來。
+
+選項（**Gemini 原寫 2 階，整合時要補 5 階**）：
+
+1. **「後門打不開就去前門！用盡全身力氣去撞！」** — strength 檢定
+   - 成功 → scene_corridor_search
+   - 失敗 → scene_door_locked_fate [san-20]
+2. **「別管門了，快躲進最近的課桌底下！」** — stealth 檢定
+   - 成功 → scene_hide_success
+   - 失敗 → scene_hide_fail
+3. **「（強壓恐懼）是誰在那裡？打開手機手電筒照過去！」** — observe 檢定
+   - 成功 → scene_monster_glimpse [clue+1, san-15]
+   - 失敗 → scene_phone_drop
