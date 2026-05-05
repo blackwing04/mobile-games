@@ -8,6 +8,35 @@
 
 ---
 
+## 🎯 線路收斂策略（使用者拍板，整合期遵循）
+
+Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂，避免場景爆炸：
+
+| 線路 | 收斂方式 |
+|------|---------|
+| **Route A 主線**（留教室）| 已收齊 — wait_classroom → phone_again → final_ascent → climax → 三結局 |
+| **Route B**（找哥哥）| 走廊探索 1-2 場 → **「哥哥第二通電話」hook 插入「我在天台等」**→ 接回 final_ascent → climax 主線 |
+| **Route C**（離校）| 校門口 → **「哥哥第二通電話」hook 插入** → 玩家信回頭 = 接 final_ascent；不信 = scene_normal_escape |
+| **detour 失敗**（door_locked_fate / hide_fail / phone_drop / scare_clock 等）| 大多直通 scene_bad_ending_lost；或 san 大扣後 loop back 主流程 |
+| **detour 成功**（hide_success / monster_glimpse 等）| 折回 scene_corridor_search 或 scene_phone_again 主軸 |
+
+### 「哥哥第二通電話」萬能 hook
+
+因為 scene_start 已埋「別理會任何人的聲音」伏筆，第二通電話自帶「真的還是假的」的張力 — 玩家自然會被吸進主線。可以在 Route B/C 任何脫線點插入，讓玩家有機會回到 Route A 主軸。
+
+### 整合後場景預估
+
+- Route A 主線：5（已收）
+- Route A 真結局 path：1（已收）
+- Route B 探索 + hook：2-3
+- Route C 離校 + hook：1-2
+- 結局：4-5（真結局 / normal_escape / bad_lost / lost_soul / curse_spread / safe_home）
+- Router / dispatcher：2-3
+
+**合計約 17-22 場，正好回到黃金量** 🎯
+
+---
+
 ## 📊 場景預算
 
 | 項目 | 計數 |
