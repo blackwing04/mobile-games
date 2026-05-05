@@ -19,8 +19,13 @@
 | ID | 名稱 | 數值 |
 | --- | --- | --- |
 | observe | 觀察 | 65 |
-| stealth | 隱匿 | 50 |
+| listen | 傾聽 | 50 |
 | lore | 博學 | 55 |
+| stealth | 隱匿 | 50 |
+| athletics | 體育 | 45 |
+| strength | 力量 | 55 |
+| resolve | 意志 | 70 |
+| common_sense | 常識 | 55 |
 
 ---
 

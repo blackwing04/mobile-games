@@ -15,9 +15,13 @@
   ],
   "skills": [
     { "id": "observe", "name": "觀察", "value": 65 },
-    { "id": "stealth", "name": "隱匿", "value": 50 },
+    { "id": "listen", "name": "傾聽", "value": 50 },
     { "id": "lore", "name": "博學", "value": 55 },
-    { "id": "resolve", "name": "意志", "value": 70 }
+    { "id": "stealth", "name": "隱匿", "value": 50 },
+    { "id": "athletics", "name": "體育", "value": 45 },
+    { "id": "strength", "name": "力量", "value": 55 },
+    { "id": "resolve", "name": "意志", "value": 70 },
+    { "id": "common_sense", "name": "常識", "value": 55 }
   ],
   "start_scene": "scene_start",
   "scenes": {

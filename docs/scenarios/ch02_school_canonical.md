@@ -26,7 +26,11 @@
 | --- | --- | --- |
 | observe | 觀察 | 60 |
 | listen | 傾聽 | 55 |
+| lore | 博學 | 45 |
+| stealth | 隱匿 | 55 |
 | athletics | 體育 | 50 |
+| strength | 力量 | 40 |
+| resolve | 意志 | 50 |
 | common_sense | 常識 | 55 |
 
 ---
