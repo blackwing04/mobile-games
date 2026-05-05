@@ -13,9 +13,9 @@
 | 項目 | 計數 |
 |------|------|
 | 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
-| v2 已收 narrative | 7 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent / the_climax) |
-| v2 已引用未定義 | 7 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static) |
-| **Route A 已累積（含結局）** | **15**（含 3 個結局收斂）|
+| v2 已收 narrative | 11 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost) |
+| v2 已引用未定義 | 8 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static / sms_or_call) |
+| **Route A 已累積（含 3 結局）** | **19** |
 | Route B / C / 結局 / router | 尚未開始 |
 | 樂觀總計預估 | 30+ |
 
@@ -57,6 +57,11 @@
 | scene_final_ascent | scene_phone_again 三選項共同 next | ✅ 已收 |
 | scene_the_climax | scene_final_ascent 兩選項 4 結果共同 next | ✅ 已收 |
 | scene_true_ending / scene_bad_ending_fall / scene_normal_ending | scene_the_climax 三選項分流 | ⚠️ Gemini 命名，整合時對應 v1 既有 scene_end_truth / scene_end_lost_soul / scene_end_rescued |
+| scene_rejection_and_escape | scene_the_climax 第 1 選項真結局路徑 | ✅ 已收（含追逐+敏捷檢定，把使用者 design intent 的 2 場合成 1 場） |
+| scene_true_rescue | scene_rejection_and_escape 條件成功 | ✅ 已收 → 整合對應 scene_end_truth |
+| scene_normal_escape | scene_rejection_and_escape 一般成功 | ✅ 已收 → 整合對應 scene_end_safe_home（妹妹自己逃出）|
+| scene_bad_ending_lost | scene_rejection_and_escape 失敗 | ✅ 已收 → 整合對應 scene_end_lost_school（失蹤，非墜樓）|
+| scene_sms_or_call | clue=2 觸發點被 dispatcher 強制插入 | ⏳ 等 narrative — 妹妹感到不對勁，2 選：傳簡訊 / 打電話（打通會自動跳「無回應」訊息） |
 
 ---
 
@@ -276,3 +281,87 @@
    - 失敗 → 待 Gemini 補（**整合建議：失敗 → scene_end_lost_soul 或 scene_end_curse_spread**）
 
 > ⚠️ **IP-canon 風險**：第 1 選項 narrative 提到「妳會聽見真正的電話鈴聲將妳喚醒」 — 整合時 narrative 要明確寫成「真哥哥真電話打斷詛咒」，避免被讀成「最後是夢」（IP_BIBLE 6.2「嚴格避免」第 7 條）。
+
+---
+
+## 🆕 SMS 機制（使用者新引入 design — 整合期 engine 處理方案）
+
+**設計目標**：真結局條件 = `clue ≥ 2 AND sent_sms`。當玩家拿到 clue 第 2 次時，無論在哪個場景，下一步強制進「妹妹感到不對勁 → 傳簡訊 / 打電話」選擇場景。傳簡訊設旗標、打電話跳「無回應」訊息後自然回原本流程。
+
+**整合期 engine 方案（不需改引擎 code）**：
+
+1. **新增隱藏 resource `sms_sent`**（initial: 0, max: 1）— UI 不顯示。IP_BIBLE 7.1 規定 san/clue 跨章一致是「玩家認知」考量；hidden flag 不在 UI 上不違反此原則
+2. **「強行插入」用 dispatcher 模擬**：每個 clue+1 的 effect 後，原本指向的 next 改為 `scene_dispatch_clue_check`（新增 router）
+   - dispatcher 條件：`if_resource_at_least: { clue: 2 }` AND `if_resource_below: { sms_sent: 1 }` → 跳 `scene_sms_or_call`
+   - 預設 → 跳原本目標
+3. **三層 outcome (失敗/普通/真) 的雙軸**：擲過 → next 進 `scene_dispatch_routeA_climax_check` (新增 router) → 看 `clue ≥ 2 AND sms_sent ≥ 1` 真 / 否則普通
+
+整合期我自己處理，不擋 Gemini 寫作流程。
+
+---
+
+## scene_rejection_and_escape (v2 ✅ 已收，新場景 — Route A 真結局路徑追逐+檢定)
+
+> 「你不是我哥。」
+>
+> 妳的話音剛落，空氣瞬間凝固。前一秒還溫柔微笑的「哥哥」，臉部肌肉開始像融化的蠟一樣垮下，那張臉迅速乾縮成一個漆黑的深淵。他手裡的那杯手搖飲「啪」地掉落在地，流出的卻是帶著腐臭味的黑色黏液。
+>
+> 「⋯⋯被⋯⋯發現了⋯⋯啊⋯⋯」
+>
+> 那聲音化作尖銳的嘶吼，整個天台開始崩塌，地面變得像沼澤般柔軟。那團黑影怪物猛地彈起，像一塊巨大的黑布朝妳撲過來！妳沒有一絲遲疑，轉身就往天台門口的樓梯間狂奔。
+>
+> 背後傳來那種濕滑、黏稠的磨擦聲，而且越來越近，幾乎就貼在妳的後腦勺上。那股腥臭的惡寒讓妳全身的汗毛直豎。
+>
+> 妳感覺到，只要一慢下來，背後那頭漆黑怪獸就會將妳整個人吞噬下去。
+
+選項（**Gemini 原寫 3 階含條件式 outcome，整合時補成 5 階 + dispatcher**）：
+
+1. **「（逃跑）什麼都不要看，拼命往光亮的地方跑！」** — Agility 檢定（**整合：rename `athletics`**）
+   - 大失敗 / 失敗 → scene_bad_ending_lost
+   - 一般成功 → scene_normal_escape
+   - 成功且滿足 `clue ≥ 2 AND sms_sent ≥ 1` → scene_true_rescue
+   - **整合時改成**：成功 → next: scene_dispatch_routeA_truth_check（router 看雙軸條件）
+
+---
+
+## scene_true_rescue (v2 ✅ 已收，真結局)
+
+> 妳在絕望的追逐中猛地撞開一樓大門，就在那漆黑觸手即將纏住妳脖子的瞬間，一個結實溫暖的身影猛地衝上前將妳拉開，真實的怒吼聲震碎了四周的幻象——
+>
+> 「滾開！別碰我妹！」
+>
+> 妳整個人被那股巨大的力量帶向後方，重重地撞進一個充滿汗水味與真實溫度的懷抱。妳大口喘著氣，視線終於對焦。那是哥哥。他穿著工作服，滿頭大汗，臉上的焦急與憤怒是那麼地真實。他身後是停在校門口的機車，引擎還在發熱。
+>
+> 妳回頭看向那座漆黑的舊校舍。門口依然是一片死寂，沒有紅光，沒有掛鐘，也沒有那頭漆黑的怪獸。只有風吹過廢棄教室窗戶的哀鳴聲。
+>
+> 哥哥的手還在微微發抖，他抓著妳的肩膀，反覆確認妳有沒有受傷。雖然妳依然感到那股揮之不去的惡寒，但當他牽起妳的手，帶著妳走向機車時，妳知道那段 23:47 的夢魘終於結束了。
+>
+> 「走，我們回家了。以後放學不准再隨便亂跑了，聽到沒有！」
+
+**整合時對應**：scene_end_truth (好結局)
+
+---
+
+## scene_normal_escape (v2 ✅ 已收，倖存結局)
+
+> 妳跌跌撞撞地衝出學校，當妳在大門口喘息回頭時，學校已是一片死寂。
+>
+> 沒有紅光，也沒有那個扭曲的背影。妳獨自站在空曠的校門口，冷汗浸透了衣服。妳拿出手機，上面沒有任何未接來電，也沒有哥哥的回覆。
+>
+> 雖然妳逃出來了，但每當妳路過這間學校，妳總覺得影子深處還有什麼東西在盯著妳看。那個 23:47 的掛鐘，似乎依然掛在妳意識深處的某個角落，滴答作響。
+
+**整合時對應**：scene_end_safe_home (好結局，妹妹自己逃出，不知情)
+
+---
+
+## scene_bad_ending_lost (v2 ✅ 已收，失蹤結局)
+
+> 妳在樓梯轉角被陰影纏住腳踝，黑暗瞬間覆蓋了妳的視線。
+>
+> 妳甚至來不及尖叫，那種濕冷且沉重的力量就將妳拖入了地板的裂縫中。在那最後的一秒鐘，妳看見牆上的掛鐘依舊停在 23:47，對妳而言，這似乎是妳最後能知曉的時間。
+>
+> 隔天，這座廢棄校舍的門口只留下一隻掉落的鞋子，而妳，再也沒有出現過。
+
+**整合時對應**：scene_end_lost_school (壞結局，失蹤類型 — 非墜樓，非無盡校園鏡中我，而是被陰影拖走的失蹤變體)
+
+> ⚠️ 注意：此場景 narrative **不是墜樓**（IP-canon「signature 死法 = 墜樓」是 scene_end_lost_soul 的 canon，從 scene_the_climax 第 2 選項「相信哥哥」直接觸發；此場是失蹤類型，對應 scene_end_lost_school，與 Wave 3 鏡中我同型）。
