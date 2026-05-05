@@ -20,6 +20,10 @@ class EndingScreen extends ConsumerWidget {
   /// true 時上方 label 顯示「— 真結局 —」取代「— 好結局 —」之類
   final bool isTruth;
 
+  /// Debug 模式下顯示在右上角的 scene id（給開發回報用）
+  /// null 時不顯示；release build 統一傳 null
+  final String? debugSceneId;
+
   const EndingScreen({
     super.key,
     required this.ending,
@@ -28,6 +32,7 @@ class EndingScreen extends ConsumerWidget {
     required this.onHome,
     this.viewOnly = false,
     this.isTruth = false,
+    this.debugSceneId,
   });
 
   /// 結局插圖：優先使用 ending.image，沒有就 fallback 到 scene.image
@@ -51,10 +56,44 @@ class EndingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
-          child: Column(
+      body: Stack(
+        children: [
+          SafeArea(child: _buildContent(ref)),
+          if (debugSceneId != null)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.5),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      debugSceneId!,
+                      style: const TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 11,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContent(WidgetRef ref) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
+      child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (_image != null) ...[
@@ -119,8 +158,6 @@ class EndingScreen extends ConsumerWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        );
   }
 }

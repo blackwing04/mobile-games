@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -87,11 +88,31 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
         onRestart: notifier.restart,
         onHome: () => Navigator.of(context).pop(),
         isTruth: scenario.truthEndingId == state.currentSceneId,
+        debugSceneId: kDebugMode ? state.currentSceneId : null,
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(scenario.title)),
+      appBar: AppBar(
+        title: kDebugMode
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(scenario.title),
+                  Text(
+                    scene.id,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: Colors.white54,
+                      fontFamily: 'monospace',
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                ],
+              )
+            : Text(scenario.title),
+      ),
       body: SafeArea(
         top: false,
         child: Stack(

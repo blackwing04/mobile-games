@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -318,6 +319,7 @@ class _EndingTile extends StatelessWidget {
           viewOnly: true,
           onHome: () => Navigator.of(context).pop(),
           isTruth: isTruth,
+          debugSceneId: kDebugMode ? scene.id : null,
         ),
       ),
     );
