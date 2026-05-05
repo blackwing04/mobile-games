@@ -8,6 +8,7 @@ import '../../engine/models/scenario.dart';
 import '../../engine/models/scene.dart';
 import '../../providers/game_provider.dart';
 import '../../services/audio_service.dart';
+import '../widgets/debug_scene_id_chip.dart';
 
 const String _kDebugPassword = 'joeyuan';
 
@@ -212,12 +213,14 @@ class _SceneTile extends ConsumerWidget {
           runSpacing: 4,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            Text(
-              sceneId,
-              style: const TextStyle(
+            DebugSceneIdChip(
+              sceneId: sceneId,
+              textStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontFamily: 'monospace',
+                fontSize: 14,
               ),
+              iconSize: 14,
             ),
             if (isStart) _badge('Start', Colors.green),
             if (scene.isRouter) _badge('Router', Colors.blue),

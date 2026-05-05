@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../engine/models/scene.dart';
 import '../../services/audio_service.dart';
+import '../widgets/debug_scene_id_chip.dart';
 import '../widgets/scene_image.dart';
 
 class EndingScreen extends ConsumerWidget {
@@ -66,20 +67,13 @@ class EndingScreen extends ConsumerWidget {
               child: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(6),
-                  child: Container(
+                  child: DebugSceneIdChip(
+                    sceneId: debugSceneId!,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
                       color: Colors.black.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      debugSceneId!,
-                      style: const TextStyle(
-                        fontFamily: 'monospace',
-                        fontSize: 11,
-                        color: Colors.white70,
-                      ),
                     ),
                   ),
                 ),

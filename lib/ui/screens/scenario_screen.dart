@@ -8,6 +8,7 @@ import '../../providers/game_provider.dart';
 import '../../services/audio_service.dart';
 import '../../services/unlock_service.dart';
 import '../widgets/choice_button.dart';
+import '../widgets/debug_scene_id_chip.dart';
 import '../widgets/dice_overlay.dart';
 import '../widgets/narrative_text.dart';
 import '../widgets/resource_bar.dart';
@@ -100,9 +101,9 @@ class _ScenarioScreenState extends ConsumerState<ScenarioScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(scenario.title),
-                  Text(
-                    scene.id,
-                    style: const TextStyle(
+                  DebugSceneIdChip(
+                    sceneId: scene.id,
+                    textStyle: const TextStyle(
                       fontSize: 11,
                       color: Colors.white54,
                       fontFamily: 'monospace',
