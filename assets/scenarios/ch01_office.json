@@ -11,7 +11,7 @@
   "truth_ending_hint": "需要走「真相揭露」路線——讓自己擲到「博學」拿到關鍵線索 (進入「想起完整真相」場景)，然後在面對小婷時選「衝出電梯」並擲過意志檢定，且最終神智需保持在 50 以上。線索達 3 個 + 神智 ≥ 50 + 衝電梯擲過 = 解放小婷的「安息」結局。",
   "resources": [
     { "id": "san", "name": "神智", "max": 100, "initial": 70, "icon": "🧠" },
-    { "id": "clue", "name": "線索", "initial": 0, "icon": "🔍" }
+    { "id": "clue", "name": "線索", "max": 3, "initial": 0, "icon": "🔍" }
   ],
   "skills": [
     { "id": "observe", "name": "觀察", "value": 65 },
