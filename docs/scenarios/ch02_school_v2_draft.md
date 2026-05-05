@@ -16,7 +16,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 |------|---------|
 | **Route A 主線**（留教室）| 已收齊 — wait_classroom → phone_again → final_ascent → climax → 三結局 |
 | **Route B**（找哥哥）| 走廊探索 1-2 場 → **「哥哥第二通電話」hook 插入「我在天台等」**→ 接回 final_ascent → climax 主線 |
-| **Route C**（離校）| 校門口 → **「哥哥第二通電話」hook 插入** → 玩家信回頭 = 接 final_ascent；不信 = scene_normal_escape |
+| **Route C**（試圖離校 → 被詛咒擋）| 玩家點 scene_start Choice 3「直接回家」→ **詛咒不讓任何人逃**，直接 → `scene_door_stuck_impatient` 變體 → 併進 Route A 主線。**完全不寫 leave_school / phone_at_gate** |
 | **detour 失敗**（door_locked_fate / hide_fail / phone_drop / scare_clock 等）| 大多直通 scene_bad_ending_lost；或 san 大扣後 loop back 主流程 |
 | **detour 成功**（hide_success / monster_glimpse 等）| 折回 scene_corridor_search 或 scene_phone_again 主軸 |
 
@@ -42,9 +42,9 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | 項目 | 計數 |
 |------|------|
 | 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
-| v2 已收 narrative | 15 (start / wait_classroom / classroom_wake / door_stuck / phone_again / phone_again_hide / phone_again_escape / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost / sms_or_call / end_curse_spread) |
+| v2 已收 narrative | 16 (start / wait_classroom / classroom_wake / door_stuck / door_stuck_impatient / phone_again / phone_again_hide / phone_again_escape / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost / sms_or_call / end_curse_spread) |
 | v2 已引用未定義 | 3 (scare_clock / monster_glimpse / phone_static) |
-| **Route A 已累積（含 4 結局 + SMS 機制 + 3 phone variants）** | **18** |
+| **Route A + C 合流累積（含結局 + SMS + 3 phone variants + 2 door variants）** | **18** |
 | Route B / C / 結局 / router | 尚未開始 |
 | 樂觀總計預估 | 30+ |
 
@@ -65,8 +65,8 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | scene_corridor_search | v1 在 JSON | ⏳ 等寫 | Route B 入口 |
 | scene_corridor_deep | v1 在 JSON | ⏳ 等寫 |  |
 | scene_mirror_self | v1 在 JSON | ⏳ 等寫 | Wave 3 終局 |
-| scene_leave_school | v1 在 JSON | ⏳ 等寫 | Route C 入口 |
-| scene_phone_at_gate | v1 在 JSON | ⏳ 等寫 |  |
+| ~~scene_leave_school~~ | v1 在 JSON | ❌ **廢棄** — 使用者拍板：Route C 改為「試圖離校但被詛咒擋」，直接接 door_stuck_impatient |
+| ~~scene_phone_at_gate~~ | v1 在 JSON | ❌ **廢棄** — 同上，沒有校門口接電話橋段 |
 | 4 個 router (dispatch) | v1 在 JSON | 通常不需改 | 視結局數值有沒有調再說 |
 | 7 個結局 | v1 在 JSON | ⏳ 等寫 |  |
 
@@ -76,7 +76,8 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 |----------|---------|------|
 | scene_classroom_wake | scene_wait_classroom 趴睡成功 | ✅ 已收 |
 | scene_scare_clock | scene_wait_classroom 看時鐘失敗 | ⏳ 等 narrative |
-| scene_door_stuck | scene_wait_classroom + scene_classroom_wake 撞門失敗 | ✅ 已收 |
+| scene_door_stuck | scene_wait_classroom + scene_classroom_wake 撞門失敗（已不安 perspective）| ✅ 已收 |
+| scene_door_stuck_impatient | **NEW**：scene_start Choice 3 直接回家入口（不耐煩 perspective）— 跟 scene_door_stuck 共用後段，僅開頭微調 | ✅ 已收 |
 | scene_phone_static | scene_classroom_wake 打電話失敗 | ⏳ 等 narrative |
 | ~~scene_door_locked_fate~~ | ~~scene_door_stuck 撞前門失敗~~ | ❌ 拿掉 — 改直接接 scene_end_curse_spread |
 | scene_phone_again_hide | scene_door_stuck 躲桌底成功（重命名自 scene_hide_success，narrative 微縮 + 選項外提）| ✅ 已收 |
@@ -128,7 +129,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 
 1. **「聽哥哥的話，留在教室等他」** → scene_wait_classroom
 2. **「電話和時鐘都太奇怪了，出去找哥哥」** → scene_corridor_search
-3. **「我又不是小孩子了，有什麼事回家再講不行喔，直接回家」** → scene_leave_school
+3. **「我又不是小孩子了，有什麼事回家再講不行喔，直接回家」** → scene_door_stuck_impatient（**詛咒擋下，沒能離開**）
 
 ---
 
@@ -228,6 +229,36 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 > - `scene_door_stuck` Choice 1 撞前門 strength 成功 → `scene_phone_again_escape`（Route A 收回）
 >
 > Narrative 解釋：door_stuck 是「已被詛咒纏深一次」狀態（門變沉重 + 怪聲音逼近），撞出去也被電話拉回主線；wait_classroom 撞門是「還沒被纏深」，可進 Route B。詛咒越纏越深 = 自由度遞減，IP-canon 對齊。
+
+---
+
+## scene_door_stuck_impatient (v2 ✅ 已收，新變體 — Route C 入口 perspective)
+
+> 妳不耐煩的走到教室後門，伸手握住把手向下按，準備離開教室。
+>
+> 沒反應。把手像是卡死了一樣一動不動。
+>
+> 妳愣了一下，心想大概是這棟舊大樓的門鎖太老舊，或者是門板受潮變形了。妳稍微加重了力道，試著再次拉動門把，但門扉依然緊緊地咬在門框裡，毫無動靜。
+>
+> 妳皺起眉，調整了一下姿勢，雙手扣住門把並用腳抵住牆壁，深吸一口氣後拼命向後一拽——
+>
+> 一次、兩次、三次。除了金屬件在妳用力下發出乾澀、尖銳的磨擦聲外，這扇門依然沉重得像是跟整面牆壁焊死在一起。妳的呼吸漸漸變得急促，掌心因為過度用力而感到一陣刺痛。
+>
+> 這不合理。就算門板變形，連門把都完全動不了也太扯了。
+>
+> 就在妳腦中閃過這個念頭，準備轉向教室前門試試看時，背後的黑暗中傳來了一聲輕響。
+>
+> 「喀。」
+>
+> 是掛鐘。那個停在 23:47 的秒針發出了咬碎枯木般的聲音。
+>
+> 緊接著，另一種聲音在死寂的教室裡響起：那是一種濕漉漉的東西，正貼著磨石子地板緩慢磨擦的聲音。它從教室最後一排的陰影裡，一吋一吋地，朝著正背對黑暗的妳移動過來。
+
+選項（**與 scene_door_stuck 完全共用同一組選項**）：
+
+跟 scene_door_stuck 三個選項一致（撞前門 strength / 躲桌底 stealth / 手電筒 observe），routing 一致。
+
+> 📝 **變體 family**：scene_door_stuck (已不安 perspective) + scene_door_stuck_impatient (不耐煩 perspective)。**唯一差異 = 開頭一句**（「準備離開這間讓妳越來越不安的空間」vs「不耐煩的⋯⋯準備離開教室」）。整合期共用同一張圖、共用後段 narrative、共用後段選項與 routing。
 
 ---
 
@@ -410,11 +441,11 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 |---------|------|
 | `scene_end_safe_home`（好《平安回家》— 不知情倖存）| 🗑️ 廢棄，由 normal_escape 取代 |
 | `scene_end_rescued`（中性《校警救援》）| 🗑️ 廢棄，由 normal_escape 取代 |
-| `scene_end_self_break`（好《自己走出去》— 主動識破成長）| ⚠️ **待拍板** — narrative 性質特殊（明確主動性勝利），是否一併廢棄？ |
+| `scene_end_self_break`（好《自己走出去》）| ✅ **保留** — 觸發路線重新對應：scene_the_climax Choice 3 (resolve 賭) **大成功** → self_break。**narrative 待重寫**：性質從「掛電話成長」改為「**意志力擊退詛咒，妹妹自己從天台走下來**」|
 
 **結局收斂後路線對應**：
 - Route A 真結局路徑 `scene_rejection_and_escape` 一般成功 → normal_escape
-- Route C 不接電話直接離校 → normal_escape
+- ~~Route C 不接電話直接離校~~ → 廢棄（Route C 改為「試圖離校被擋」併進 Route A）
 - Route B 探索失敗收尾 → normal_escape
 - climax Choice 3 (resolve 賭) 成功 → normal_escape（候選）
 
