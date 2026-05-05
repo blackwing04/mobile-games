@@ -42,9 +42,9 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | 項目 | 計數 |
 |------|------|
 | 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
-| v2 已收 narrative | 12 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost / sms_or_call) |
-| v2 已引用未定義 | 7 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static) |
-| **Route A 已累積（含 3 結局 + SMS 機制）** | **19** |
+| v2 已收 narrative | 13 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost / sms_or_call / end_curse_spread) |
+| v2 已引用未定義 | 6 (scare_clock / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static) |
+| **Route A 已累積（含 4 結局 + SMS 機制）** | **19** |
 | Route B / C / 結局 / router | 尚未開始 |
 | 樂觀總計預估 | 30+ |
 
@@ -78,7 +78,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | scene_scare_clock | scene_wait_classroom 看時鐘失敗 | ⏳ 等 narrative |
 | scene_door_stuck | scene_wait_classroom + scene_classroom_wake 撞門失敗 | ✅ 已收 |
 | scene_phone_static | scene_classroom_wake 打電話失敗 | ⏳ 等 narrative |
-| scene_door_locked_fate | scene_door_stuck 撞前門失敗 | ⏳ 等 narrative |
+| ~~scene_door_locked_fate~~ | ~~scene_door_stuck 撞前門失敗~~ | ❌ 拿掉 — 改直接接 scene_end_curse_spread |
 | scene_hide_success | scene_door_stuck 躲桌底成功 | ⏳ 等 narrative |
 | scene_hide_fail | scene_door_stuck 躲桌底失敗 | ⏳ 等 narrative |
 | scene_monster_glimpse | scene_door_stuck 手電筒成功 | ⏳ 等 narrative |
@@ -214,7 +214,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 
 1. **「後門打不開就去前門！用盡全身力氣去撞！」** — strength 檢定
    - 成功 → scene_corridor_search
-   - 失敗 → scene_door_locked_fate [san-20]
+   - 失敗 → scene_end_curse_spread [san-20]（**使用者拍板：移除 door_locked_fate，撞門失敗直接走「下一個」結局**）
 2. **「別管門了，快躲進最近的課桌底下！」** — stealth 檢定
    - 成功 → scene_hide_success
    - 失敗 → scene_hide_fail
@@ -424,3 +424,23 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 > 1. 加隱藏 resource `sms_sent` (initial: 0, max: 1, UI hidden)
 > 2. 在每個 clue+1 觸發點之後路由到 `scene_dispatch_clue_check`（router），條件「clue ≥ 2 AND sms_sent < 1」 → SMS scene；否則 → 原 next
 > 3. SMS scene 兩 choices 都 next → `scene_dispatch_after_sms`（router），按 origin 折回主流程
+
+---
+
+## scene_end_curse_spread (v2 ✅ 已收，覆蓋 v1)
+
+> 所有的掙扎在這一刻都失去了意義。
+>
+> 妳驚恐地發現，視線所及的一切開始迅速崩解、消散。原本存在的輪廓在瞬間液化，化作一股濃稠得近乎固體的黑暗，從四面八方向妳擠壓而來。這不再是單純的陰影，而是一種帶有重量與溫度的寒冷，正一點一滴地滲進妳的皮膚與骨髓。
+>
+> 妳伸出手，卻連自己的五指都看不見。空間感在這一刻徹底消失，妳像是墜入了一個無止盡的深淵，四周只剩下一片絕對的死寂與壓迫感。無數無形的觸感在暗處緩緩纏繞上妳的腳踝，冰冷且充滿惡意地將妳向下拉扯，直到將妳徹底拽入那片墨色之中。
+>
+> 妳的意識開始模糊，手中的手機螢幕成了這片虛無中最後的殘光。
+>
+> 在那慘白的螢幕上，電話正自動撥向妳最熟悉的那個人。聽筒傳來接通的聲音，而妳聽見「自己」正帶著那種令人不寒而慄的空洞笑意，輕聲對著話筒說道：
+>
+> 「你在哪？我在學校等你⋯⋯這裡好漂亮，你快過來⋯⋯」
+
+**使用者設計筆記**：這場是 Ch3 的伏筆 — Ch3 將以妹妹男朋友的視角寫，他接到的就是這通電話。世界線走 Ch2 真結局時，這場不發生。
+
+> 🟡 **整合期 IP-canon 待拍板**：Ch3 主角是男朋友 (非血脈) 跟 IP_BIBLE「主角必須血脈直系」相衝。三選：(A) Ch3 主角換堂表親 (B) 修 IP_BIBLE 接受詛咒擴散到非血脈 (C) 男朋友其實是遠房親戚。**這不擋 Ch2 整合，等使用者後續決定再回來改 IP_BIBLE。**
