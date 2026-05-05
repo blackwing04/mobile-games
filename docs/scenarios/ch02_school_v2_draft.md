@@ -42,9 +42,9 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | 項目 | 計數 |
 |------|------|
 | 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
-| v2 已收 narrative | 14 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost / sms_or_call / end_curse_spread / hide_success) |
+| v2 已收 narrative | 15 (start / wait_classroom / classroom_wake / door_stuck / phone_again / phone_again_hide / phone_again_escape / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost / sms_or_call / end_curse_spread) |
 | v2 已引用未定義 | 3 (scare_clock / monster_glimpse / phone_static) |
-| **Route A 已累積（含 4 結局 + SMS 機制）** | **17** |
+| **Route A 已累積（含 4 結局 + SMS 機制 + 3 phone variants）** | **18** |
 | Route B / C / 結局 / router | 尚未開始 |
 | 樂觀總計預估 | 30+ |
 
@@ -79,7 +79,8 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | scene_door_stuck | scene_wait_classroom + scene_classroom_wake 撞門失敗 | ✅ 已收 |
 | scene_phone_static | scene_classroom_wake 打電話失敗 | ⏳ 等 narrative |
 | ~~scene_door_locked_fate~~ | ~~scene_door_stuck 撞前門失敗~~ | ❌ 拿掉 — 改直接接 scene_end_curse_spread |
-| scene_hide_success | scene_door_stuck 躲桌底成功 | ✅ 已收 |
+| scene_phone_again_hide | scene_door_stuck 躲桌底成功（重命名自 scene_hide_success，narrative 微縮 + 選項外提）| ✅ 已收 |
+| scene_phone_again_escape | scene_door_stuck 撞前門成功（**Gemini 改 routing**：原本 corridor_search → 改回 Route A 主線）| ✅ 已收 |
 | ~~scene_hide_fail~~ | ~~scene_door_stuck 躲桌底失敗~~ | ❌ 拿掉 — 改直接接 scene_end_curse_spread |
 | scene_monster_glimpse | scene_door_stuck 手電筒成功 | ⏳ 等 narrative |
 | ~~scene_phone_drop~~ | ~~scene_door_stuck 手電筒失敗~~ | ❌ 拿掉 — 改直接接 scene_end_curse_spread |
@@ -213,14 +214,20 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 選項（**Gemini 原寫 2 階，整合時要補 5 階**）：
 
 1. **「後門打不開就去前門！用盡全身力氣去撞！」** — strength 檢定
-   - 成功 → scene_corridor_search
-   - 失敗 → scene_end_curse_spread [san-20]（**使用者拍板：移除 door_locked_fate，撞門失敗直接走「下一個」結局**）
+   - 成功 → scene_phone_again_escape（**routing 改：原 corridor_search → 改 phone_again_escape，詛咒越纏越深 = 撞出去也被電話拉回 Route A 主線**）
+   - 失敗 → scene_end_curse_spread [san-20]
 2. **「別管門了，快躲進最近的課桌底下！」** — stealth 檢定
-   - 成功 → scene_hide_success
-   - 失敗 → scene_end_curse_spread [san-25]（**使用者拍板：移除 hide_fail，躲藏失敗直接走「下一個」**）
+   - 成功 → scene_phone_again_hide（rename 自 scene_hide_success）
+   - 失敗 → scene_end_curse_spread [san-25]
 3. **「（強壓恐懼）是誰在那裡？打開手機手電筒照過去！」** — observe 檢定
    - 成功 → scene_monster_glimpse [clue+1, san-15]
-   - 失敗 → scene_end_curse_spread [san-25]（**使用者拍板：移除 phone_drop，手電筒失敗直接走「下一個」**）
+   - 失敗 → scene_end_curse_spread [san-25]
+
+> 📝 **routing 不一致說明（使用者拍板：A 接受）**：
+> - `scene_wait_classroom` Choice 2 撞門 strength 成功 → `scene_corridor_search`（Route B 探索）
+> - `scene_door_stuck` Choice 1 撞前門 strength 成功 → `scene_phone_again_escape`（Route A 收回）
+>
+> Narrative 解釋：door_stuck 是「已被詛咒纏深一次」狀態（門變沉重 + 怪聲音逼近），撞出去也被電話拉回主線；wait_classroom 撞門是「還沒被纏深」，可進 Route B。詛咒越纏越深 = 自由度遞減，IP-canon 對齊。
 
 ---
 
@@ -447,13 +454,13 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 
 ---
 
-## scene_hide_success (v2 ✅ 已收，新場景 — Route A 躲藏成功支線)
+## scene_phone_again_hide (v2 ✅ 已收，rename 自 scene_hide_success — 桌底 perspective 變體)
 
 > 妳蜷縮在課桌下的陰影中，心跳聲在死寂的教室裡顯得震耳欲聾。妳能感覺到門口那股冰冷的氣息正緩緩掃過教室，甚至快要貼上妳的後頸。
 >
-> 就在妳以為要被發現的瞬間，手心裡的手機猛然震動，強烈的震感讓妳整隻手發麻。螢幕閃爍著：「哥哥」。
+> 就在那股冰冷的感覺快要貼上妳的後頸時，手心裡的手機猛然震動，強烈的震感讓妳整隻手發麻。螢幕閃爍著：「哥哥」。
 >
-> 妳像抓到救命稻草般按下了接聽鍵。電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。
+> 妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。
 >
 > 「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」
 >
@@ -461,11 +468,9 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 >
 > 哥哥剛才說⋯⋯夕陽很漂亮？
 >
-> 就在妳遲疑的瞬間，背後那個「喀、喀」的掛鐘聲突然加快了，節奏快得像是瘋狂跳動的心臟。原本打不開的教室門，竟然在此時發出「喀擦」一聲，自己緩緩推開了一道縫隙，露出外面那條血紅色的長廊。
->
-> 門後的長廊被夕陽染成令人不適的深紅，妳別無選擇，必須離開這間教室。
+> 就在妳遲疑的瞬間，背後那個「喀、喀」的掛鐘聲突然加快了。原本打不開的教室門，竟然在此時發出「喀擦」一聲，自己緩緩推開了一道縫隙，露出外面那條血紅色的長廊。
 
-選項（**Gemini 原寫 2 階，整合時補 5 階**）：
+選項（**phone_again_hide / phone_again_escape 共用同一組選項**，整合期可能用 dispatcher 收斂）：
 
 1. **「（警戒）哥哥給人感覺怪怪的，但好像只能衝出去了。」** — resolve 檢定
    - 成功 → scene_final_ascent [clue+1]（環境 vs 電話描述的巨大落差）
@@ -474,4 +479,42 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
    - 成功 → scene_final_ascent
    - 失敗 → scene_end_curse_spread（虛假希望感崩潰，被深紅陰影吞噬）
 
-> 🛠️ **整合期注意**：narrative 中段（電話橋段）跟 scene_phone_again 高度重疊（同一通電話）。整合時決定：(a) 保留兩版本（不同 perspective）/ (b) 縮短 hide_success 後 next 接 phone_again。傾向 (a) — Gemini 寫的桌底 perspective 有額外壓迫感。
+---
+
+## scene_phone_again_escape (v2 ✅ 已收，新場景 — 撞門逃出走廊 perspective 變體)
+
+> 妳發出一聲嘶吼，用肩膀全力撞向門板。「砰！」的一聲巨響，那扇沉重的門竟被妳撞開了一道縫隙。妳顧不得肩膀傳來的撕裂感，側身從縫隙中擠了出去。
+>
+> 就在那股冰冷的感覺快要貼上妳的後頸時，妳撞開了後門逃了出去，此時妳口袋裡的手機猛然震動，強烈的震感讓妳大腿發麻，妳緊張地從口袋拿出手機。螢幕閃爍著：「哥哥」。
+>
+> 妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。
+>
+> 「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」
+>
+> 妳聽著那溫柔的嗓音，看著眼前這條被夕陽——或是被鮮血——染紅的長廊。
+>
+> 哥哥剛才說⋯⋯夕陽很漂亮？
+>
+> 就在妳遲疑的瞬間，後方教室內那個「喀、喀」的掛鐘聲突然加快了，聲音大得像是就在妳耳邊。妳回頭一看，原本被撞開的教室門竟在妳面前緩緩合上，只留下一條深紅色的長廊在妳面前延伸。
+
+選項（**與 scene_phone_again_hide 共用**）：
+
+1. **「（警戒）哥哥給人感覺怪怪的，但好像只能衝出去了。」** — resolve 檢定
+   - 成功 → scene_final_ascent [clue+1]
+   - 失敗 → scene_end_curse_spread
+2. **「（前進）相信哥哥，跟他拚了。」** — resolve 檢定
+   - 成功 → scene_final_ascent
+   - 失敗 → scene_end_curse_spread
+
+---
+
+## 📞 phone_again 變體 family — 整合期統一處理
+
+三個變體（`scene_phone_again` / `scene_phone_again_hide` / `scene_phone_again_escape`）整合方案：
+
+| 整合 to-do | 處理方式 |
+|-----------|---------|
+| 圖片資源 | 三變體共用同一張電話螢幕特寫 / 23:47 圖 |
+| narrative 中段 | 各場各自寫一份完整 narrative（接受重複，因為玩家在不同路線只會看到一個版本）|
+| 後段選項 | hide / escape 兩變體共用「警戒 / 前進」(resolve) 選項 — 可能用 `scene_routeA_phone_choice` router 收斂；主版 phone_again 後段是「質問 / 求救 / 神情恍惚」三選 → final_ascent，保留差異 |
+| 5 階補完 | 三變體的所有 resolve / observe 檢定都補 critical_success / partial / fumble |
