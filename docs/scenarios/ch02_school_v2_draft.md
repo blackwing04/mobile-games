@@ -42,9 +42,9 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | 項目 | 計數 |
 |------|------|
 | 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
-| v2 已收 narrative | 11 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost) |
-| v2 已引用未定義 | 8 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static / sms_or_call) |
-| **Route A 已累積（含 3 結局）** | **19** |
+| v2 已收 narrative | 12 (start / wait_classroom / classroom_wake / door_stuck / phone_again / final_ascent / the_climax / rejection_and_escape / true_rescue / normal_escape / bad_ending_lost / sms_or_call) |
+| v2 已引用未定義 | 7 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static) |
+| **Route A 已累積（含 3 結局 + SMS 機制）** | **19** |
 | Route B / C / 結局 / router | 尚未開始 |
 | 樂觀總計預估 | 30+ |
 
@@ -90,7 +90,7 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | scene_true_rescue | scene_rejection_and_escape 條件成功 | ✅ 已收 → 整合對應 scene_end_truth |
 | scene_normal_escape | scene_rejection_and_escape 一般成功 | ✅ 已收 → 整合對應 scene_end_safe_home（妹妹自己逃出）|
 | scene_bad_ending_lost | scene_rejection_and_escape 失敗 | ✅ 已收 → 整合對應 scene_end_lost_school（失蹤，非墜樓）|
-| scene_sms_or_call | clue=2 觸發點被 dispatcher 強制插入 | ⏳ 等 narrative — 妹妹感到不對勁，2 選：傳簡訊 / 打電話（打通會自動跳「無回應」訊息） |
+| scene_sms_or_call | clue=2 觸發點被 dispatcher 強制插入 | ✅ 已收 — 妹妹 recap 兩條反差跡象，2 選：傳簡訊（sms_sent+1）/ 撥電話（雜訊收線）|
 
 ---
 
@@ -394,3 +394,33 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 **整合時對應**：scene_end_lost_school (壞結局，失蹤類型 — 被陰影拖入地板)
 
 > ✅ IP-canon 已鬆綁（2026-05 update）：失神結局形式不再限定一致，可以是墜樓 / 失蹤 / 被吞噬等。此場「被陰影拖入地板裂縫」即合法的失神變體。
+
+---
+
+## scene_sms_or_call (v2 ✅ 已收，新場景 — SMS 機制中介)
+
+> 妳放慢了腳步，甚至停了下來。在這片死寂中，那些被恐懼掩蓋的細節開始在腦中拼湊。
+>
+> 剛才第二通電話裡哥哥那種溫柔的語氣，在妳心頭激起了一陣不安。在妳的記憶中，哥哥從來不曾用那種輕聲細語的方式跟妳說話。雖然他是妳最親的人，但他平時講話直來直往，甚至帶點脾氣，這種突如其來的「溫柔」反而讓妳覺得陌生。
+>
+> 妳忍不住開始回想第一通電話。那時他的聲音聽起來急急燥燥的，雖然他脾氣不算好，但做事向來有條有理，絕不會像剛才那樣顯得慌亂失序。
+>
+> 「這真的不像他⋯⋯」
+>
+> 這種怪異感讓妳心裡毛毛的。妳轉頭看向四周，只有無盡的黑暗與扭曲的課桌椅。就在這時，妳手中手機螢幕發出的微弱白光映入眼簾，那道光在昏暗中跳動著，像是這片混亂空間裡唯一真實的東西，也讓妳產生了一個念頭。
+
+選項（**整合時補 next + effects；兩選項都不擲骰**）：
+
+1. **「（傳簡訊）你在哪？我在學校等你，但學校好像有點詭異。」** [sms_sent+1]
+   → 整合期 next 折回原流程（dispatcher 處理 origin，最常見回 phone_again 或 final_ascent）
+   - 劇情：妳決定改用文字試探。看著「已傳送」標籤，妳心裡稍微踏實一點。如果他是真的哥哥，他一定會看到。
+2. **「（撥打電話）還是再打一次確認看看，這次我要聽清楚一點。」**
+   → 整合期 next 折回原流程
+   - 劇情：聽筒裡傳來刺耳電子雜訊聲，忽大忽小，中間夾雜指甲刮金屬的尖銳音。妳嚇得縮了一下脖子，通話被硬生生切斷。
+
+> 📝 **使用者拍板**：clue 累積 UI 維持 Ch1 convention「[線索+1]」toast，**不加額外解釋 popup**。本場 narrative 本身就是 natural recap。
+>
+> 🛠️ **整合 to-do**：
+> 1. 加隱藏 resource `sms_sent` (initial: 0, max: 1, UI hidden)
+> 2. 在每個 clue+1 觸發點之後路由到 `scene_dispatch_clue_check`（router），條件「clue ≥ 2 AND sms_sent < 1」 → SMS scene；否則 → 原 next
+> 3. SMS scene 兩 choices 都 next → `scene_dispatch_after_sms`（router），按 origin 折回主流程
