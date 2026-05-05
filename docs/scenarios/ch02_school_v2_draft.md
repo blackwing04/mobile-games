@@ -42,8 +42,8 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | 項目 | 計數 |
 |------|------|
 | 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
-| v2 已收 narrative | 16 (Route A + C 合流) |
-| v2 已引用未定義 | 6 (scare_clock / monster_glimpse / phone_static / endless_stairs / endless_stairs_search / phone_again_stairs)|
+| v2 已收 narrative | 17 (Route A + B + C 合流，含 endless_stairs)|
+| v2 已引用未定義 | 5 (scare_clock / monster_glimpse / phone_static / phone_again_stairs / endless_stairs_search 共用 narrative)|
 | **Route A + B + C 合流累積（含結局 + SMS + 4 phone variants + 2 door variants + 2 stairs variants）** | **22** |
 | Route B / C / 結局 / router | 尚未開始 |
 | 樂觀總計預估 | 30+ |
@@ -78,8 +78,8 @@ Route A 已打通 = 大部分路也打通了。其他線路用以下方式收斂
 | scene_scare_clock | scene_wait_classroom 看時鐘失敗 | ⏳ 等 narrative |
 | scene_door_stuck | scene_wait_classroom + scene_classroom_wake 撞門失敗（已不安 perspective）| ✅ 已收 |
 | scene_door_stuck_impatient | **NEW**：scene_start Choice 3 直接回家入口（不耐煩 perspective）— 跟 scene_door_stuck 共用後段，僅開頭微調 | ✅ 已收 |
-| scene_endless_stairs | **NEW Route B 主場景**：wait_classroom Choice 2 撞門成功入口。永遠下不到一樓 + F 標誌變 23:47 + 背後被盯。選項 1 「轉念聽哥哥，去天台」 → phone_again_stairs；選項 2 「打火災警鈴」→ scene_end_rescued | ⏳ 等 narrative |
-| scene_endless_stairs_search | **NEW**：scene_start Choice 2 入口（主動找哥哥 perspective）— 跟 endless_stairs 共用 narrative，選項 1 改為「打給哥哥」→ phone_again_stairs（主動撥）；選項 2 共用「打火災警鈴」 | ⏳ 等 narrative |
+| scene_endless_stairs | **NEW Route B 主場景**：wait_classroom Choice 2 撞門成功入口。永遠下不到一樓 + F 標誌變 23:47 + 背後被盯。選項 1 「轉念聽哥哥，去天台」 → phone_again_stairs；選項 2 「打火災警鈴」→ scene_end_rescued | ✅ 已收 narrative |
+| scene_endless_stairs_search | **NEW**：scene_start Choice 2 入口（主動找哥哥 perspective）— 跟 endless_stairs 共用 narrative，選項 1 改為「打給哥哥」→ phone_again_stairs（主動撥）；選項 2 共用「打火災警鈴」 | ✅ 已收 (共用 narrative) |
 | scene_phone_again_stairs | **NEW phone_again 變體**：endless_stairs 兩變體選項 1 共同 next。樓梯間 perspective — narrative 同主版但**拿掉「教室門推開露出血紅長廊」結尾段** | ⏳ 整合期可從主版 derive |
 | scene_phone_static | scene_classroom_wake 打電話失敗 | ⏳ 等 narrative |
 | ~~scene_door_locked_fate~~ | ~~scene_door_stuck 撞前門失敗~~ | ❌ 拿掉 — 改直接接 scene_end_curse_spread |
@@ -630,6 +630,36 @@ wait_classroom Choice 2 撞門成功 ──→ scene_endless_stairs (被動 pers
 - narrative = scene_phone_again 主版 - 結尾「教室門推開露出血紅長廊」段
 - 後段選項組同主版（質問 / 求救 / 神情恍惚 → final_ascent）
 - 圖片同主版
+
+### scene_endless_stairs (main 變體) — narrative 已收
+
+> 妳衝出走廊，一頭栽進空曠的樓梯間。妳扶著冰冷的不鏽鋼扶手，發了瘋似地往下衝，球鞋在磨石子階梯上發出急促且混亂的摩擦聲。
+>
+> 妳下了一層又一層，但無論妳怎麼加速，前方永遠是向下延伸、看不見底的灰色台階。
+>
+> 妳猛然停下腳步，轉頭看向牆上的樓層標示。
+>
+> 原本應該標註樓層的藍色壓克力牌不見了。取而代之的，是一個圓形的掛鐘。它像是直接從牆壁裡長出來的一樣，鐘面上的秒針發出咬碎枯木般的聲音，正死死地定格在 23:47。
+>
+> 妳不死心地繼續往下跑，每經過一個樓層轉角，牆上都掛著一模一樣的鐘，每一面都指著同一個時間。樓梯間的回音讓妳產生錯覺，彷彿有無數個妳正在不同的時空同時奔跑。
+>
+> 此時，妳感覺後頸傳來一陣刺骨的惡寒。
+>
+> 上方的樓梯轉角傳來了那種黏稠的拖行聲，在那種完全開放的空間裡，聲音被牆壁折射得無處不在。妳不敢回頭，因為妳知道，那個「東西」正順著扶手滑行，祂的影子已經在妳腳邊的台階上緩緩拉長。
+
+選項（**Claude 設定，直接型無擲骰；進場 san-5 反映 Wave 加壓**）：
+
+1. **「轉念聽哥哥的話，去天台找他」** → scene_phone_again_stairs
+2. **「打破旁邊的火災警鈴求救」** → scene_end_rescued
+
+### scene_endless_stairs_search 變體 — 共用 narrative，選項 1 不同
+
+narrative 完全同 main 變體（共用上方那段）。
+
+選項：
+
+1. **「直接打給哥哥確認」**（**search 變體 only**：scene_start Choice 2 玩家還沒接過第二通電話，這裡是主動撥）→ scene_phone_again_stairs
+2. **「打破旁邊的火災警鈴求救」** → scene_end_rescued
 
 ### scene_end_rescued — 重寫指示
 
