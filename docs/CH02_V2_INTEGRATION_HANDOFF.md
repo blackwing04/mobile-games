@@ -415,7 +415,7 @@ git add -A && git commit -m "ch02 v2 完整整合 — 純 v2 命名 7 結局 + S
 - [ ] 所有 dispatcher 都有 `"default": true` 兜底規則
 - [ ] 所有 dispatcher 第一條 rule 都是 `if_resource_below: {san: 50} → scene_lost_sanity`（除了 dispatch_sms_check）
 - [ ] scene_the_climax Choice 1 識破有 `require_resource_at_least: {"clue": 2}`（玩家 clue < 2 時看不到此選項）
-- [ ] scene_dream_intrusion 是 router-style（無 narrative + conditional_next default）
+- [ ] scene_dream_intrusion / scene_phone_static / scene_monster_glimpse 用「單一銜接 choice」pattern（不要用 conditional_next router — 會直接跳過 narrative）。dream_intrusion 用「（繼續）」、phone_static + monster_glimpse 用「接起電話」（接 phone_again）
 - [ ] scene_phone_again_stairs narrative = scene_phone_again 主版**減掉結尾「教室門推開」段**
 - [ ] scene_door_stuck_impatient narrative 開頭「妳不耐煩的⋯⋯準備離開教室」（vs door_stuck「⋯⋯離開這間讓妳越來越不安的空間」）
 - [ ] scene_endless_stairs / scene_endless_stairs_search narrative 100% 同

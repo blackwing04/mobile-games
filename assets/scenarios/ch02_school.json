@@ -6,11 +6,12 @@
   "author": "Joe & Gemini",
   "estimated_minutes": 12,
   "episode": 2,
-  "truth_ending_id": "scene_end_truth",
-  "truth_ending_hint": "你必須識破那通「哥哥」的電話。每一次擲骰成功都可能讓妹妹發現一個反差跡象（哥哥從不直呼她全名 / 電話沒有背景音 / 哥哥不會說「我命令你」 / 對方知道哥哥不可能知道的事）——收集 ≥3 個線索 + 神智 ≥50 + 走到天台時拒絕跟「哥哥」走（常識檢定擲過）= 哥哥趕到校門口救援的真結局。",
+  "truth_ending_id": "scene_true_rescue",
+  "truth_ending_hint": "妳必須識破那通「哥哥」的電話。每次擲骰成功都可能讓妳發現一個反差跡象（哥哥從不直呼妳全名 / 電話沒有背景音 / 哥哥不會說「我命令妳」 / 對方知道哥哥不可能知道的事）。收集 ≥3 個線索 + 神智 ≥50 + 中途有傳簡訊給哥哥 + 在天台識破假哥哥 → 哥哥趕到校門口救援的真結局。",
   "resources": [
-    { "id": "san", "name": "神智", "max": 100, "initial": 80, "icon": "🧠" },
-    { "id": "clue", "name": "線索", "initial": 0, "icon": "🔍" }
+    { "id": "san", "name": "神智", "max": 100, "initial": 70, "icon": "🧠" },
+    { "id": "clue", "name": "線索", "max": 3, "initial": 0, "icon": "🔍" },
+    { "id": "sms_sent", "name": "簡訊", "max": 1, "initial": 0, "icon": "📱", "hidden": true }
   ],
   "skills": [
     { "id": "observe", "name": "觀察", "value": 60 },
@@ -29,17 +30,17 @@
       "narrative": "窗外，夕陽正濃。\n\n金橘色的光芒像潮水一樣漫進走廊，這是每天放學都能見到的景象。但不知為何，今天的晚霞紅得有些過分，色彩濃郁得近乎黏稠，將灰白的磁磚地面鍍上了一層深沉的暗紅。妳揉了揉有些乾澀的眼角，心想大概是盯著模擬考試卷太久，產生了色偏的錯覺。\n\n17:00 的放學鈴聲剛停，清脆的鐘聲在空曠的建築間激盪，隨即迅速消散。或許是因為模擬考結束，大部分學生早就交卷離校了，這時間校園裡竟然寥寥無幾。不知為什麼，整座教學大樓像是失去了活力般，陷入一種莫名的死寂。\n\n妳正低頭將參考書塞進書包，手機忽然在空蕩蕩的木抽屜裡瘋狂震動起來，撞擊聲在極度安靜的教室裡顯得格外刺耳。\n\n螢幕顯示是「哥哥」。妳接起電話，卻只聽見對面傳來雜亂的風聲，以及哥哥壓低到近乎耳語、極度焦慮的聲音：\n\n「⋯⋯聽著，妹，我快到了。妳乖乖在教室等我，千萬別出去。我有事要跟妳說，等我五分鐘就好⋯⋯記住，別理會任何人的聲音。」\n\n沒等到妳回話，電話就掛斷了。妳有些莫名其妙地放下手機，抬頭看了一眼牆上的掛鐘——\n\n黑色的時針與分針穩穩地停在 23:47。\n\n妳皺了皺眉，心裡嘀咕著：「這鐘是什麼時候停的？大概是沒電了吧⋯⋯」雖然現在應該才剛過 17:00，但看著那凝固在深夜時分的指針，妳莫名感到一陣不適。\n\n窗外的紅光斜射進教室，將妳的身影拉得極長，影子的末端似乎正慢慢融入走廊那一頭黑沉沉的陰影裡。",
       "choices": [
         { "label": "聽哥哥的話，留在教室等他", "next": "scene_wait_classroom" },
-        { "label": "電話和時鐘都太奇怪了，出去找哥哥", "next": "scene_corridor_search" },
-        { "label": "我又不是小孩子了，有什麼事回家再講不行喔，直接回家", "next": "scene_leave_school" }
+        { "label": "電話和時鐘都太奇怪了，出去找哥哥", "next": "scene_endless_stairs_search" },
+        { "label": "我又不是小孩子了，有什麼事回家再講不行喔，直接回家", "next": "scene_door_stuck_impatient" }
       ]
     },
 
     "scene_wait_classroom": {
       "bgm": "assets/audio/bgm/building-tension.mp3",
-      "narrative": "你坐回自己的位子，把耳機戴上又拔下來。\n\n同學們陸續離開，最後關上教室門的人還回頭跟你揮了揮手。「妳一個人留下來小心喔。」\n\n你笑著點頭，但笑容凝固在嘴邊——\n\n你抬頭，掛在前面黑板旁的時鐘指著 23:47。秒針在那個位置跳了一下，又跳回去，像是壞了。你皺眉，再看一次手機螢幕：17:03。\n\n窗外的夕陽，還是同樣的角度。",
+      "narrative": "妳嘆了口氣，坐回座位，把耳機塞進耳朵。妳決定給哥哥五分鐘，如果他沒出現，妳就自己去搭公車回家。\n\n教室門口傳來幾聲零星的腳步聲。最後一個離開的同學在拉上門前，隔著門窗跟妳揮了揮手，口型似乎是在說「明天見」。妳點了點頭，勉強擠出一個微笑，心裡卻在想：這學校今天靜得讓人耳鳴。\n\n妳再次抬頭看向黑板旁的掛鐘。\n\n指針依然停在 23:47。但這一次妳注意到，那根黑色的秒針正在劇烈地顫動著。它像是想要往前跳，卻被某種看不見的力量死死拽住，在寂靜的教室裡發出極其細微的「喀——喀——」聲。\n\n妳皺起眉，下意識地掏出手機確認：17:03。\n\n才過了三分鐘。但妳轉頭看向窗外，那抹原本應該緩緩沉落的橘紅夕陽，現在竟然像是融化的蠟一樣，在天邊拉出了幾道詭異的血色條紋。\n\n妳看著那些斜射進教室的光影，光影的夾角和妳剛才坐下時似乎一模一樣，沒有絲毫移動。一種強烈的違和感像冷水般從腳底竄上脊椎，妳感到一陣莫名的不適，連呼吸都變得有些侷促。",
       "choices": [
         {
-          "label": "走過去仔細看那個時鐘",
+          "label": "走過去仔細看那個掛鐘到底怎麼了",
           "skill_check": {
             "skill": "observe",
             "outcomes": {
@@ -51,316 +52,502 @@
             }
           }
         },
-        { "label": "不要看了，假裝沒事繼續滑手機", "next": "scene_phone_again", "effects": [{ "resource": "san", "delta": -5 }] },
-        { "label": "這不對勁，立刻離開教室找哥哥", "next": "scene_corridor_search" }
+        {
+          "label": "這地方待不下去，不等了，立刻離開教室",
+          "skill_check": {
+            "skill": "strength",
+            "outcomes": {
+              "critical_success": { "next": "scene_endless_stairs", "effects": [{ "resource": "san", "delta": -5 }] },
+              "success":          { "next": "scene_endless_stairs", "effects": [{ "resource": "san", "delta": -8 }] },
+              "partial":          { "next": "scene_door_stuck",     "effects": [{ "resource": "san", "delta": -10 }] },
+              "failure":          { "next": "scene_door_stuck",     "effects": [{ "resource": "san", "delta": -15 }] },
+              "fumble":           { "next": "scene_door_stuck",     "effects": [{ "resource": "san", "delta": -20 }] }
+            }
+          }
+        },
+        {
+          "label": "哥哥說過別理會聲音⋯⋯我乾脆趴著睡一下好了",
+          "skill_check": {
+            "skill": "common_sense",
+            "outcomes": {
+              "critical_success": { "next": "scene_classroom_wake",  "effects": [{ "resource": "san", "delta": 5 }] },
+              "success":          { "next": "scene_classroom_wake" },
+              "partial":          { "next": "scene_classroom_wake",  "effects": [{ "resource": "san", "delta": -10 }] },
+              "failure":          { "next": "scene_dream_intrusion", "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_dream_intrusion", "effects": [{ "resource": "san", "delta": -40 }] }
+            }
+          }
+        }
+      ]
+    },
+
+    "scene_classroom_wake": {
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "妳的手枕在課桌上，耳機裡的旋律漸漸變得遙遠。就在快要失去意識進入夢鄉時，妳的身體猛然抽搐了一下。\n\n那是一種類似墜落感的生理警訊。妳沒有聽到任何聲音，但冷汗瞬間浸透了妳的後背。妳僵坐在位子上不敢動彈，那種感覺極其強烈——彷彿在教室後方那些看不見的陰影角落裡，正有人在暗處死死地盯著妳，目光冰冷且充滿惡意。\n\n妳驚慌地抬起頭，下意識地看向手錶：17:15。\n\n按照常理，現在應該是夕陽最亮的時候，但窗外的陽光卻不知在何時消失了。整間教室陷入了一片死寂的黑暗，那種黑並非入夜後的自然黑，而是一種像墨水般濃稠、帶著窒息感的混濁。\n\n剛才那種暖橘色的光影完全不見了，取而代之的是手錶螢幕發出的微弱白光，在絕對的黑暗中顯得孤零零的。妳環顧四周，課桌椅的輪廓在黑暗中扭曲變形，像是一座座沉默的墓碑。\n\n妳感覺喉嚨乾澀，心臟狂跳的聲音在寂靜的教室裡震耳欲聾。\n\n妳猛地抓起書包站了起來，椅子在空曠的教室裡劃出一聲刺耳的「吱——」聲。這聲音大得誇張，彷彿在向暗處那個「窺視者」宣告妳已經醒了。",
+      "choices": [
+        {
+          "label": "不敢再待下去了，用盡全力撞開門衝出去！",
+          "skill_check": {
+            "skill": "strength",
+            "outcomes": {
+              "critical_success": { "next": "scene_endless_stairs" },
+              "success":          { "next": "scene_endless_stairs", "effects": [{ "resource": "san", "delta": -5 }] },
+              "partial":          { "next": "scene_door_stuck",     "effects": [{ "resource": "san", "delta": -10 }] },
+              "failure":          { "next": "scene_door_stuck",     "effects": [{ "resource": "san", "delta": -15 }] },
+              "fumble":           { "next": "scene_door_stuck",     "effects": [{ "resource": "san", "delta": -20 }] }
+            }
+          }
+        },
+        {
+          "label": "冷靜點，先打電話給哥哥問他在哪",
+          "skill_check": {
+            "skill": "observe",
+            "outcomes": {
+              "critical_success": { "next": "scene_phone_again",  "effects": [{ "resource": "clue", "delta": 1 }] },
+              "success":          { "next": "scene_phone_again" },
+              "partial":          { "next": "scene_phone_static", "effects": [{ "resource": "san", "delta": -5 }] },
+              "failure":          { "next": "scene_phone_static", "effects": [{ "resource": "san", "delta": -5 }] },
+              "fumble":           { "next": "scene_phone_static", "effects": [{ "resource": "san", "delta": -15 }] }
+            }
+          }
+        }
+      ]
+    },
+
+    "scene_door_stuck": {
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "妳走到教室後門，伸手握住把手向下按，準備離開這間讓妳越來越不安的空間。\n\n沒反應。把手像是卡死了一樣一動不動。\n\n妳愣了一下，心想大概是這棟舊大樓的門鎖太老舊，或者是門板受潮變形了。妳稍微加重了力道，試著再次拉動門把，但門扉依然緊緊地咬在門框裡，毫無動靜。\n\n妳皺起眉，調整了一下姿勢，雙手扣住門把並用腳抵住牆壁，深吸一口氣後拼命向後一拽——\n\n一次、兩次、三次。除了金屬件在妳用力下發出乾澀、尖銳的磨擦聲外，這扇門依然沉重得像是跟整面牆壁焊死在一起。妳的呼吸漸漸變得急促，掌心因為過度用力而感到一陣刺痛。\n\n這不合理。就算門板變形，連門把都完全動不了也太扯了。\n\n就在妳腦中閃過這個念頭，準備轉向教室前門試試看時，背後的黑暗中傳來了一聲輕響。\n\n「喀。」\n\n是掛鐘。那個停在 23:47 的秒針發出了咬碎枯木般的聲音。\n\n緊接著，另一種聲音在死寂的教室裡響起：那是一種濕漉漉的東西，正貼著磨石子地板緩慢磨擦的聲音。它從教室最後一排的陰影裡，一吋一吋地，朝著正背對黑暗的妳移動過來。",
+      "choices": [
+        {
+          "label": "後門打不開就去前門！用盡全身力氣去撞！",
+          "skill_check": {
+            "skill": "strength",
+            "outcomes": {
+              "critical_success": { "next": "scene_phone_again_escape" },
+              "success":          { "next": "scene_phone_again_escape", "effects": [{ "resource": "san", "delta": -5 }] },
+              "partial":          { "next": "scene_phone_again_escape", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_curse_spread",       "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_curse_spread",       "effects": [{ "resource": "san", "delta": -40 }] }
+            }
+          }
+        },
+        {
+          "label": "別管門了，快躲進最近的課桌底下！",
+          "skill_check": {
+            "skill": "stealth",
+            "outcomes": {
+              "critical_success": { "next": "scene_phone_again_hide" },
+              "success":          { "next": "scene_phone_again_hide", "effects": [{ "resource": "san", "delta": -5 }] },
+              "partial":          { "next": "scene_phone_again_hide", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_curse_spread",     "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_curse_spread",     "effects": [{ "resource": "san", "delta": -40 }] }
+            }
+          }
+        },
+        {
+          "label": "（強壓恐懼）是誰在那裡？打開手機手電筒照過去！",
+          "skill_check": {
+            "skill": "observe",
+            "outcomes": {
+              "critical_success": { "next": "scene_monster_glimpse", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": -15 }] },
+              "success":          { "next": "scene_monster_glimpse", "effects": [{ "resource": "san", "delta": -15 }] },
+              "partial":          { "next": "scene_monster_glimpse", "effects": [{ "resource": "san", "delta": -25 }] },
+              "failure":          { "next": "scene_curse_spread",    "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_curse_spread",    "effects": [{ "resource": "san", "delta": -40 }] }
+            }
+          }
+        }
+      ]
+    },
+
+    "scene_door_stuck_impatient": {
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "妳不耐煩的走到教室後門，伸手握住把手向下按，準備離開教室。\n\n沒反應。把手像是卡死了一樣一動不動。\n\n妳愣了一下，心想大概是這棟舊大樓的門鎖太老舊，或者是門板受潮變形了。妳稍微加重了力道，試著再次拉動門把，但門扉依然緊緊地咬在門框裡，毫無動靜。\n\n妳皺起眉，調整了一下姿勢，雙手扣住門把並用腳抵住牆壁，深吸一口氣後拼命向後一拽——\n\n一次、兩次、三次。除了金屬件在妳用力下發出乾澀、尖銳的磨擦聲外，這扇門依然沉重得像是跟整面牆壁焊死在一起。妳的呼吸漸漸變得急促，掌心因為過度用力而感到一陣刺痛。\n\n這不合理。就算門板變形，連門把都完全動不了也太扯了。\n\n就在妳腦中閃過這個念頭，準備轉向教室前門試試看時，背後的黑暗中傳來了一聲輕響。\n\n「喀。」\n\n是掛鐘。那個停在 23:47 的秒針發出了咬碎枯木般的聲音。\n\n緊接著，另一種聲音在死寂的教室裡響起：那是一種濕漉漉的東西，正貼著磨石子地板緩慢磨擦的聲音。它從教室最後一排的陰影裡，一吋一吋地，朝著正背對黑暗的妳移動過來。",
+      "choices": [
+        {
+          "label": "後門打不開就去前門！用盡全身力氣去撞！",
+          "skill_check": {
+            "skill": "strength",
+            "outcomes": {
+              "critical_success": { "next": "scene_phone_again_escape" },
+              "success":          { "next": "scene_phone_again_escape", "effects": [{ "resource": "san", "delta": -5 }] },
+              "partial":          { "next": "scene_phone_again_escape", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_curse_spread",       "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_curse_spread",       "effects": [{ "resource": "san", "delta": -40 }] }
+            }
+          }
+        },
+        {
+          "label": "別管門了，快躲進最近的課桌底下！",
+          "skill_check": {
+            "skill": "stealth",
+            "outcomes": {
+              "critical_success": { "next": "scene_phone_again_hide" },
+              "success":          { "next": "scene_phone_again_hide", "effects": [{ "resource": "san", "delta": -5 }] },
+              "partial":          { "next": "scene_phone_again_hide", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_curse_spread",     "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_curse_spread",     "effects": [{ "resource": "san", "delta": -40 }] }
+            }
+          }
+        },
+        {
+          "label": "（強壓恐懼）是誰在那裡？打開手機手電筒照過去！",
+          "skill_check": {
+            "skill": "observe",
+            "outcomes": {
+              "critical_success": { "next": "scene_monster_glimpse", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": -15 }] },
+              "success":          { "next": "scene_monster_glimpse", "effects": [{ "resource": "san", "delta": -15 }] },
+              "partial":          { "next": "scene_monster_glimpse", "effects": [{ "resource": "san", "delta": -25 }] },
+              "failure":          { "next": "scene_curse_spread",    "effects": [{ "resource": "san", "delta": -25 }] },
+              "fumble":           { "next": "scene_curse_spread",    "effects": [{ "resource": "san", "delta": -40 }] }
+            }
+          }
+        }
       ]
     },
 
     "scene_phone_again": {
       "bgm": "assets/audio/bgm/building-tension.mp3",
-      "narrative": "手機又震動了。是哥哥。\n\n「妹？我快到了，到天台來等我。」聲音聽起來有點急，又有點⋯⋯空。\n\n你愣了一下：「天⋯⋯天台？哥，你不是說在教室等？」\n\n「天台視野好。林○○，妳上來，我馬上到。」\n\n你心裡有什麼東西緊了一下。哥哥從來不直呼你的全名——你叫「小妹」，已經叫了十六年。",
+      "narrative": "就在那股冰冷的感覺快要貼上妳的後頸時，手心裡的手機猛然震動，強烈的震感讓妳整隻手發麻。螢幕閃爍著：「哥哥」。\n\n妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。\n\n「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」\n\n妳聽著那溫柔的嗓音，看著眼前這間陷入死寂黑暗、連門把都扭不動的教室。\n\n哥哥剛才說⋯⋯夕陽很漂亮？\n\n就在妳遲疑的瞬間，背後那個「喀、喀」的掛鐘聲突然加快了。原本打不開的教室門，竟然在此時發出「喀擦」一聲，自己緩緩推開了一道縫隙，露出外面那條血紅色的長廊。",
       "choices": [
         {
-          "label": "仔細聽電話那頭的聲音",
-          "skill_check": {
-            "skill": "listen",
-            "outcomes": {
-              "critical_success": { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "clue", "delta": 2 }, { "resource": "san", "delta": -5 }] },
-              "success":          { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": -8 }] },
-              "partial":          { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "san", "delta": -15 }] },
-              "failure":          { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "san", "delta": -12 }] },
-              "fumble":           { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "san", "delta": -25 }] }
-            }
-          }
-        },
-        {
-          "label": "質問哥哥：「你怎麼叫我全名？」",
-          "skill_check": {
-            "skill": "common_sense",
-            "outcomes": {
-              "critical_success": { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "clue", "delta": 2 }, { "resource": "san", "delta": 5 }] },
-              "success":          { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "clue", "delta": 1 }] },
-              "partial":          { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "san", "delta": -10 }] },
-              "failure":          { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "san", "delta": -15 }] },
-              "fumble":           { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "san", "delta": -25 }] }
-            }
-          }
-        },
-        { "label": "什麼都別問，直接掛掉電話", "next": "scene_dispatch_route_a", "effects": [{ "resource": "san", "delta": 5 }] }
-      ]
-    },
-
-    "scene_walk_to_rooftop": {
-      "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
-      "narrative": "你不知不覺已經站到了天台的鐵門前。\n\n你不記得自己什麼時候走出教室、什麼時候上的樓——夕陽不知何時變成了暗紅色，走廊的燈一盞接一盞熄滅，只剩下天台這扇門透出最後一點橘黃。\n\n你推開門。風灌進來，吹得你頭髮往後飛。天台的水泥邊緣站著一個人，背對著你，穿著哥哥常穿的那件灰色帽 T。\n\n「妹，你看，這裡可以看到全市的夕陽。」他沒有回頭。「過來，跟我一起看。」\n\n他的聲音從背後傳來，但你發現——他的嘴沒有動。",
-      "choices": [
-        {
-          "label": "退後一步，告訴自己「這不是哥哥」",
-          "skill_check": {
-            "skill": "common_sense",
-            "outcomes": {
-              "critical_success": { "next": "scene_dispatch_truth_check", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": 10 }] },
-              "success":          { "next": "scene_dispatch_truth_check", "effects": [{ "resource": "san", "delta": 5 }] },
-              "partial":          { "next": "scene_end_lost_soul", "effects": [{ "resource": "san", "delta": -30 }] },
-              "failure":          { "next": "scene_end_lost_soul", "effects": [{ "resource": "san", "delta": -40 }] },
-              "fumble":           { "next": "scene_end_lost_soul", "effects": [{ "resource": "san", "delta": -60 }] }
-            }
-          }
-        },
-        {
-          "label": "走過去，「跟哥哥」一起看夕陽",
-          "skill_check": {
-            "skill": "common_sense",
-            "outcomes": {
-              "critical_success": { "next": "scene_end_lost_soul" },
-              "success":          { "next": "scene_end_lost_soul" },
-              "partial":          { "next": "scene_end_lost_soul", "effects": [{ "resource": "san", "delta": -30 }] },
-              "failure":          { "next": "scene_end_lost_soul", "effects": [{ "resource": "san", "delta": -50 }] },
-              "fumble":           { "next": "scene_end_lost_soul", "effects": [{ "resource": "san", "delta": -70 }] }
-            }
-          }
-        },
-        {
-          "label": "頭也不回，往樓下狂奔",
-          "skill_check": {
-            "skill": "athletics",
-            "outcomes": {
-              "critical_success": { "next": "scene_dispatch_truth_check", "effects": [{ "resource": "san", "delta": 10 }] },
-              "success":          { "next": "scene_dispatch_truth_check" },
-              "partial":          { "next": "scene_dispatch_route_b", "effects": [{ "resource": "san", "delta": -20 }] },
-              "failure":          { "next": "scene_dispatch_route_b", "effects": [{ "resource": "san", "delta": -25 }] },
-              "fumble":           { "next": "scene_end_lost_soul", "effects": [{ "resource": "san", "delta": -50 }] }
-            }
-          }
-        }
-      ]
-    },
-
-    "scene_corridor_search": {
-      "bgm": "assets/audio/bgm/per-sempre-noi.mp3",
-      "narrative": "你揹起書包走到走廊。\n\n夕陽從走廊一端的窗戶斜照進來，把走廊染成一條長長的橘色。地板上每一格地磚的影子都被拉得很長⋯⋯然後你發現——那些影子不是你的，也不是任何學生的。\n\n它們有形狀，但對應不到走廊上任何一個物體。\n\n你深吸一口氣，貼著牆走。走廊盡頭的窗戶玻璃倒映著教室的燈光，但倒影裡的燈，比現實中亮的時間晚了半秒——你的腦袋輕微地發暈。",
-      "choices": [
-        {
-          "label": "停下來，仔細看玻璃裡的倒影",
+          "label": "（質問）你剛才不是叫我別出去嗎？為什麼現在又要我去天台？",
           "skill_check": {
             "skill": "observe",
             "outcomes": {
-              "critical_success": { "next": "scene_corridor_deep", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": -5 }] },
-              "success":          { "next": "scene_corridor_deep", "effects": [{ "resource": "san", "delta": -8 }] },
-              "partial":          { "next": "scene_corridor_deep", "effects": [{ "resource": "san", "delta": -15 }] },
-              "failure":          { "next": "scene_corridor_deep", "effects": [{ "resource": "san", "delta": -10 }] },
-              "fumble":           { "next": "scene_mirror_self", "effects": [{ "resource": "san", "delta": -25 }] }
+              "critical_success": { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "clue", "delta": 2 }] },
+              "success":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "failure":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "fumble":           { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san",  "delta": -20 }] }
             }
           }
         },
-        { "label": "別看了，繼續往走廊深處走", "next": "scene_corridor_deep", "effects": [{ "resource": "san", "delta": -5 }] },
-        { "label": "走廊太怪了，去廁所洗把臉冷靜一下", "next": "scene_mirror_self" }
+        { "label": "（求救）哥！這學校不對勁！你快點過來接我！", "next": "scene_dispatch_clue_check" },
+        { "label": "好，我現在上去找你⋯⋯（放下手機，神情恍惚）", "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san", "delta": -25 }] }
       ]
     },
 
-    "scene_corridor_deep": {
-      "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
-      "narrative": "走廊比你印象中長。\n\n明明只是普通的高中走廊，可你已經走了快兩分鐘，盡頭的轉角還是看不到。教室的門牌一個接一個經過：1-3、1-4、1-5⋯⋯1-7、1-8⋯⋯\n\n你停下來。你們學校只有 1-6 班。\n\n就在這時，你看見走廊盡頭——夕陽橘紅色的反光裡，站著一個人。穿著哥哥的灰色帽 T，背對著你，正在慢慢往一個方向走。\n\n他沒回頭，但他的聲音在你耳邊說：「過來啊，妹。」",
+    "scene_phone_again_hide": {
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "妳蜷縮在課桌下的陰影中，心跳聲在死寂的教室裡顯得震耳欲聾。妳能感覺到門口那股冰冷的氣息正緩緩掃過教室，甚至快要貼上妳的後頸。\n\n就在那股冰冷的感覺快要貼上妳的後頸時，手心裡的手機猛然震動，強烈的震感讓妳整隻手發麻。螢幕閃爍著：「哥哥」。\n\n妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。\n\n「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」\n\n妳聽著那溫柔的嗓音，看著眼前這間陷入死寂黑暗、連門把都扭不動的教室。\n\n哥哥剛才說⋯⋯夕陽很漂亮？\n\n就在妳遲疑的瞬間，背後那個「喀、喀」的掛鐘聲突然加快了。原本打不開的教室門，竟然在此時發出「喀擦」一聲，自己緩緩推開了一道縫隙，露出外面那條血紅色的長廊。",
       "choices": [
-        { "label": "追上去，喊住他", "next": "scene_walk_to_rooftop" },
         {
-          "label": "原地大喊：「哥！你回頭！」",
+          "label": "（警戒）哥哥給人感覺怪怪的，但好像只能衝出去了。",
+          "skill_check": {
+            "skill": "resolve",
+            "outcomes": {
+              "critical_success": { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": 5 }] },
+              "success":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "failure":          { "next": "scene_curse_spread",        "effects": [{ "resource": "san",  "delta": -25 }] },
+              "fumble":           { "next": "scene_curse_spread",        "effects": [{ "resource": "san",  "delta": -40 }] }
+            }
+          }
+        },
+        {
+          "label": "（前進）相信哥哥，跟他拚了。",
+          "skill_check": {
+            "skill": "resolve",
+            "outcomes": {
+              "critical_success": { "next": "scene_dispatch_clue_check" },
+              "success":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san", "delta": -5 }] },
+              "partial":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_curse_spread",        "effects": [{ "resource": "san", "delta": -30 }] },
+              "fumble":           { "next": "scene_curse_spread",        "effects": [{ "resource": "san", "delta": -45 }] }
+            }
+          }
+        }
+      ]
+    },
+
+    "scene_phone_again_escape": {
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "妳發出一聲嘶吼，用肩膀全力撞向門板。「砰！」的一聲巨響，那扇沉重的門竟被妳撞開了一道縫隙。妳顧不得肩膀傳來的撕裂感，側身從縫隙中擠了出去。\n\n就在那股冰冷的感覺快要貼上妳的後頸時，妳撞開了後門逃了出去，此時妳口袋裡的手機猛然震動，強烈的震感讓妳大腿發麻，妳緊張地從口袋拿出手機。螢幕閃爍著：「哥哥」。\n\n妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。\n\n「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」\n\n妳聽著那溫柔的嗓音，看著眼前這條被夕陽——或是被鮮血——染紅的長廊。\n\n哥哥剛才說⋯⋯夕陽很漂亮？\n\n就在妳遲疑的瞬間，後方教室內那個「喀、喀」的掛鐘聲突然加快了，聲音大得像是就在妳耳邊。妳回頭一看，原本被撞開的教室門竟在妳面前緩緩合上，只留下一條深紅色的長廊在妳面前延伸。",
+      "choices": [
+        {
+          "label": "（警戒）哥哥給人感覺怪怪的，但好像只能衝出去了。",
+          "skill_check": {
+            "skill": "resolve",
+            "outcomes": {
+              "critical_success": { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": 5 }] },
+              "success":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "failure":          { "next": "scene_curse_spread",        "effects": [{ "resource": "san",  "delta": -25 }] },
+              "fumble":           { "next": "scene_curse_spread",        "effects": [{ "resource": "san",  "delta": -40 }] }
+            }
+          }
+        },
+        {
+          "label": "（前進）相信哥哥，跟他拚了。",
+          "skill_check": {
+            "skill": "resolve",
+            "outcomes": {
+              "critical_success": { "next": "scene_dispatch_clue_check" },
+              "success":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san", "delta": -5 }] },
+              "partial":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_curse_spread",        "effects": [{ "resource": "san", "delta": -30 }] },
+              "fumble":           { "next": "scene_curse_spread",        "effects": [{ "resource": "san", "delta": -45 }] }
+            }
+          }
+        }
+      ]
+    },
+
+    "scene_phone_again_stairs": {
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "就在那股冰冷的感覺快要貼上妳的後頸時，手心裡的手機猛然震動，強烈的震感讓妳整隻手發麻。螢幕閃爍著：「哥哥」。\n\n妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。\n\n「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」\n\n妳聽著那溫柔的嗓音，看著眼前這條陷入血紅色暗影的樓梯。\n\n哥哥剛才說⋯⋯夕陽很漂亮？",
+      "choices": [
+        {
+          "label": "（質問）你剛才不是叫我別出去嗎？為什麼現在又要我去天台？",
+          "skill_check": {
+            "skill": "observe",
+            "outcomes": {
+              "critical_success": { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "clue", "delta": 2 }] },
+              "success":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "failure":          { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "fumble":           { "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san",  "delta": -20 }] }
+            }
+          }
+        },
+        { "label": "（求救）哥！這學校不對勁！你快點過來接我！", "next": "scene_dispatch_clue_check" },
+        { "label": "好，我現在上去找你⋯⋯（放下手機，神情恍惚）", "next": "scene_dispatch_clue_check", "effects": [{ "resource": "san", "delta": -25 }] }
+      ]
+    },
+
+    "scene_endless_stairs": {
+      "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
+      "narrative": "妳衝出走廊，一頭栽進空曠的樓梯間。妳扶著冰冷的不鏽鋼扶手，發了瘋似地往下衝，球鞋在磨石子階梯上發出急促且混亂的摩擦聲。\n\n妳下了一層又一層，但無論妳怎麼加速，前方永遠是向下延伸、看不見底的灰色台階。\n\n妳猛然停下腳步，轉頭看向牆上的樓層標示。\n\n原本應該標註樓層的藍色壓克力牌不見了。取而代之的，是一個圓形的掛鐘。它像是直接從牆壁裡長出來的一樣，鐘面上的秒針發出咬碎枯木般的聲音，正死死地定格在 23:47。\n\n妳不死心地繼續往下跑，每經過一個樓層轉角，牆上都掛著一模一樣的鐘，每一面都指著同一個時間。樓梯間的回音讓妳產生錯覺，彷彿有無數個妳正在不同的時空同時奔跑。\n\n此時，妳感覺後頸傳來一陣刺骨的惡寒。\n\n上方的樓梯轉角傳來了那種黏稠的拖行聲，在那種完全開放的空間裡，聲音被牆壁折射得無處不在。妳不敢回頭，因為妳知道，那個「東西」正順著扶手滑行，祂的影子已經在妳腳邊的台階上緩緩拉長。",
+      "choices": [
+        { "label": "轉念聽哥哥的話，去天台找他",  "next": "scene_phone_again_stairs", "effects": [{ "resource": "san", "delta": -5 }] },
+        { "label": "打破旁邊的火災警鈴求救",      "next": "scene_rescued",            "effects": [{ "resource": "san", "delta": -5 }] }
+      ]
+    },
+
+    "scene_endless_stairs_search": {
+      "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
+      "narrative": "妳衝出走廊，一頭栽進空曠的樓梯間。妳扶著冰冷的不鏽鋼扶手，發了瘋似地往下衝，球鞋在磨石子階梯上發出急促且混亂的摩擦聲。\n\n妳下了一層又一層，但無論妳怎麼加速，前方永遠是向下延伸、看不見底的灰色台階。\n\n妳猛然停下腳步，轉頭看向牆上的樓層標示。\n\n原本應該標註樓層的藍色壓克力牌不見了。取而代之的，是一個圓形的掛鐘。它像是直接從牆壁裡長出來的一樣，鐘面上的秒針發出咬碎枯木般的聲音，正死死地定格在 23:47。\n\n妳不死心地繼續往下跑，每經過一個樓層轉角，牆上都掛著一模一樣的鐘，每一面都指著同一個時間。樓梯間的回音讓妳產生錯覺，彷彿有無數個妳正在不同的時空同時奔跑。\n\n此時，妳感覺後頸傳來一陣刺骨的惡寒。\n\n上方的樓梯轉角傳來了那種黏稠的拖行聲，在那種完全開放的空間裡，聲音被牆壁折射得無處不在。妳不敢回頭，因為妳知道，那個「東西」正順著扶手滑行，祂的影子已經在妳腳邊的台階上緩緩拉長。",
+      "choices": [
+        { "label": "直接打給哥哥確認",            "next": "scene_phone_again_stairs", "effects": [{ "resource": "san", "delta": -5 }] },
+        { "label": "打破旁邊的火災警鈴求救",      "next": "scene_rescued",            "effects": [{ "resource": "san", "delta": -5 }] }
+      ]
+    },
+
+    "scene_sms_or_call": {
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "妳放慢了腳步，甚至停了下來。在這片死寂中，那些被恐懼掩蓋的細節開始在腦中拼湊。\n\n剛才第二通電話裡哥哥那種溫柔的語氣，在妳心頭激起了一陣不安。在妳的記憶中，哥哥從來不曾用那種輕聲細語的方式跟妳說話。雖然他是妳最親的人，但他平時講話直來直往，甚至帶點脾氣，這種突如其來的「溫柔」反而讓妳覺得陌生。\n\n妳忍不住開始回想第一通電話。那時他的聲音聽起來急急燥燥的，雖然他脾氣不算好，但做事向來有條有理，絕不會像剛才那樣顯得慌亂失序。\n\n「這真的不像他⋯⋯」\n\n這種怪異感讓妳心裡毛毛的。妳轉頭看向四周，只有無盡的黑暗與扭曲的課桌椅。就在這時，妳手中手機螢幕發出的微弱白光映入眼簾，那道光在昏暗中跳動著，像是這片混亂空間裡唯一真實的東西，也讓妳產生了一個念頭。",
+      "choices": [
+        { "label": "（傳簡訊）你在哪？我在學校等你，但學校好像有點詭異。", "next": "scene_dispatch_after_sms", "effects": [{ "resource": "sms_sent", "delta": 1 }] },
+        { "label": "（撥打電話）還是再打一次確認看看，這次我要聽清楚一點。", "next": "scene_dispatch_after_sms", "effects": [{ "resource": "san", "delta": -5 }] }
+      ]
+    },
+
+    "scene_dream_intrusion": {
+      "bgm": "assets/audio/bgm/halloween-bgmkill-me-babydark.mp3",
+      "narrative": "妳的眼皮變得異常沉重，意識像是沉入了一片深不見底的溫水之中。妳夢見自己依然坐在教室裡，但窗外的夕陽不再是金橘色，而是一種鮮艷得近乎刺眼的暗紅。\n\n妳聽見身後傳來翻動書頁的聲音，回頭一看，座位上坐著無數個「妳」。她們全都低著頭，動作整齊劃一地在課本上塗抹著。妳好奇地湊近看，發現她們用原子筆反覆刻畫著同一個數字：23:47。筆尖劃破紙張的聲音，在寂靜的夢裡聽起來像是在切割妳的耳膜。\n\n其中一個「妳」緩緩抬起頭。她的臉像是一張被抹平的白紙，沒有任何五官，只有額頭上貼著一張發黃的便條紙。\n\n她伸出冰冷的手，輕輕覆蓋在妳的臉上。妳想掙扎，卻發現自己的身體正迅速變硬、變冷，皮膚開始呈現出一種大理石般的慘白色。那種感覺並不痛苦，反而帶著一種讓人墮落的安寧。\n\n「不用再跑了⋯⋯」 妳聽見自己的聲音在腦海中溫柔地低語：「留下來，我們一起等他。」\n\n當那個無面的「妳」將手移開時，妳發現夢境與現實的界線已經徹底溶解。",
+      "choices": [
+        { "label": "（繼續）", "next": "scene_lost_sanity" }
+      ]
+    },
+
+    "scene_phone_static": {
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "妳顫抖著按下哥哥的號碼，聽筒貼在耳邊。撥號音響了兩聲後，通話接通了。\n\n但聽筒裡傳出的不是哥哥的聲音，而是一陣刺耳的、忽大忽小的電子雜訊。妳隱約聽見背景裡有什麼聲音在說話，那聲音被雜訊撕成碎片，根本聽不清楚。\n\n「⋯⋯哥？」\n\n雜訊瞬間放大成一聲尖銳的嘯叫，妳痛得把手機從耳邊扯開。畫面顯示：通話已結束。\n\n妳僵在原地，背後那種被注視的感覺更強了。\n\n就在這時，手心裡的手機震動了一下。",
+      "choices": [
+        { "label": "接起電話", "next": "scene_phone_again" }
+      ]
+    },
+
+    "scene_monster_glimpse": {
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "妳深吸一口氣，按下手電筒鍵。一道慘白的光柱射向教室後排的陰影。\n\n在那一瞬間，妳看見了。\n\n一團蠕動的、濕漉漉的影子蹲在最後一排的課桌之間。它沒有臉，但有什麼東西在它「該是頭部的位置」朝妳轉了過來。妳認得那個輪廓——那是穿著校服的形狀，但比例都錯了，像是被誰把妳的剪影擰歪後重新拼裝的拙劣模仿。\n\n妳本能地關掉手電筒，但那個畫面已經烙在妳的視網膜上。\n\n就在這時，手心裡的手機震動了一下。",
+      "choices": [
+        { "label": "接起電話", "next": "scene_phone_again" }
+      ]
+    },
+
+    "scene_final_ascent": {
+      "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
+      "narrative": "妳的話音落下後，電話那頭遲遲沒有回應。\n\n妳保持著通話的姿勢，耳朵緊貼著冰冷的手機螢幕。原本應該傳來哥哥回覆的頻道，此時卻安靜得像是一個被抽乾空氣的黑洞，連剛才那種微弱的迴響都消失得無影無蹤。\n\n「⋯⋯喂？哥？你有在聽嗎？」\n\n妳忍不住再次對著話筒追問，聲音在死寂的教室裡顯得格外單薄。回應妳的依然只有那種讓人背脊發涼的沈默。緊接著，手機螢幕無預警地閃爍了兩下，隨即徹底熄滅，化為一片漆黑的鏡面。\n\n就在通訊中斷的瞬間，那扇剛才妳怎麼拉都拉不動的門，突然發出「喀擦」一聲，自己緩緩打開了。外面透進來的暗紅光線像是一條血紅色的舌頭，鋪在漆黑的教室地板上。\n\n妳知道不能再待下去了，無論天台上有什麼，都比留在這間被惡意填滿的教室好。妳深吸一口氣，抓緊書包，跌跌撞撞地衝出教室。\n\n走廊的景象讓妳頭皮發麻——原本熟悉的長廊似乎被強行「拉長」了，兩側的教室門像是一排排歪斜的墓碑。那種濃郁得近乎黏稠的紅光從窗外滲透進來，將地面塗滿了濕滑的暗紅色，每跑一步，腳下都會發出「噗滋、噗滋」的怪異磨擦聲。\n\n「這到底怎麼回事⋯⋯」妳邊跑邊在心裡嘀咕，試圖理清這一切詭異的現象。\n\n妳衝進樓梯間，記憶中牆上原本標示著「4F」的字樣，現在卻莫名被換成一個掛鐘，上面依然停留在 23:47。妳不敢停下來思考，只能不斷往上爬，那是唯一還有光亮的地方。\n\n終於，妳推開了通往天台的那扇沉重鐵門。\n\n強風瞬間灌進妳的領口，凍得妳打了個寒顫。妳看見在那片血紅色的天空下，一個熟悉的背影正靜靜地站在天台邊緣，背對著妳。\n\n那是哥哥。他穿著早上出門時的那件外套，手裡拿著一支妳最愛喝的手搖飲，冰塊撞擊杯壁的「叮、叮」聲，在狂風中竟然聽得清清楚楚，彷彿那聲音是直接在妳腦袋裡響起的。",
+      "choices": [
+        {
+          "label": "（止步）你剛才不是說你在校門口？為什麼現在在這裡？",
+          "skill_check": {
+            "skill": "observe",
+            "outcomes": {
+              "critical_success": { "next": "scene_the_climax", "effects": [{ "resource": "clue", "delta": 2 }] },
+              "success":          { "next": "scene_the_climax", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_the_climax", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "failure":          { "next": "scene_the_climax", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "fumble":           { "next": "scene_the_climax", "effects": [{ "resource": "san",  "delta": -20 }] }
+            }
+          }
+        },
+        {
+          "label": "（觀察）先不要靠近，觀察周圍。",
           "skill_check": {
             "skill": "listen",
             "outcomes": {
-              "critical_success": { "next": "scene_dispatch_truth_check", "effects": [{ "resource": "clue", "delta": 2 }, { "resource": "san", "delta": 5 }] },
-              "success":          { "next": "scene_mirror_self", "effects": [{ "resource": "clue", "delta": 1 }] },
-              "partial":          { "next": "scene_mirror_self", "effects": [{ "resource": "san", "delta": -15 }] },
-              "failure":          { "next": "scene_mirror_self", "effects": [{ "resource": "san", "delta": -10 }] },
-              "fumble":           { "next": "scene_mirror_self", "effects": [{ "resource": "san", "delta": -25 }] }
+              "critical_success": { "next": "scene_the_climax", "effects": [{ "resource": "clue", "delta": 2 }] },
+              "success":          { "next": "scene_the_climax", "effects": [{ "resource": "clue", "delta": 1 }] },
+              "partial":          { "next": "scene_the_climax", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "failure":          { "next": "scene_the_climax", "effects": [{ "resource": "san",  "delta": -10 }] },
+              "fumble":           { "next": "scene_the_climax", "effects": [{ "resource": "san",  "delta": -20 }] }
             }
           }
-        },
-        { "label": "他不對勁——轉身往樓梯間跑", "next": "scene_dispatch_route_b", "effects": [{ "resource": "san", "delta": -10 }] }
+        }
       ]
     },
 
-    "scene_mirror_self": {
-      "bgm": "assets/audio/bgm/halloween-bgmkill-me-babydark.mp3",
-      "narrative": "你推開廁所門，日光燈一閃一閃。\n\n你扭開水龍頭，把雙手浸在冷水裡，告訴自己冷靜⋯⋯然後你抬頭看鏡子。\n\n鏡子裡的妳，正在對你微笑。\n\n你停下動作。你的嘴沒有笑。\n\n鏡中的「妳」歪了歪頭，嘴角咧得更開，輕輕地說：「那不是哥哥喔，妳也知道吧。跟我走，我帶妳去找他——真的他。」\n\n她伸出手，從鏡子裡，慢慢地伸了出來。",
+    "scene_the_climax": {
+      "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
+      "narrative": "透過天台機房玻璃上的倒影，他看見了站在門口的妳。那個背影微微一頓，接著，他緩緩地轉過身來。\n\n那張臉確實是妳熟悉的哥哥，他舉起拿著手搖飲的手對著妳搖了搖。\n\n「妹，妳在那邊發什麼呆？過來呀，我買了妳最愛喝的飲料，妳看這夕陽多美，我們看完再一起回家吧。」\n\n他溫柔地說著，但妳注意到他的嘴型與聲音有著詭異的延遲，那種殘響像是不斷重疊的幻聽。此時，他腳下的影子竟像怪物般，正沿著天台地板朝妳緩緩爬過來。\n\n見妳遲遲不肯過去，他指了指手腕上的手錶，那上面的指針正瘋狂倒轉，最後死死地卡在 23:47。\n\n「快點，妹妹。妳再不過來⋯⋯夕陽就要下山了喔。」",
       "choices": [
         {
-          "label": "後退一大步，告訴自己「這不是真的」",
+          "label": "你不是我哥⋯⋯（根據線索識破謊言）",
+          "next": "scene_rejection_and_escape",
+          "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": 10 }],
+          "require_resource_at_least": { "clue": 2 }
+        },
+        { "label": "相信眼前的哥哥", "next": "scene_lost_soul", "effects": [{ "resource": "san", "delta": -50 }] },
+        {
+          "label": "（閉上眼大喊）這一切都是假的！通通消失！",
           "skill_check": {
-            "skill": "common_sense",
+            "skill": "resolve",
             "outcomes": {
-              "critical_success": { "next": "scene_dispatch_truth_check", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": 10 }] },
-              "success":          { "next": "scene_dispatch_route_b", "effects": [{ "resource": "san", "delta": -5 }] },
-              "partial":          { "next": "scene_end_lost_school", "effects": [{ "resource": "san", "delta": -25 }] },
-              "failure":          { "next": "scene_end_lost_school", "effects": [{ "resource": "san", "delta": -30 }] },
-              "fumble":           { "next": "scene_end_lost_school", "effects": [{ "resource": "san", "delta": -50 }] }
+              "critical_success": { "next": "scene_self_break",                  "effects": [{ "resource": "san", "delta": 15 }] },
+              "success":          { "next": "scene_dispatch_routeA_truth_check", "effects": [{ "resource": "san", "delta": 5 }] },
+              "partial":          { "next": "scene_lost_sanity",                 "effects": [{ "resource": "san", "delta": -30 }] },
+              "failure":          { "next": "scene_lost_sanity",                 "effects": [{ "resource": "san", "delta": -50 }] },
+              "fumble":           { "next": "scene_lost_sanity",                 "effects": [{ "resource": "san", "delta": -70 }] }
             }
           }
-        },
-        { "label": "牽住她的手，跟她走", "next": "scene_end_lost_school" },
+        }
+      ]
+    },
+
+    "scene_rejection_and_escape": {
+      "bgm": "assets/audio/bgm/halloween-bgmkill-me-babydark.mp3",
+      "narrative": "「你不是我哥。」\n\n妳的話音剛落，空氣瞬間凝固。前一秒還溫柔微笑的「哥哥」，臉部肌肉開始像融化的蠟一樣垮下，那張臉迅速乾縮成一個漆黑的深淵。他手裡的那杯手搖飲「啪」地掉落在地，流出的卻是帶著腐臭味的黑色黏液。\n\n「⋯⋯被⋯⋯發現了⋯⋯啊⋯⋯」\n\n那聲音化作尖銳的嘶吼，整個天台開始崩塌，地面變得像沼澤般柔軟。那團黑影怪物猛地彈起，像一塊巨大的黑布朝妳撲過來！妳沒有一絲遲疑，轉身就往天台門口的樓梯間狂奔。\n\n背後傳來那種濕滑、黏稠的磨擦聲，而且越來越近，幾乎就貼在妳的後腦勺上。那股腥臭的惡寒讓妳全身的汗毛直豎。\n\n妳感覺到，只要一慢下來，背後那頭漆黑怪獸就會將妳整個人吞噬下去。",
+      "choices": [
         {
-          "label": "用書包砸鏡子，大叫救命",
+          "label": "（逃跑）什麼都不要看，拼命往光亮的地方跑！",
           "skill_check": {
             "skill": "athletics",
             "outcomes": {
-              "critical_success": { "next": "scene_end_rescued", "effects": [{ "resource": "san", "delta": 10 }] },
-              "success":          { "next": "scene_end_rescued" },
-              "partial":          { "next": "scene_end_rescued", "effects": [{ "resource": "san", "delta": -15 }] },
-              "failure":          { "next": "scene_end_lost_school", "effects": [{ "resource": "san", "delta": -25 }] },
-              "fumble":           { "next": "scene_end_lost_school", "effects": [{ "resource": "san", "delta": -40 }] }
+              "critical_success": { "next": "scene_dispatch_routeA_truth_check", "effects": [{ "resource": "san", "delta": 5 }] },
+              "success":          { "next": "scene_dispatch_routeA_truth_check" },
+              "partial":          { "next": "scene_normal_escape",               "effects": [{ "resource": "san", "delta": -15 }] },
+              "failure":          { "next": "scene_lost_sanity",                 "effects": [{ "resource": "san", "delta": -30 }] },
+              "fumble":           { "next": "scene_lost_sanity",                 "effects": [{ "resource": "san", "delta": -50 }] }
             }
           }
         }
       ]
     },
 
-    "scene_leave_school": {
-      "bgm": "assets/audio/bgm/the_mountain-lonely.mp3",
-      "narrative": "你決定不管了。\n\n哥哥再奇怪也是哥哥，他到了會自己打給你。你揹起書包，往樓下走。走到一樓大廳時，警衛室的老警衛抬起頭看了你一眼，又埋回他的報紙。\n\n你穿過警衛室、走過操場、走到校門口。鐵門半掩著，外面的街道是熟悉的橘紅色，補習班招牌、便利商店、賣茶葉蛋的小攤——一切都像平常的傍晚。\n\n你長出一口氣。就在你踏出校門那一瞬間，手機又響了。\n\n螢幕上：哥哥。",
-      "choices": [
-        { "label": "接起來，「哥你到底在搞什麼」", "next": "scene_phone_at_gate" },
-        { "label": "不接，直接往家裡走", "next": "scene_dispatch_route_c", "effects": [{ "resource": "san", "delta": 5 }] }
-      ]
-    },
-
-    "scene_phone_at_gate": {
-      "bgm": "assets/audio/bgm/building-tension.mp3",
-      "narrative": "「妹，你到哪了？」哥哥的聲音很冷靜——太冷靜了。\n\n「我在校門口啊，你呢？」\n\n「⋯⋯我命令妳，回學校天台等我。」\n\n你愣住。你不是沒被哥哥唸過、不是沒被哥哥兇過——但他從來、從來不會用「命令」這個詞。哥哥再煩，最多就是央著妳「拜託拜託聽我的」。\n\n而這個聲音的背後——\n\n你忽然意識到。電話那頭，沒有任何聲音。沒有風、沒有公車、沒有路上的人聲。乾淨得像錄音棚。",
-      "choices": [
-        {
-          "label": "「你不是我哥」——掛斷電話，自己走回家",
-          "skill_check": {
-            "skill": "common_sense",
-            "outcomes": {
-              "critical_success": { "next": "scene_end_self_break", "effects": [{ "resource": "clue", "delta": 2 }, { "resource": "san", "delta": 15 }] },
-              "success":          { "next": "scene_end_self_break", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": 10 }] },
-              "partial":          { "next": "scene_dispatch_route_c", "effects": [{ "resource": "san", "delta": -10 }] },
-              "failure":          { "next": "scene_dispatch_route_c", "effects": [{ "resource": "san", "delta": -15 }] },
-              "fumble":           { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "san", "delta": -30 }] }
-            }
-          }
-        },
-        { "label": "猶豫了一下，還是回頭走回學校", "next": "scene_walk_to_rooftop", "effects": [{ "resource": "san", "delta": -15 }] },
-        {
-          "label": "什麼都不說，直接掛掉",
-          "skill_check": {
-            "skill": "listen",
-            "outcomes": {
-              "critical_success": { "next": "scene_end_self_break", "effects": [{ "resource": "clue", "delta": 1 }, { "resource": "san", "delta": 5 }] },
-              "success":          { "next": "scene_dispatch_route_c", "effects": [{ "resource": "san", "delta": 5 }] },
-              "partial":          { "next": "scene_dispatch_route_c", "effects": [{ "resource": "san", "delta": -10 }] },
-              "failure":          { "next": "scene_dispatch_route_c", "effects": [{ "resource": "san", "delta": -15 }] },
-              "fumble":           { "next": "scene_walk_to_rooftop", "effects": [{ "resource": "san", "delta": -25 }] }
-            }
-          }
-        }
-      ]
-    },
-
-    "scene_dispatch_truth_check": {
+    "scene_dispatch_clue_check": {
       "narrative": "",
       "conditional_next": [
-        { "if_resource_at_least": { "clue": 3, "san": 50 }, "next": "scene_end_truth" },
-        { "if_resource_below": { "san": 30 }, "next": "scene_end_lost_soul" },
-        { "default": true, "next": "scene_end_rescued" }
+        { "if_resource_below":    { "san": 50 },  "next": "scene_lost_sanity" },
+        { "if_resource_at_least": { "clue": 2 }, "next": "scene_dispatch_sms_check" },
+        { "default": true,                       "next": "scene_dispatch_after_sms" }
       ]
     },
 
-    "scene_dispatch_route_a": {
+    "scene_dispatch_sms_check": {
       "narrative": "",
       "conditional_next": [
-        { "if_resource_at_least": { "san": 60, "clue": 2 }, "next": "scene_end_self_break" },
-        { "if_resource_below": { "san": 30 }, "next": "scene_end_lost_soul" },
-        { "default": true, "next": "scene_end_curse_spread" }
+        { "if_resource_below": { "sms_sent": 1 }, "next": "scene_sms_or_call" },
+        { "default": true,                        "next": "scene_dispatch_after_sms" }
       ]
     },
 
-    "scene_dispatch_route_b": {
+    "scene_dispatch_after_sms": {
       "narrative": "",
       "conditional_next": [
-        { "if_resource_at_least": { "clue": 3, "san": 50 }, "next": "scene_end_truth" },
-        { "if_resource_at_least": { "san": 50 }, "next": "scene_end_rescued" },
-        { "if_resource_below": { "san": 30 }, "next": "scene_end_lost_school" },
-        { "default": true, "next": "scene_end_curse_spread" }
+        { "if_resource_below": { "san": 50 }, "next": "scene_lost_sanity" },
+        { "default": true,                    "next": "scene_final_ascent" }
       ]
     },
 
-    "scene_dispatch_route_c": {
+    "scene_dispatch_routeA_truth_check": {
       "narrative": "",
       "conditional_next": [
-        { "if_resource_at_least": { "san": 70 }, "next": "scene_end_safe_home" },
-        { "if_resource_at_least": { "san": 50 }, "next": "scene_end_self_break" },
-        { "default": true, "next": "scene_end_curse_spread" }
+        { "if_resource_below":    { "san": 50 },                                     "next": "scene_lost_sanity" },
+        { "if_resource_at_least": { "clue": 3, "san": 50, "sms_sent": 1 },           "next": "scene_true_rescue" },
+        { "default": true,                                                            "next": "scene_normal_escape" }
       ]
     },
 
-    "scene_end_truth": {
+    "scene_true_rescue": {
       "bgm": "assets/audio/bgm/melancholic-piano.mp3",
       "narrative": "",
       "ending": {
         "type": "good",
         "title": "兄妹重逢",
-        "description": "你死命撐著沒有走上天台。\n\n你拽著走廊的扶手往樓下衝，每跑一階，那個叫著「林○○」的聲音就在背後變低一分、再低一分——直到你撞開校門，看見一個真實的、滿身汗水、書包帶子斷掉一半的——\n\n「妹！妳在哪——」哥哥的聲音被你撲過去抱住而中斷。他比電話裡的他粗糙、急、出汗、結結巴巴。他的衣服上有公車味、有跑步的味道，有一個真正活著的人該有的味道。\n\n「對不起，公車卡在路上很久⋯⋯妳⋯⋯妳沒事吧？妳怎麼一臉⋯⋯」\n\n你搖頭，用力搖頭。「沒事。我沒事。」\n\n回家的路上，哥哥開車。他握著方向盤的手在抖。你忍不住問：「⋯⋯哥，你以前⋯⋯有沒有遇過那種，你明明知道不對勁，但一直被叫著走過去的時候？」\n\n他沉默了很久，紅燈時才低聲說：「⋯⋯有過。一次。在某棟大樓的茶水間。」「我也是這樣撐回來的。」「下次，無論誰叫妳，記得——真的我，不會用『命令』這兩個字。」\n\n那一夜，你們兄妹在客廳的沙發上一人一邊靠著睡到天亮。屋子裡很安靜，安靜到妳第一次清楚地聽見了——時鐘的秒針，是一格一格往前的，沒有再倒退過一次。"
+        "description": "妳在絕望的追逐中猛地撞開一樓大門，就在那漆黑觸手即將纏住妳脖子的瞬間，一個結實溫暖的身影猛地衝上前將妳拉開，真實的怒吼聲震碎了四周的幻象——\n\n「滾開！別碰我妹！」\n\n妳整個人被那股巨大的力量帶向後方，重重地撞進一個充滿汗水味與真實溫度的懷抱。妳大口喘著氣，視線終於對焦。那是哥哥。他穿著工作服，滿頭大汗，臉上的焦急與憤怒是那麼地真實。他身後是停在校門口的機車，引擎還在發熱。\n\n妳回頭看向那座漆黑的舊校舍。門口依然是一片死寂，沒有紅光，沒有掛鐘，也沒有那頭漆黑的怪獸。只有風吹過廢棄教室窗戶的哀鳴聲。\n\n哥哥的手還在微微發抖，他抓著妳的肩膀，反覆確認妳有沒有受傷。雖然妳依然感到那股揮之不去的惡寒，但當他牽起妳的手，帶著妳走向機車時，妳知道那段 23:47 的夢魘終於結束了。\n\n「走，我們回家了。以後放學不准再隨便亂跑了，聽到沒有！」"
       }
     },
 
-    "scene_end_lost_soul": {
+    "scene_self_break": {
+      "bgm": "assets/audio/bgm/melancholic-piano.mp3",
+      "narrative": "",
+      "ending": {
+        "type": "good",
+        "title": "逃出生天",
+        "description": "「這一切都是假的！通通給我消失！！！」\n\n妳閉上眼，用盡全身的力氣聲嘶力覺地大喊。那一瞬間，空氣中那種黏稠的、帶有腥味的壓迫感劇烈震動。妳聽見一聲像是玻璃碎裂的清脆聲響，隨後是哥哥發出的一聲模糊、扭曲的嘆息。\n\n當妳顫抖著睜開眼時，原本血紅色的天空與那個人影全都消失了。天台上空無一物，只有冰冷的晚風和遠處城市的點點燈火。妳不敢回頭，轉身衝下樓梯，每一步都踏在真實的地磚上。\n\n妳衝出校門，跑過空蕩蕩的街道，直到看見自家的公寓大門。就在這時，口袋裡的手機再次猛然震動。\n\n螢幕閃爍著：「哥哥」。\n\n妳看著那個號碼，心臟像是被一隻冰冷的手死死攥住。這一次，妳沒有接聽。妳用力地按掉了通話，直接衝上樓，用鑰匙反鎖了家門。\n\n客廳的燈亮著，哥哥正坐在沙發上滑手機。看到妳一臉驚恐且滿身大汗，他嚇了一跳，連忙起身遞過毛巾：\n\n「妹？妳怎麼了？跑成這樣？」\n\n妳顫抖著問他剛才是不是有打電話，哥哥一臉莫名其妙地搖搖頭：「我今天根本沒打給妳啊，公車上手機沒電，我回到家才剛充好。」\n\n他為了證明，翻開通話紀錄給妳看。上面乾乾淨淨，沒有任何撥出的號碼。妳也僵硬地拿出自己的手機，卻發現⋯⋯原本那些詭異的通話紀錄，竟然全部消失了。\n\n彷彿這一切真的只是妳的一場幻覺。\n\n生活似乎恢復了正常。但從那天起，妳總覺得坐在沙發上吃著飯、跟妳說著話的哥哥，變得有些陌生。\n\n每當妳轉過身去，妳都能感覺到一道冰冷的視線正死死盯著妳的後頸。但當妳猛然回頭時，哥哥卻只是平靜地低頭喝著湯，臉上帶著一個妳從未見過的、微微上揚的僵硬弧度。"
+      }
+    },
+
+    "scene_normal_escape": {
+      "bgm": "assets/audio/bgm/sad-strings.mp3",
+      "narrative": "",
+      "ending": {
+        "type": "neutral",
+        "title": "無盡校園",
+        "description": "妳跌跌撞撞地衝出校門，冰冷的晚風灌進肺部，讓妳劇烈咳嗽起來。\n\n妳站在空曠的街道上回頭望去，學校教學大樓隱沒在深沉的暮色中，沒有血紅色的光，也沒有那個扭曲的人影。妳顫抖著拿出手機，螢幕乾乾淨淨，沒有通話紀錄，也沒有哥哥發來的任何訊息，彷彿剛才那場令人窒息的追逐只是一場過度疲勞引發的幻覺。\n\n妳拖著虛脫的身體回到家，在浴室用熱水洗去滿身的冷汗，倒頭便睡。\n\n隔天一早，鬧鐘準時響起。妳揉著發痠的肩膀，照常揹起書包上學。走進校門時，熟悉的喧鬧聲、學生的談笑聲讓妳感到一絲安心。妳穿過走廊，走進教室，一切都是那麼平常。\n\n直到下午放學，夕陽再次將教室染成那種詭異的橘紅色。\n\n妳揹起書包正準備離開，口袋裡的手機卻在此時猛然震動。妳心頭一緊，顫抖著拿出手機。\n\n螢幕上閃爍著那個熟悉的號碼：「哥哥」。\n\n妳僵硬地抬起頭看向黑板上方的掛鐘。那一瞬間，妳感覺心臟漏跳了一拍——\n\n掛鐘的秒針，正死死地定格在 23:47。\n\n「喀、喀、喀⋯⋯」\n\n那種咬碎枯木般的磨損聲再次從妳身後響起。妳慢慢轉過頭，看見自己的影子，正一點一釐米地往課桌底下縮了回去。"
+      }
+    },
+
+    "scene_rescued": {
+      "bgm": "assets/audio/bgm/sad-strings.mp3",
+      "narrative": "",
+      "ending": {
+        "type": "neutral",
+        "title": "餘震",
+        "description": "妳用盡最後的力氣擊碎了牆上的火警警報器。尖銳、單調的警鈴聲瞬間撕裂了死寂的走廊，也震碎了那種黏稠的、不自然的靜謐。\n\n黑暗中傳來一聲憤怒且不甘的嘶吼，隨後那些紅色的霧氣與拖行聲迅速退去。當老警衛提著手電筒，氣喘吁吁地跑上樓梯時，妳正縮在牆角，雙眼無神地盯著虛空，口中不斷重複著一個誰也聽不清的數字。\n\n妳被救出來了，但有些東西已經回不來了。\n\n在醫院的那幾週，妳拒絕與任何人交談。哥哥守在妳床邊，眼眶通紅地握著妳的手，但妳看著他的臉，卻總覺得那層皮膚下隱藏著另一張平滑、無面孔的臉。\n\n妳休學了半年。在家休養的日子裡，妳拆掉了家裡所有的時鐘。妳無法忍受那種「滴答」聲，那聲音聽起來像是在磨碎妳的骨頭。\n\n後來，父母幫妳辦了轉學。新學校的教室窗明几淨，同學們都很友善，生活似乎回到了正軌。\n\n可是，每當夕陽斜斜地照進教室時，妳都會停下筆，死死地盯著黑板上方的掛鐘。妳看著秒針一下、一下地跳動，隨著分針漸漸逼近數字 9 與 10 之間，妳的呼吸會變得短促，指尖開始不由自主地劇烈顫抖。\n\n45⋯⋯46⋯⋯\n\n當分針觸碰到 47 的那一刻，妳會感覺教室的光線瞬間冷了下去，四周的談笑聲變得遙遠且扭曲。妳屏住呼吸，直到看著分針緩緩跨過那個刻度，妳才敢重新吐出那口憋在胸腔裡的氣。"
+      }
+    },
+
+    "scene_lost_soul": {
       "bgm": "assets/audio/bgm/halloween-bgmkill-me-babydark.mp3",
       "narrative": "",
       "ending": {
         "type": "bad",
         "title": "失神",
-        "description": "妳聽見自己說：「好。」\n\n妳走過去，走得很慢，慢到血紅色的夕陽來得及把整個天台染成同一片暗紅。背對著妳的「哥哥」沒有回頭——他不需要回頭，他的聲音已經繞到妳的耳邊，溫柔地、輕輕地說：\n\n「乖，跟哥哥一起看夕陽。」\n\n那是妳聽過最熟悉的聲音。畢竟，那是哥哥的聲音。\n\n越接近哥哥，妳的思緒越來越薄弱，彷彿有什麼正悄悄的從妳的認知拿走什麼。妳漸漸不記得今天的異樣，妳的認知、思維、記憶都慢慢被蒸發了一樣，這世界好似什麼都不重要了，只剩眼前的哥哥﹍\n\n風灌進妳的領口。妳閉上眼睛。\n\n——\n\n隔天清晨，學校警衛打開後門時，發現校舍下方躺著一個穿著校服的女生。手機還握在手裡，最後一通通話紀錄是「哥哥」，時間 23:47。她的臉上還掛著笑——那種被哥哥牽著手過馬路時，妹妹會露出的、最安心的微笑。"
+        "description": "妳聽見自己說：「好。」\n\n妳走過去，走得很慢，慢到血紅色的夕陽來得及把整個天台染成同一片暗紅。背對著妳的「哥哥」沒有回頭——他不需要回頭，他的聲音已經繞到妳的耳邊，溫柔地、輕輕地說：\n\n「乖，跟哥哥一起看夕陽。」\n\n那是妳聽過最熟悉的聲音。畢竟，那是哥哥的聲音。\n\n越接近哥哥，妳的思緒越來越薄弱，彷彿有什麼正悄悄的從妳的認知拿走什麼。妳漸漸不記得今天的異樣，妳的認知、思維、記憶都慢慢被蒸發了一樣，這世界好似什麼都不重要了，只剩眼前的哥哥⋯\n\n風灌進妳的領口。妳閉上眼睛。\n\n——\n\n隔天清晨，學校警衛打開後門時，發現校舍下方躺著一個穿著校服的女生。手機還握在手裡，最後一通通話紀錄是「哥哥」，時間 23:47。她的臉上還掛著笑——那種被哥哥牽著手過馬路時，妹妹會露出的、最安心的微笑。"
       }
     },
 
-    "scene_end_safe_home": {
-      "bgm": "assets/audio/bgm/sad-strings.mp3",
+    "scene_lost_sanity": {
+      "bgm": "assets/audio/bgm/feedeorfano-terror.mp3",
       "narrative": "",
       "ending": {
-        "type": "good",
-        "title": "平安回家",
-        "description": "你沒有接那通電話。\n\n你走到公車站，搭上你每天搭的那班 287 路公車，一路平淡無奇地回到了家。打開門時，家裡的燈是亮的，媽媽在切水果，電視上播著無聊的綜藝。\n\n半小時後，哥哥也到家了。他渾身是汗，看見你坐在沙發上，愣了一下：「妳怎麼自己回來？我不是叫妳⋯⋯」「叫我什麼？」哥哥皺眉：「我今天根本沒打給妳，公車上手機沒電，我擔心死了。」\n\n你看著哥哥，看了很久，最後笑了一下，搖搖頭：「沒事啦。可能是詐騙吧。」\n\n那一晚，你睡得很好。只是你永遠不知道——如果你那時候接了那通電話，會發生什麼事。也許這樣不知道，才是最好的。"
+        "type": "bad",
+        "title": "留校生",
+        "description": "「這一切都是假的⋯⋯假的⋯⋯」\n\n妳嘶吼著，但聲音卻像被這濃稠的紅霧吞噬了一般，微弱得連妳自己都聽不見。妳的理智在這一刻崩解，原本試圖識破幻覺的意志力，在那個「東西」冰冷的注視下徹底瓦解。\n\n妳看見「哥哥」的臉開始像蠟一樣融化，露出底下那片平滑、肉色、沒有五官的皮膚。但奇怪的是，妳不再感到恐懼，反而覺得那種空洞異常地親切。\n\n那個東西緩緩伸出細長的手指，輕輕覆蓋在妳的雙眼上。妳感覺到一種極致的寒意滲進大腦，帶走了妳所有的記憶、名字與情緒。妳最後一點自我，就像被抹布擦掉的字跡一樣，消失得乾乾淨淨。\n\n當妳再次睜開眼時，妳依然站在原地，但妳的眼神已經空洞得像兩口深不見底的井。\n\n妳不再想逃了。妳轉過身，像個提線木偶般走回那條血紅色的走廊。妳走進一間教室，安靜地坐在最後一排的位子上，雙手平放在膝蓋上，就像一個最乖巧的學生。\n\n牆上的掛鐘依然定格在 23:47。\n\n妳成了這座死寂校園裡的又一個「留校生」。當下一個受害者來到這裡時，他們會看見妳坐在黑暗中，對著他們露出一個僵硬且完美的微笑，然後輕聲問道：\n\n「你在哪？我在教室等妳⋯⋯」"
       }
     },
 
-    "scene_end_rescued": {
-      "bgm": "assets/audio/bgm/sad-strings.mp3",
-      "narrative": "",
-      "ending": {
-        "type": "neutral",
-        "title": "校警救援",
-        "description": "你蹲在走廊上發抖，書包散落一地。一道手電筒的光從樓梯口刺過來——是值班的老警衛，慢吞吞地走過來。\n\n「同學？啊⋯⋯妳怎麼還在學校？」他打量你的臉，眉頭皺了起來，沒再多問，只是嘆了一口氣，伸手扶你起來：「⋯⋯我送妳到校門口，妳家人來接妳。」\n\n他在校門口的警衛室幫你撥了哥哥的號碼。十分鐘後，哥哥跑進警衛室抱住你，嘴裡一直念「對不起對不起」。老警衛站在一旁，看著你們兄妹，最後輕輕說：「⋯⋯這所學校以前也出過事。妳哥沒帶妳來這上學，是對的。」\n\n你回家後睡了三天三夜。從此你再也沒在 17:00 之後留在學校過。你不知道那天到底發生了什麼，也沒有人會告訴你。但你知道——那不是你最後一次聽見「那個聲音」叫你的名字。"
-      }
-    },
-
-    "scene_end_curse_spread": {
+    "scene_curse_spread": {
       "bgm": "assets/audio/bgm/feedeorfano-terror.mp3",
       "narrative": "",
       "ending": {
         "type": "bad",
         "title": "下一個",
-        "description": "你撐到了 23:47。\n\n手機螢幕已經熄滅。教室裡只剩下你一個人——以及，黑板上多出來的那個名字。是你的名字，但不是你的字跡。\n\n哥哥永遠沒到。也或者說，那個「哥哥」一直都在，只是換了一個方式。\n\n那一晚過後，你回家了，吃了飯、洗了澡、睡了覺。你和正常人沒有任何區別。\n\n只是有時候，你會在傍晚的時候，對著家裡某個年紀比你小的親戚——表妹、堂妹、鄰居家的小孩——溫柔地、輕輕地，把手機遞給他們：「喂，是哥哥嗎？等等他要你來這邊喔。」\n\n你不知道你為什麼這樣做。但你知道，總得有下一個人。\n\n（多年後，當有個女孩在另一座城市的某間公寓裡接到一通「哥哥」的電話時——那聲音的源頭，是從妳這裡傳出去的。）"
-      }
-    },
-
-    "scene_end_lost_school": {
-      "bgm": "assets/audio/bgm/horror-ambience.mp3",
-      "narrative": "",
-      "ending": {
-        "type": "bad",
-        "title": "無盡校園",
-        "description": "你牽住了她的手。\n\n她的手很冷，但很熟悉——畢竟那是你自己的手。她笑著把你帶出廁所，走過走廊：1-7、1-8、1-9⋯⋯走廊永遠走不完，每一間教室裡都坐滿了背對著你的「同學」。\n\n你不害怕了。她說會帶你去找哥哥，你相信她。\n\n一個小時後，學校警衛巡查時，廁所的鏡子上多了一個淡淡的手印，廁所門虛掩著，地上有妳的書包、妳的手機、妳的學生證。但妳本人不在——彷彿從來沒進過這間廁所。\n\n警方搜查了三天三夜。哥哥在記者會上崩潰地哭。一個月後，案件被列為「離奇失蹤」。\n\n（但偶爾——偶爾——還會有學生在傍晚的廁所鏡子裡，看見一個穿著校服的女孩，對自己微微笑著。她看起來很安心，因為她「終於找到哥哥了」。）"
-      }
-    },
-
-    "scene_end_self_break": {
-      "bgm": "assets/audio/bgm/melancholic-piano.mp3",
-      "narrative": "",
-      "ending": {
-        "type": "good",
-        "title": "自己走出去",
-        "description": "「你不是我哥。」\n\n你說完這句話，按下了掛斷鍵，然後做了一件你自己都意外的事——你打開手機，把「哥哥」這個聯絡人封鎖了。\n\n你知道真正的哥哥之後會打從別的號碼來——他會生氣、會擔心、會問你在搞什麼——但那都是之後的事了。現在你只想自己走回家。\n\n你走得很慢，很穩。每一步都踩在自己的影子上。手機在書包裡又響了幾次，你沒看。\n\n回到家後不久，真正的哥哥也滿頭大汗地跑回來，第一句話是：「妳是不是接到很奇怪的電話？我手機剛剛被人盜用打出去了！」\n\n你看著他，看了很久。最後笑著說：「我知道，所以我沒理。」\n\n哥哥愣住，眼眶突然就紅了。他沒說話，只是用力搓了一下你的頭。\n\n那一晚之後，妳變了一些——妳開始不那麼依賴哥哥的照顧，開始相信自己第一直覺。哥哥再也沒小看過妳。妳們兄妹的關係，從那天之後，平等了。"
+        "description": "所有的掙扎在這一刻都失去了意義。\n\n妳驚恐地發現，視線所及的一切開始迅速崩解、消散。原本存在的輪廓在瞬間液化，化作一股濃稠得近乎固體的黑暗，從四面八方向妳擠壓而來。這不再是單純的陰影，而是一種帶有重量與溫度的寒冷，正一點一滴地滲進妳的皮膚與骨髓。\n\n妳伸出手，卻連自己的五指都看不見。空間感在這一刻徹底消失，妳像是墜入了一個無止盡的深淵，四周只剩下一片絕對的死寂與壓迫感。無數無形的觸感在暗處緩緩纏繞上妳的腳踝，冰冷且充滿惡意地將妳向下拉扯，直到將妳徹底拽入那片墨色之中。\n\n妳的意識開始模糊，手中的手機螢幕成了這片虛無中最後的殘光。\n\n在那慘白的螢幕上，電話正自動撥向妳最熟悉的那個人。聽筒傳來接通的聲音，而妳聽見「自己」正帶著那種令人不寒而慄的空洞笑意，輕聲對著話筒說道：\n\n「你在哪？我在學校等你⋯⋯這裡好漂亮，你快過來⋯⋯」"
       }
     }
   }
