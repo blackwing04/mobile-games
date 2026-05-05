@@ -176,7 +176,7 @@
    - 代價成功 → scene_phone_again_hide [san-15]
    - 失敗 → scene_curse_spread [san-25]
    - 大失敗 → scene_curse_spread [san-40]
-3. **「（強壓恐懼）是誰在那裡？打開手機手電筒照過去！」** — observe 檢定
+3. **「是誰在那裡？打開手機手電筒照過去！」** — observe 檢定
    - 大成功 → scene_monster_glimpse [clue+1, san-15]
    - 成功 → scene_monster_glimpse [san-15]
    - 代價成功 → scene_monster_glimpse [san-25]
@@ -419,7 +419,7 @@ narrative：與 `scene_endless_stairs` 完全相同（共用上方那段）。
 
 選項：
 
-1. **「你不是我哥⋯⋯（根據線索識破謊言）」**（線索 ≥ 2 才顯示）→ scene_rejection_and_escape [clue+1, san+10]
+1. **「你不是我哥⋯⋯」**（線索 ≥ 2 才顯示）→ scene_rejection_and_escape [clue+1, san+10]
 2. **「相信眼前的哥哥」** → scene_lost_soul [san-50]
 3. **「（閉上眼大喊）這一切都是假的！通通消失！」** — resolve 檢定
    - 大成功 → scene_self_break [san+15]
