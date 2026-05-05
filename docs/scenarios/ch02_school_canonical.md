@@ -102,8 +102,8 @@
    - 大成功 → scene_classroom_wake [san+5]
    - 成功 → scene_classroom_wake
    - 代價成功 → scene_classroom_wake [san-10]
-   - 失敗 → scene_lost_sanity [san-30]
-   - 大失敗 → scene_lost_sanity [san-50]
+   - 失敗 → scene_dream_corruption [san-25]
+   - 大失敗 → scene_dream_corruption [san-40]
 
 ---
 
@@ -427,6 +427,21 @@ narrative：與 `scene_endless_stairs` 完全相同（共用上方那段）。
    - 代價成功 → scene_lost_sanity [san-30]
    - 失敗 → scene_lost_sanity [san-50]
    - 大失敗 → scene_lost_sanity [san-70]
+
+---
+
+## scene_dream_corruption （**過場場景，趴睡失敗 → 夢境汙染**）
+
+⏳ **narrative 待 Gemini 寫**。設計大綱：
+- 妹妹趴在桌上閉眼，意識沉入睡眠
+- 夢境裡那個「東西」靠近，緩緩覆蓋她的雙眼 / 滲入她的意識
+- 詛咒在夢中汙染妹妹（記憶、自我、感知開始扭曲）
+- 妹妹突然驚醒（其實已被汙染），嘴裡無意識地嘶吼出「這一切都是假的⋯⋯假的⋯⋯」
+- next → scene_lost_sanity（lost_sanity 開頭「這一切都是假的⋯⋯」自然延續為「醒來瞬間的嘶吼」）
+
+選項：無（純 narrative 過場，自動 next）
+
+next → scene_lost_sanity
 
 ---
 
