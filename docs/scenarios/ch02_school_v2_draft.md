@@ -8,6 +8,21 @@
 
 ---
 
+## 📊 場景預算
+
+| 項目 | 計數 |
+|------|------|
+| 黃金預算（EPISODE_BLUEPRINT） | 17-22 |
+| v2 已收 narrative | 5 (start / wait_classroom / classroom_wake / door_stuck / phone_again) |
+| v2 已引用未定義 | 8 (scare_clock / door_locked_fate / hide_success / hide_fail / monster_glimpse / phone_drop / phone_static / final_ascent) |
+| **Route A 已累積** | **13**（光這條線就已 13）|
+| Route B / C / 結局 / router | 尚未開始 |
+| 樂觀總計預估 | 30+ |
+
+> ⚠️ 整合期須壓縮 30-40%。已知壓縮機會：scene_door_stuck 的 6 個 next（3 成功 + 3 失敗）可併成 2 個（成功 → 既有 corridor_search、失敗 → 新合併場景 caught_in_classroom）。
+
+---
+
 ## 🔄 進度追蹤
 
 ### 既有場景（v1 → v2 重寫狀態）
