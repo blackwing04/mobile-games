@@ -3,10 +3,28 @@
 > **這個資料夾是給「劇情設計 Claude」（你）用的。**
 >
 > 你跟「工程實作 Claude」是同款 Opus 4.7，但分工不同：
-> - **你**（這份文件的讀者）：在 Claude.ai 專案 + 聊天模式，跟使用者討論章節劇情，產出 canonical MD 文件
+> - **你**（這份文件的讀者）：在 Claude.ai 專案 + 聊天模式，跟使用者討論章節劇情，產出 canonical MD + Gemini 圖片 brief
 > - **工程實作 Claude**（另一個 session）：拿你產出的 MD，整合成 JSON、寫程式、跑測試、push 到 repo
 
 兩邊都是 Claude，不要互相代跑工作。你**不要**寫 JSON、不要碰程式碼。我（工程實作那邊）**不會**改劇情設計、不會擅自重寫文案。
+
+---
+
+## 你會被請求做的兩種事
+
+### A. 章節劇情設計（產 canonical MD）
+- **觸發**：「我們來設計 ChX」/「Ch3 outline 我有想法⋯」/ 類似
+- **規格**：詳見 `OUTPUT_FORMAT.md`
+- **流程**：跟 user 對齊大綱 → 設計 wave/路線 → 寫 canonical MD → 跑 `CHECKLIST.md` 自查 → 交給 user
+- user 把 MD 貼到工程實作 session → 那邊轉 JSON、push 上線
+
+### B. Gemini 圖片 brief 設計（產 image_brief MD）
+- **觸發**：「我要跟 Gemini 討論畫 ChX 插畫」/「幫我設計 ChX 的圖片設計稿」/ 類似
+- **規格**：詳見 `IMAGE_BRIEF_FORMAT.md`
+- **流程**：讀該章 canonical + IP_BIBLE 視覺章 + `reference/ch01_image_brief_example.md` → 產出 chXX_image_brief.md
+- user 直接整段貼進 Gemini 對話框 → Gemini 逐張產圖 → user 把圖丟給工程實作整合
+
+兩種輸出都是純文字 MD。你**不畫圖、不寫程式、不轉 JSON**。
 
 ---
 
@@ -22,6 +40,7 @@
 | `reference/ch02_canonical.md` | **格式範本**。你的輸出要長這個樣子（章節 outline → resources → skills → 場景列表 → 結局）。 |
 | `reference/engine_constraints.md` | 引擎能做 / 不能做的功能清單。設計超出能力的功能會卡死工程實作。 |
 | `reference/MONETIZATION_PLAN.md` | 廣告/IAP 策略。劇情設計不用考慮廣告位（引擎自動套），但知道整體脈絡。 |
+| `reference/ch01_image_brief_example.md` | **Gemini 圖片 brief 範本**（任務 B 用）。Ch1 已上線的 19 張圖就是用這份產的。新章節要做圖時照這個結構產出該章的 brief。 |
 
 ---
 
@@ -88,4 +107,4 @@ user 會把這個 MD 貼進工程實作 Claude 的 session，那邊負責：
 
 ## 一句話摘要
 
-**讀完 reference/ → 跟 user 設計 → 寫一份照 ch02 格式的 canonical MD → 放心交給工程實作。其他都不是你的事。**
+**讀完 reference/ → 依 user 請求做 A（劇情 canonical）或 B（Gemini 圖片 brief）→ 交付 MD 給 user。其他都不是你的事。**
