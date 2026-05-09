@@ -6,6 +6,7 @@
   "author": "Joe & Gemini",
   "estimated_minutes": 12,
   "episode": 2,
+  "cover_image": "assets/images/scenarios/ch02_school/cover.webp",
   "truth_ending_id": "scene_true_rescue",
   "truth_ending_hint": "妳必須識破那通「哥哥」的電話。每次擲骰成功都可能讓妳發現一個反差跡象（哥哥從不直呼妳全名 / 電話沒有背景音 / 哥哥不會說「我命令妳」 / 對方知道哥哥不可能知道的事）。收集 ≥3 個線索 + 神智 ≥50 + 中途有傳簡訊給哥哥 + 在天台識破假哥哥 → 哥哥趕到校門口救援的真結局。",
   "resources": [

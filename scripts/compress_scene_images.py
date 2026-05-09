@@ -89,13 +89,13 @@ def compress_one(src: Path) -> tuple[int, int]:
 
 
 def update_json_paths(json_path: Path) -> int:
-    """把 JSON 內所有 ch__XXX/scene_yyy.png → .webp。回傳替換次數。"""
+    """把 JSON 內所有 image / cover_image 欄位的 .png → .webp。回傳替換次數。"""
     text = json_path.read_text(encoding="utf-8")
     new_text = text
     count = 0
-    # 簡單字串替換 — 只動 .png → .webp，不動其他內容
+    # 抓有 image / cover_image / ending image 等所有路徑欄位的 .png 字串
     for line in text.splitlines():
-        if '"image"' in line and ".png" in line:
+        if "image" in line and ".png" in line and "scenarios/" in line:
             new_line = line.replace(".png", ".webp")
             new_text = new_text.replace(line, new_line)
             count += 1
