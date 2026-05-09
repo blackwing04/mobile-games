@@ -4,17 +4,18 @@
 
 ---
 
-## 一、最終設計（使用者拍板，2026-05）
+## 一、最終設計（使用者拍板，2026-05；2026-05 更新：3 章版本）
 
-### 1. 章節 Gating（Ch2+ 才需廣告）
+### 1. 章節 Gating（**全章都需廣告**）
 
 **規則**：
 
 | 章節 | Gating 行為 |
 |------|------------|
-| **Ch1**（永久免費）| 點開直接進，永遠不需廣告 |
-| **Ch2 / Ch3 / Ch4 / Ch5**（需 ad）| 點開 → 若未在 1 小時 cooldown 內 → 看 ad → 進入；若在 cooldown 內 → 直接進 |
+| **Ch1 / Ch2 / Ch3**（全章皆 gating）| 點開 → 若未在 1 小時 cooldown 內 → 看 ad → 進入；若在 cooldown 內 → 直接進 |
 | **任何章節（Premium 玩家）** | 永遠直接進，不顯示 ad |
+
+> **2026-05 修正**：原本 Ch1 永久免費。但第一作砍到 3 章後內容變短，IAP 動機弱、廣告是主要回收，**改成每章入口都看 ad（含 Ch1）**。1 hr cooldown 機制保留 — 玩家連續嘗試結局時 1 hr 內免重看，干擾仍低。
 
 **Cooldown 機制**：
 - 每章節**獨立** cooldown timestamp（`ad_cooldown:scenario_id` 存在 SharedPreferences）
@@ -33,10 +34,16 @@
 |------|------|
 | **商品類型** | One-time non-consumable（買斷，跨裝置可恢復）|
 | **商品 ID（暫定）** | `com.blackwing04.mobilegames.premium_pass` |
-| **價位** | **NT$60**（台灣手遊入門 sweet spot；不能太高因為廣告 cooldown 已經很寬鬆，玩家動機不強烈，要把 IAP 設成「省麻煩」級別的便宜）|
+| **價位** | **NT$30**（試水溫策略 — 第一作降低門檻衝安裝量；NT$30 是「想都不用想」的價位，比 NT$60 更容易轉換）|
 | **效果** | 永遠跳過所有 ad（不論章節）|
 | **Restore 按鈕** | Settings 頁加「恢復購買」按鈕（換手機 / 重灌 app 用）|
 | **抽成** | Google Play 抽 15%（前 USD$100 萬）|
+
+> **2026-05 修正**：原本 NT$60，後拍板改 NT$30 試水溫。理由：
+> 1. 第一作衝安裝量比衝單價重要（評分、口碑、後續作品流量）
+> 2. 廣告 cooldown 寬鬆 = IAP 動機弱，價格越低越好抓「省麻煩」轉換
+> 3. NT$30 你拿 NT$25.5（扣 15%），100 個轉換 ≈ NT$2,550，足以覆蓋 Play Developer 帳號 $25 美金
+> 4. 之後續作市場有反應再考慮 NT$60
 
 ### 3. 平台範圍
 
@@ -144,21 +151,11 @@ return true;
 
 ```dart
 Future<void> _openScenario(Scenario scenario) async {
-  // Ch1 永遠免費
-  if (scenario.episode == 1) {
-    return _navigateTo(scenario);
-  }
-
-  // Premium 玩家免 ad
-  final isPremium = await ref.read(premiumServiceProvider).isPremium();
-  if (isPremium) {
-    return _navigateTo(scenario);
-  }
-
-  // Web fallback（NoopAdService 直接 return true）
-  // 走 cooldown / ad flow
-  final ok = await ref.read(adServiceProvider).ensureAdWatched(scenario.id);
-  if (ok) _navigateTo(scenario);
+  // 全部章節（含 Ch1）都走 ad gating
+  // Premium 玩家 / Web / cooldown 內 → adService 直接 return true
+  final ok = await ref.read(adServiceProvider).ensureAdWatched(context, scenario.id);
+  if (!ok || !mounted) return;
+  _navigateTo(scenario);
 }
 ```
 
@@ -166,18 +163,17 @@ Future<void> _openScenario(Scenario scenario) async {
 
 ## 五、Phase 1 完成後的 manual 驗證
 
-1. Ch1 點開 → 直接進（無 ad / cooldown）✅
-2. Ch2 第一次點開 → 顯示假 ad 畫面 5 秒 → 進章節 ✅
-3. Ch2 隔 30 分鐘再點 → 直接進（cooldown 內）✅
-4. Ch2 隔 1.5 小時再點 → 又顯示假 ad（cooldown 已過）✅
-5. Web build 點 Ch2 → 直接進（NoopAdService）✅
-6. （將來 Phase 3）打開 settings 按「去除廣告」→ purchase flow → 之後所有章節都直接進 ✅
+1. **任何章節**第一次點開 → 顯示假 ad 畫面 5 秒 → 進章節 ✅
+2. 隔 30 分鐘再點同章節 → 直接進（cooldown 內）✅
+3. 隔 1.5 小時再點同章節 → 又顯示假 ad（cooldown 已過）✅
+4. Web build 點任何章節 → 直接進（NoopAdService）✅
+5. （將來 Phase 3）打開 settings 按「去除廣告 NT$30」→ purchase flow → 之後所有章節都直接進 ✅
 
 ---
 
 ## 六、未來接手 Claude 注意事項
 
-1. **不要動 Ch1 gating 邏輯** — Ch1 永遠免費
+1. **每章入口都 gating** — 包含 Ch1。原本 Ch1 永久免費的設計已廢除
 2. **每章獨立 cooldown** — 不要做「全章共用 cooldown」
 3. **Web 一律 NoopAdService** — Web 不做 ad 邏輯
 4. **新增章節時**：JSON 加 `episode` 欄位，hooks 自動 gating（不必動 ad code）

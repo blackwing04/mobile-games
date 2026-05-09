@@ -10,7 +10,7 @@ import 'premium_service.dart';
 /// 詳細設計：docs/MONETIZATION_PLAN.md
 ///
 /// ### Phase 1 行為（現在）
-/// - Ch1（episode == 1）永遠免廣告（呼叫端決定，AdService 不知道章節資訊）
+/// - **每章都 gating**（含 Ch1 — 2026-05 修正版，原本 Ch1 免費已廢除）
 /// - Premium 玩家：直接 return true（無 ad）
 /// - 在 1 小時 cooldown 內：直接 return true
 /// - 否則：顯示假廣告畫面 5 秒（StubAd dialog）→ 寫入 cooldown timestamp → return true

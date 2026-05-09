@@ -36,15 +36,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Future<void> _openScenario(Scenario scenario) async {
-    // Ch1 永遠免廣告；其他章節走 ad gating
-    // (Premium / Web / cooldown 內 → 直接進；否則顯示 ad)
+    // 全部章節（含 Ch1）都走 ad gating
+    // Premium / Web / cooldown 內 → adService 直接 return true，無感
     // 詳細設計見 docs/MONETIZATION_PLAN.md
-    if (scenario.episode != 1) {
-      final ok = await ref
-          .read(adServiceProvider)
-          .ensureAdWatched(context, scenario.id);
-      if (!ok || !mounted) return;
-    }
+    final ok = await ref
+        .read(adServiceProvider)
+        .ensureAdWatched(context, scenario.id);
+    if (!ok || !mounted) return;
 
     // 強制 invalidate 確保進入劇本時 state 是 fresh GameState.initial
     // (autoDispose family 在某些 timing 下會 race condition 沒釋放)
