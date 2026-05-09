@@ -36,6 +36,7 @@ flutter:
     - assets/scenarios/
     - assets/images/
     - assets/images/scenarios/ch01_office/
+    - assets/images/scenarios/ch02_school/
     - assets/icons/
     - assets/audio/bgm/
     - assets/audio/sfx/
