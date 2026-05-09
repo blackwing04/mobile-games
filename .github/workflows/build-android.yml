@@ -29,6 +29,24 @@ jobs:
           channel: stable
           cache: true
 
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('android/**/*.gradle*', 'android/**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
+      - name: Cache Android NDK + CMake
+        uses: actions/cache@v4
+        with:
+          path: |
+            /usr/local/lib/android/sdk/ndk
+            /usr/local/lib/android/sdk/cmake
+          key: android-ndk27-cmake3221-${{ runner.os }}
+
       - name: Print versions (debug)
         run: |
           flutter --version
