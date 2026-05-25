@@ -1270,7 +1270,7 @@
         },
         {
           "label": "（撥打電話）還是再打一次確認看看，這次我要聽清楚一點。",
-          "next": "scene_dispatch_after_sms",
+          "next": "scene_dispatch_after_call",
           "effects": [
             {
               "resource": "san",
@@ -1428,6 +1428,119 @@
       "image": "assets/images/scenarios/ch02_school/scene_final_ascent.webp",
       "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
       "narrative": "訊息送出。\n\n妳緊握著手機，盯著螢幕等回覆。一分鐘、兩分鐘⋯⋯沒有跳出「已讀」標記，連訊號格的小圓點都不動。\n\n「哥？你有看到嗎？」妳又補了一則。\n\n螢幕依然只顯示著那兩則被無情吞掉的訊息，沒有任何回覆。緊接著，手機螢幕無預警地閃爍了兩下，隨即徹底熄滅，化為一片漆黑的鏡面。\n\n訊號中斷的瞬間，妳猛然意識到——不能再原地等下去了。無論「哥哥」要妳到的天台上有什麼，都比留在這片惡意中好。妳深吸一口氣，抓緊書包，朝著上方的方向奔去。\n\n沿路的景象不斷扭曲變形——走廊像被拉長成一條血色的舌頭、樓梯轉角的牆面長出停留在 23:47 的掛鐘、空氣中黏稠的紅光每跑一步就在地上拖出黏膩的濕跡。\n\n「這到底怎麼回事⋯⋯」妳邊跑邊在心裡嘀咕，試圖理清這一切詭異的現象。但妳不敢停下來思考，只能不斷往上爬，那是唯一還有光亮的地方。\n\n終於，妳推開了通往天台的那扇沉重鐵門。\n\n強風瞬間灌進妳的領口，凍得妳打了個寒顫。妳看見在那片血紅色的天空下，一個熟悉的背影正靜靜地站在天台邊緣，背對著妳。\n\n那是哥哥。他穿著早上出門時的那件外套，手裡拿著一支妳最愛喝的手搖飲，冰塊撞擊杯壁的「叮、叮」聲，在狂風中竟然聽得清清楚楚，彷彿那聲音是直接在妳腦袋裡響起的。",
+      "choices": [
+        {
+          "label": "（止步）你剛才不是說你在校門口？為什麼現在在這裡？",
+          "skill_check": {
+            "skill": "observe",
+            "outcomes": {
+              "critical_success": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "clue",
+                    "delta": 2
+                  }
+                ]
+              },
+              "success": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "clue",
+                    "delta": 1
+                  }
+                ]
+              },
+              "partial": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "san",
+                    "delta": -10
+                  }
+                ]
+              },
+              "failure": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "san",
+                    "delta": -10
+                  }
+                ]
+              },
+              "fumble": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "san",
+                    "delta": -20
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "label": "（觀察）先不要靠近，觀察周圍。",
+          "skill_check": {
+            "skill": "listen",
+            "outcomes": {
+              "critical_success": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "clue",
+                    "delta": 2
+                  }
+                ]
+              },
+              "success": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "clue",
+                    "delta": 1
+                  }
+                ]
+              },
+              "partial": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "san",
+                    "delta": -10
+                  }
+                ]
+              },
+              "failure": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "san",
+                    "delta": -10
+                  }
+                ]
+              },
+              "fumble": {
+                "next": "scene_the_climax",
+                "effects": [
+                  {
+                    "resource": "san",
+                    "delta": -20
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "scene_final_ascent_call": {
+      "image": "assets/images/scenarios/ch02_school/scene_final_ascent.webp",
+      "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
+      "narrative": "妳深吸一口氣，按下哥哥的號碼。撥號音響了兩聲後，通話接通了 ——\n\n但電話那頭沒有任何聲音，連剛才那種微弱的迴響都消失了，安靜得像是一個被抽乾空氣的黑洞。\n\n「⋯⋯喂？哥？你有在聽嗎？」\n\n妳對著話筒追問，聲音單薄地消失在這片死寂中。回應妳的依然只有那種讓人背脊發涼的沈默。緊接著，手機螢幕無預警地閃爍了兩下，隨即徹底熄滅，化為一片漆黑的鏡面。\n\n通話中斷的瞬間，妳猛然意識到——不能再原地等下去了。無論「哥哥」要妳到的天台上有什麼，都比留在這片惡意中好。妳深吸一口氣，抓緊書包，朝著上方的方向奔去。\n\n沿路的景象不斷扭曲變形——走廊像被拉長成一條血色的舌頭、樓梯轉角的牆面長出停留在 23:47 的掛鐘、空氣中黏稠的紅光每跑一步就在地上拖出黏膩的濕跡。\n\n「這到底怎麼回事⋯⋯」妳邊跑邊在心裡嘀咕，試圖理清這一切詭異的現象。但妳不敢停下來思考，只能不斷往上爬，那是唯一還有光亮的地方。\n\n終於，妳推開了通往天台的那扇沉重鐵門。\n\n強風瞬間灌進妳的領口，凍得妳打了個寒顫。妳看見在那片血紅色的天空下，一個熟悉的背影正靜靜地站在天台邊緣，背對著妳。\n\n那是哥哥。他穿著早上出門時的那件外套，手裡拿著一支妳最愛喝的手搖飲，冰塊撞擊杯壁的「叮、叮」聲，在狂風中竟然聽得清清楚楚，彷彿那聲音是直接在妳腦袋裡響起的。",
       "choices": [
         {
           "label": "（止步）你剛才不是說你在校門口？為什麼現在在這裡？",
@@ -1732,6 +1845,21 @@
         {
           "default": true,
           "next": "scene_final_ascent"
+        }
+      ]
+    },
+    "scene_dispatch_after_call": {
+      "narrative": "",
+      "conditional_next": [
+        {
+          "if_resource_below": {
+            "san": 50
+          },
+          "next": "scene_lost_sanity"
+        },
+        {
+          "default": true,
+          "next": "scene_final_ascent_call"
         }
       ]
     },

@@ -408,7 +408,7 @@
 選項：
 
 1. **「（傳簡訊）你在哪？我在學校等你，但學校好像有點詭異。」** → scene_dispatch_after_sms [sms_sent+1]
-2. **「（撥打電話）還是再打一次確認看看，這次我要聽清楚一點。」** → scene_dispatch_after_sms（聽筒只有刺耳電子雜訊與指甲刮金屬聲，通話被切斷）
+2. **「（撥打電話）還是再打一次確認看看，這次我要聽清楚一點。」** → scene_dispatch_after_call [san-5]
 
 ---
 
@@ -470,11 +470,31 @@
 > **變體說明**：分流規則放在 `scene_dispatch_after_sms` router：
 > - san < 50 → lost_sanity
 > - **sms_sent ≥ 1 → scene_final_ascent_sms**（玩家剛傳完簡訊）
-> - default → scene_final_ascent（玩家撥電話 / 直接從 phone_again 過來，clue<2 跳過 SMS 步驟）
+> - default → scene_final_ascent（直接從 phone_again 過來，clue<2 跳過 SMS 步驟 — 玩家延續第二通電話的回應）
 >
 > SMS 變體只改開頭五段（傳訊息 / 等已讀 / 補一則 / 螢幕黑掉 → 訊號中斷），中段「沿路扭曲」+ 結尾「天台」與選項全部與 scene_final_ascent 共用。圖跟 BGM 也共用。
 
 選項：與 `scene_final_ascent` 完全相同（共用兩選項 → scene_the_climax）。
+
+---
+
+## scene_final_ascent_call （**重撥電話變體** — 玩家在 sms_or_call 選了撥打電話）
+
+> 妳深吸一口氣，按下哥哥的號碼。撥號音響了兩聲後，通話接通了 ——
+>
+> 但電話那頭沒有任何聲音，連剛才那種微弱的迴響都消失了，安靜得像是一個被抽乾空氣的黑洞。
+>
+> 「⋯⋯喂？哥？你有在聽嗎？」
+>
+> 妳對著話筒追問，聲音單薄地消失在這片死寂中。回應妳的依然只有那種讓人背脊發涼的沈默。緊接著，手機螢幕無預警地閃爍了兩下，隨即徹底熄滅，化為一片漆黑的鏡面。
+>
+> （「通話中斷的瞬間⋯」+ 沿路扭曲蒙太奇 + 天台段與 scene_final_ascent 完全相同）
+
+> **變體說明**：sms_or_call 撥電話選項導向專屬 router `scene_dispatch_after_call`（san<50→lost_sanity / default→final_ascent_call），不走 dispatch_after_sms。原因：scene_final_ascent 開頭「妳的話音落下後」對「延續第二通電話的玩家」合理，但 sms_or_call 撥的是**新一通電話**，需要鋪墊「按號碼→撥號音→接通」的動作鏈才接得上講話。
+>
+> 改寫只動開頭四段（按號碼 / 撥通 / 對方沉默 / 喂喂 / 螢幕黑掉），中段「沿路扭曲」+ 結尾「天台」+ 選項 + image/bgm 與主版共用。
+
+選項：與 `scene_final_ascent` 完全相同。
 
 ---
 
@@ -567,7 +587,18 @@ next → scene_lost_sanity
 
 條件路由：
 
-- 預設 → scene_final_ascent（**整合期**：根據觸發來源可細化分流到 phone_again 各變體 / final_ascent / endless_stairs；初期統一接 final_ascent）
+- san < 50 → scene_lost_sanity
+- sms_sent ≥ 1 → scene_final_ascent_sms（玩家剛傳完簡訊變體）
+- 預設 → scene_final_ascent（玩家從 phone_again 直接過來、clue<2 跳過 SMS 步驟）
+
+## scene_dispatch_after_call （**重撥電話結束折回主流程**）
+
+> （router）
+
+條件路由：
+
+- san < 50 → scene_lost_sanity
+- 預設 → scene_final_ascent_call（重撥電話變體 — sms_or_call 撥電話選項專用）
 
 ## scene_dispatch_routeA_truth_check （**雙軸真結局判定**）
 
