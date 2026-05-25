@@ -83,6 +83,8 @@
 > 才過了三分鐘。但妳轉頭看向窗外，那抹原本應該緩緩沉落的橘紅夕陽，現在竟然像是融化的蠟一樣，在天邊拉出了幾道詭異的血色條紋。
 >
 > 妳看著那些斜射進教室的光影，光影的夾角和妳剛才坐下時似乎一模一樣，沒有絲毫移動。一種強烈的違和感像冷水般從腳底竄上脊椎，妳感到一陣莫名的不適，連呼吸都變得有些侷促。
+>
+> 就在這時，手心裡的手機猛然震動 —— 是哥哥來電。
 
 選項：
 
@@ -132,11 +134,13 @@
    - 失敗 → scene_door_stuck [san-15]
    - 大失敗 → scene_door_stuck [san-20]
 2. **「冷靜點，先打電話給哥哥問他在哪」** — observe 檢定
-   - 大成功 → scene_phone_again [clue+1]
-   - 成功 → scene_phone_again
+   - 大成功 → scene_phone_again_outgoing [clue+1]
+   - 成功 → scene_phone_again_outgoing
    - 代價成功 → scene_phone_static [san-5]
    - 失敗 → scene_phone_static [san-5]
    - 大失敗 → scene_phone_static [san-15]
+
+> **路徑備註**：crit/success 走 `scene_phone_again_outgoing`（**outgoing 變體** — 妹妹主動撥電話視角），不是主版被動來電。partial/failure/fumble 走 `scene_phone_static`（撥不通只有雜訊）。
 
 ---
 
@@ -235,6 +239,18 @@
    - 大失敗 → scene_dispatch_clue_check [san-20]（對面沉默後的尖銳笑聲）
 2. **「（求救）哥！這學校不對勁！你快點過來接我！」** → scene_dispatch_clue_check
 3. **「好，我現在上去找你⋯⋯」** → scene_dispatch_clue_check [san-25]（妹妹被聲音帶偏，朝壞結局偏移 — 玩家不知道）
+
+---
+
+## scene_phone_again_outgoing （**主動撥電話 perspective 變體** — classroom_wake 撥電話 crit/success 走這裡）
+
+> 妳深吸一口氣按下哥哥的號碼。撥號音響了兩聲後，通話接通了 ——
+>
+> （後段「電話那頭安靜得詭異⋯⋯哥哥的聲音⋯⋯掛鐘聲加快⋯⋯門開縫隙」與 `scene_phone_again` 完全相同）
+
+選項：與 `scene_phone_again` 完全相同（共用三選項 → scene_dispatch_clue_check）。
+
+> **變體說明**：classroom_wake 第二選項「冷靜點，先打電話給哥哥」是**妹妹主動撥**，但主版 `scene_phone_again` 開頭「螢幕閃爍：哥哥」是**被動來電**視角，因果反向。此變體開頭兩段改寫成「妳按下哥哥的號碼→通話接通了」，後段與主版完全共用（電話內容跟對話走向一致 — 接通後假哥哥開口叫上天台）。
 
 ---
 

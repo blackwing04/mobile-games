@@ -99,7 +99,7 @@
     "scene_wait_classroom": {
       "image": "assets/images/scenarios/ch02_school/scene_wait_classroom.webp",
       "bgm": "assets/audio/bgm/building-tension.mp3",
-      "narrative": "妳嘆了口氣，坐回座位，把耳機塞進耳朵。妳決定給哥哥五分鐘，如果他沒出現，妳就自己去搭公車回家。\n\n教室門口傳來幾聲零星的腳步聲。最後一個離開的同學在拉上門前，隔著門窗跟妳揮了揮手，口型似乎是在說「明天見」。妳點了點頭，勉強擠出一個微笑，心裡卻在想：這學校今天靜得讓人耳鳴。\n\n妳再次抬頭看向黑板旁的掛鐘。\n\n指針依然停在 23:47。但這一次妳注意到，那根黑色的秒針正在劇烈地顫動著。它像是想要往前跳，卻被某種看不見的力量死死拽住，在寂靜的教室裡發出極其細微的「喀——喀——」聲。\n\n妳皺起眉，下意識地掏出手機確認：17:03。\n\n才過了三分鐘。但妳轉頭看向窗外，那抹原本應該緩緩沉落的橘紅夕陽，現在竟然像是融化的蠟一樣，在天邊拉出了幾道詭異的血色條紋。\n\n妳看著那些斜射進教室的光影，光影的夾角和妳剛才坐下時似乎一模一樣，沒有絲毫移動。一種強烈的違和感像冷水般從腳底竄上脊椎，妳感到一陣莫名的不適，連呼吸都變得有些侷促。",
+      "narrative": "妳嘆了口氣，坐回座位，把耳機塞進耳朵。妳決定給哥哥五分鐘，如果他沒出現，妳就自己去搭公車回家。\n\n教室門口傳來幾聲零星的腳步聲。最後一個離開的同學在拉上門前，隔著門窗跟妳揮了揮手，口型似乎是在說「明天見」。妳點了點頭，勉強擠出一個微笑，心裡卻在想：這學校今天靜得讓人耳鳴。\n\n妳再次抬頭看向黑板旁的掛鐘。\n\n指針依然停在 23:47。但這一次妳注意到，那根黑色的秒針正在劇烈地顫動著。它像是想要往前跳，卻被某種看不見的力量死死拽住，在寂靜的教室裡發出極其細微的「喀——喀——」聲。\n\n妳皺起眉，下意識地掏出手機確認：17:03。\n\n才過了三分鐘。但妳轉頭看向窗外，那抹原本應該緩緩沉落的橘紅夕陽，現在竟然像是融化的蠟一樣，在天邊拉出了幾道詭異的血色條紋。\n\n妳看著那些斜射進教室的光影，光影的夾角和妳剛才坐下時似乎一模一樣，沒有絲毫移動。一種強烈的違和感像冷水般從腳底竄上脊椎，妳感到一陣莫名的不適，連呼吸都變得有些侷促。\n\n就在這時，手心裡的手機猛然震動 —— 是哥哥來電。",
       "choices": [
         {
           "label": "走過去仔細看那個掛鐘到底怎麼了",
@@ -322,7 +322,7 @@
             "skill": "observe",
             "outcomes": {
               "critical_success": {
-                "next": "scene_phone_again",
+                "next": "scene_phone_again_outgoing",
                 "effects": [
                   {
                     "resource": "clue",
@@ -331,7 +331,7 @@
                 ]
               },
               "success": {
-                "next": "scene_phone_again"
+                "next": "scene_phone_again_outgoing"
               },
               "partial": {
                 "next": "scene_phone_static",
@@ -685,6 +685,80 @@
       "image": "assets/images/scenarios/ch02_school/scene_phone_again.webp",
       "bgm": "assets/audio/bgm/building-tension.mp3",
       "narrative": "螢幕閃爍著：「哥哥」。\n\n妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。\n\n「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」\n\n妳聽著那溫柔的嗓音，看著眼前這間陷入死寂黑暗、連門把都扭不動的教室。\n\n哥哥剛才說⋯⋯夕陽很漂亮？\n\n就在妳遲疑的瞬間，背後那個「喀、喀」的掛鐘聲突然加快了。原本打不開的教室門，竟然在此時發出「喀擦」一聲，自己緩緩推開了一道縫隙，露出外面那條血紅色的長廊。",
+      "choices": [
+        {
+          "label": "（質問）你剛才不是叫我別出去嗎？為什麼現在又要我去天台？",
+          "skill_check": {
+            "skill": "observe",
+            "outcomes": {
+              "critical_success": {
+                "next": "scene_dispatch_clue_check",
+                "effects": [
+                  {
+                    "resource": "clue",
+                    "delta": 2
+                  }
+                ]
+              },
+              "success": {
+                "next": "scene_dispatch_clue_check",
+                "effects": [
+                  {
+                    "resource": "clue",
+                    "delta": 1
+                  }
+                ]
+              },
+              "partial": {
+                "next": "scene_dispatch_clue_check",
+                "effects": [
+                  {
+                    "resource": "san",
+                    "delta": -10
+                  }
+                ]
+              },
+              "failure": {
+                "next": "scene_dispatch_clue_check",
+                "effects": [
+                  {
+                    "resource": "san",
+                    "delta": -10
+                  }
+                ]
+              },
+              "fumble": {
+                "next": "scene_dispatch_clue_check",
+                "effects": [
+                  {
+                    "resource": "san",
+                    "delta": -20
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "label": "（求救）哥！這學校不對勁！你快點過來接我！",
+          "next": "scene_dispatch_clue_check"
+        },
+        {
+          "label": "好，我現在上去找你⋯⋯",
+          "next": "scene_dispatch_clue_check",
+          "effects": [
+            {
+              "resource": "san",
+              "delta": -25
+            }
+          ]
+        }
+      ]
+    },
+    "scene_phone_again_outgoing": {
+      "image": "assets/images/scenarios/ch02_school/scene_phone_again.webp",
+      "bgm": "assets/audio/bgm/building-tension.mp3",
+      "narrative": "妳深吸一口氣按下哥哥的號碼。撥號音響了兩聲後，通話接通了 ——\n\n電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。\n\n「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」\n\n妳聽著那溫柔的嗓音，看著眼前這間陷入死寂黑暗、連門把都扭不動的教室。\n\n哥哥剛才說⋯⋯夕陽很漂亮？\n\n就在妳遲疑的瞬間，背後那個「喀、喀」的掛鐘聲突然加快了。原本打不開的教室門，竟然在此時發出「喀擦」一聲，自己緩緩推開了一道縫隙，露出外面那條血紅色的長廊。",
       "choices": [
         {
           "label": "（質問）你剛才不是叫我別出去嗎？為什麼現在又要我去天台？",
