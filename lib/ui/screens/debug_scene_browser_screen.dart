@@ -302,7 +302,8 @@ class _DetailBody extends ConsumerWidget {
             const SizedBox(height: 12),
             Text('選項 (${scene.choices.length})',
                 style: const TextStyle(fontWeight: FontWeight.bold)),
-            for (final c in scene.choices) _ChoiceBlock(choice: c),
+            for (final c in scene.choices)
+              _ChoiceBlock(choice: c, scenario: scenario),
           ],
           if (scene.conditionalNext.isNotEmpty) ...[
             const SizedBox(height: 12),
@@ -421,8 +422,36 @@ class _DetailBody extends ConsumerWidget {
 
 class _ChoiceBlock extends StatelessWidget {
   final Choice choice;
+  final Scenario scenario;
 
-  const _ChoiceBlock({required this.choice});
+  const _ChoiceBlock({required this.choice, required this.scenario});
+
+  /// 把 `next` 指向 router 的場景展開：把該 router 的 conditional_next 列出來，
+  /// 玩家一眼看出「啊這 choice 跑 router 還會分流到 X / Y / Z」
+  List<String> _expandRouter(String? next, {String indent = '    ↳ '}) {
+    if (next == null) return const [];
+    final target = scenario.sceneById(next);
+    if (target == null || !target.isRouter) return const [];
+    return [
+      for (final cn in target.conditionalNext) '$indent${_describeCn(cn)}',
+    ];
+  }
+
+  String _describeCn(ConditionalNext cn) {
+    final parts = <String>[];
+    if (cn.isDefault) parts.add('default');
+    if (cn.ifResourceAtLeast != null) {
+      parts.add(cn.ifResourceAtLeast!.entries
+          .map((e) => '${e.key}≥${e.value}')
+          .join(' AND '));
+    }
+    if (cn.ifResourceBelow != null) {
+      parts.add(cn.ifResourceBelow!.entries
+          .map((e) => '${e.key}<${e.value}')
+          .join(' AND '));
+    }
+    return '${parts.join(", ")} → ${cn.next}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -436,6 +465,7 @@ class _ChoiceBlock extends StatelessWidget {
             .join(', ');
         lines.add(
             '  ${outcome.jsonKey} → ${branch.next}${fx.isEmpty ? "" : " [$fx]"}');
+        lines.addAll(_expandRouter(branch.next, indent: '      ↳ '));
       });
     } else {
       final fx = choice.effects
@@ -443,6 +473,7 @@ class _ChoiceBlock extends StatelessWidget {
           .join(', ');
       lines.add(
           'direct → ${choice.next}${fx.isEmpty ? "" : " [$fx]"}');
+      lines.addAll(_expandRouter(choice.next));
     }
     if (choice.requireResourceAtLeast != null) {
       lines.add(
