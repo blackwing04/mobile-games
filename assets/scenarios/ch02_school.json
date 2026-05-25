@@ -867,6 +867,7 @@
       ]
     },
     "scene_phone_again_escape": {
+      "image": "assets/images/scenarios/ch02_school/scene_phone_again_escape.webp",
       "bgm": "assets/audio/bgm/horror-dark.mp3",
       "narrative": "妳發出一聲嘶吼，用肩膀全力撞向門板。「砰！」的一聲巨響，那扇沉重的門竟被妳撞開了一道縫隙。妳顧不得肩膀傳來的撕裂感，側身從縫隙中擠了出去。\n\n就在那股冰冷的感覺快要貼上妳的後頸時，妳撞開了後門逃了出去，此時妳口袋裡的手機猛然震動，強烈的震感讓妳大腿發麻，妳緊張地從口袋拿出手機。螢幕閃爍著：「哥哥」。\n\n妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。\n\n「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」\n\n妳聽著那溫柔的嗓音，看著眼前這條被夕陽——或是被鮮血——染紅的長廊。\n\n哥哥剛才說⋯⋯夕陽很漂亮？\n\n就在妳遲疑的瞬間，後方教室內那個「喀、喀」的掛鐘聲突然加快了，聲音大得像是就在妳耳邊。妳回頭一看，原本被撞開的教室門竟在妳面前緩緩合上，只留下一條深紅色的長廊在妳面前延伸。",
       "choices": [
@@ -977,6 +978,7 @@
       ]
     },
     "scene_phone_again_stairs": {
+      "image": "assets/images/scenarios/ch02_school/scene_phone_again_stairs.webp",
       "bgm": "assets/audio/bgm/building-tension.mp3",
       "narrative": "螢幕閃爍著：「哥哥」。\n\n妳像抓到救命稻草般按下了接聽鍵，電話那頭安靜得詭異，沒有剛才的風聲，只有一種規律的、像是有人在空曠大廳裡緩步移動的微弱迴響。\n\n「妹，妳還在教室嗎？」哥哥的聲音聽起來輕鬆、溫和，甚至帶著一點笑意，跟三分鐘前那種焦慮到近乎窒息的語氣完全不同。「我到校門口了，這裡的夕陽真的好漂亮，雲都是金色的。妳慢慢收拾，我現在上去天台等妳，我們好久沒一起看風景了，快上來。」\n\n妳聽著那溫柔的嗓音，看著眼前這條陷入血紅色暗影的樓梯。\n\n哥哥剛才說⋯⋯夕陽很漂亮？",
       "choices": [
@@ -1050,6 +1052,7 @@
       ]
     },
     "scene_endless_stairs": {
+      "image": "assets/images/scenarios/ch02_school/scene_endless_stairs.webp",
       "bgm": "assets/audio/bgm/frozen-in-the-nebula-liminal-dark-eerie-space.mp3",
       "narrative": "妳衝出走廊，一頭栽進空曠的樓梯間。妳扶著冰冷的不鏽鋼扶手，發了瘋似地往下衝，球鞋在磨石子階梯上發出急促且混亂的摩擦聲。\n\n妳下了一層又一層，但無論妳怎麼加速，前方永遠是向下延伸、看不見底的灰色台階。\n\n妳猛然停下腳步，轉頭看向牆上的樓層標示。\n\n原本應該標註樓層的藍色壓克力牌不見了。取而代之的，是一個圓形的掛鐘。它像是直接從牆壁裡長出來的一樣，鐘面上的秒針發出咬碎枯木般的聲音，正死死地定格在 23:47。\n\n妳不死心地繼續往下跑，每經過一個樓層轉角，牆上都掛著一模一樣的鐘，每一面都指著同一個時間。樓梯間的回音讓妳產生錯覺，彷彿有無數個妳正在不同的時空同時奔跑。\n\n此時，妳感覺後頸傳來一陣刺骨的惡寒。\n\n上方的樓梯轉角傳來了那種黏稠的拖行聲，在那種完全開放的空間裡，聲音被牆壁折射得無處不在。妳不敢回頭，因為妳知道，那個「東西」正順著扶手滑行，祂的影子已經在妳腳邊的台階上緩緩拉長。",
       "choices": [
@@ -1076,6 +1079,7 @@
       ]
     },
     "scene_endless_stairs_search": {
+      "image": "assets/images/scenarios/ch02_school/scene_endless_stairs.webp",
       "bgm": "assets/audio/bgm/frozen-in-the-nebula-liminal-dark-eerie-space.mp3",
       "narrative": "妳深吸了一口氣，把書包甩到肩上。哥哥那句「別出去」反倒讓妳更不安——他在電話裡的口氣慌得不像他，是不是真的在校門口出了什麼事？妳沒辦法繼續坐在這裡乾等。\n\n妳推開教室前門走進空蕩的走廊。模擬考剛結束，學生早就走光了，自己的腳步聲在磁磚地上敲出空洞的回音，像是有人在背後配合著一步一步跟上來。\n\n妳告訴自己這只是錯覺，沿著樓梯間往下走。扶著冰冷的不鏽鋼扶手，妳一邊下樓一邊在心裡盤算著：只要到校門口找到哥哥，這股說不上來的怪異感就會散去。\n\n但下了一層又一層，前方永遠是向下延伸、看不見底的灰色台階。\n\n妳猛然停下腳步，轉頭看向牆上的樓層標示。\n\n原本應該標註樓層的藍色壓克力牌不見了。取而代之的，是一個圓形的掛鐘。它像是直接從牆壁裡長出來的一樣，鐘面上的秒針發出咬碎枯木般的聲音，正死死地定格在 23:47。\n\n妳不死心地繼續往下跑，每經過一個樓層轉角，牆上都掛著一模一樣的鐘，每一面都指著同一個時間。樓梯間的回音讓妳產生錯覺，彷彿有無數個妳正在不同的時空同時奔跑。\n\n此時，妳感覺後頸傳來一陣刺骨的惡寒。\n\n上方的樓梯轉角傳來了那種黏稠的拖行聲，在那種完全開放的空間裡，聲音被牆壁折射得無處不在。妳不敢回頭，因為妳知道，那個「東西」正順著扶手滑行，祂的影子已經在妳腳邊的台階上緩緩拉長。",
       "choices": [
@@ -1102,6 +1106,7 @@
       ]
     },
     "scene_sms_or_call": {
+      "image": "assets/images/scenarios/ch02_school/scene_sms_or_call.webp",
       "bgm": "assets/audio/bgm/building-tension.mp3",
       "narrative": "妳放慢了腳步，甚至停了下來。在這片死寂中，那些被恐懼掩蓋的細節開始在腦中拼湊。\n\n剛才第二通電話裡哥哥那種溫柔的語氣，在妳心頭激起了一陣不安。在妳的記憶中，哥哥從來不曾用那種輕聲細語的方式跟妳說話。雖然他是妳最親的人，但他平時講話直來直往，甚至帶點脾氣，這種突如其來的「溫柔」反而讓妳覺得陌生。\n\n妳忍不住開始回想第一通電話。那時他的聲音聽起來急急燥燥的，雖然他脾氣不算好，但做事向來有條有理，絕不會像剛才那樣顯得慌亂失序。\n\n「這真的不像他⋯⋯」\n\n這種怪異感讓妳心裡毛毛的。妳轉頭看向四周，只有無盡的黑暗與扭曲的課桌椅。就在這時，妳手中手機螢幕發出的微弱白光映入眼簾，那道光在昏暗中跳動著，像是這片混亂空間裡唯一真實的東西，也讓妳產生了一個念頭。",
       "choices": [
@@ -1128,6 +1133,7 @@
       ]
     },
     "scene_dream_intrusion": {
+      "image": "assets/images/scenarios/ch02_school/scene_dream_intrusion.webp",
       "bgm": "assets/audio/bgm/halloween-bgmkill-me-babydark.mp3",
       "narrative": "妳的眼皮變得異常沉重，意識像是沉入了一片深不見底的溫水之中。妳夢見自己依然坐在教室裡，但窗外的夕陽不再是金橘色，而是一種鮮艷得近乎刺眼的暗紅。\n\n妳聽見身後傳來翻動書頁的聲音，回頭一看，座位上坐著無數個「妳」。她們全都低著頭，動作整齊劃一地在課本上塗抹著。妳好奇地湊近看，發現她們用原子筆反覆刻畫著同一個數字：23:47。筆尖劃破紙張的聲音，在寂靜的夢裡聽起來像是在切割妳的耳膜。\n\n其中一個「妳」緩緩抬起頭。她的臉像是一張被抹平的白紙，沒有任何五官，只有額頭上貼著一張發黃的便條紙。\n\n她伸出冰冷的手，輕輕覆蓋在妳的臉上。妳想掙扎，卻發現自己的身體正迅速變硬、變冷，皮膚開始呈現出一種大理石般的慘白色。那種感覺並不痛苦，反而帶著一種讓人墮落的安寧。\n\n「不用再跑了⋯⋯」 妳聽見自己的聲音在腦海中溫柔地低語：「留下來，我們一起等他。」\n\n當那個無面的「妳」將手移開時，妳發現夢境與現實的界線已經徹底溶解。",
       "choices": [
@@ -1158,6 +1164,7 @@
       ]
     },
     "scene_final_ascent": {
+      "image": "assets/images/scenarios/ch02_school/scene_final_ascent.webp",
       "bgm": "assets/audio/bgm/the_mountain-horror.mp3",
       "narrative": "妳的話音落下後，電話那頭遲遲沒有回應。\n\n妳保持著通話的姿勢，耳朵緊貼著冰冷的手機螢幕。原本應該傳來哥哥回覆的頻道，此時卻安靜得像是一個被抽乾空氣的黑洞，連剛才那種微弱的迴響都消失得無影無蹤。\n\n「⋯⋯喂？哥？你有在聽嗎？」\n\n妳忍不住再次對著話筒追問，聲音單薄地消失在這片死寂中。回應妳的依然只有那種讓人背脊發涼的沈默。緊接著，手機螢幕無預警地閃爍了兩下，隨即徹底熄滅，化為一片漆黑的鏡面。\n\n通話中斷的瞬間，妳猛然意識到——不能再原地等下去了。無論「哥哥」要妳到的天台上有什麼，都比留在這片惡意中好。妳深吸一口氣，抓緊書包，朝著上方的方向奔去。\n\n沿路的景象不斷扭曲變形——走廊像被拉長成一條血色的舌頭、樓梯轉角的牆面長出停留在 23:47 的掛鐘、空氣中黏稠的紅光每跑一步就在地上拖出黏膩的濕跡。\n\n「這到底怎麼回事⋯⋯」妳邊跑邊在心裡嘀咕，試圖理清這一切詭異的現象。但妳不敢停下來思考，只能不斷往上爬，那是唯一還有光亮的地方。\n\n終於，妳推開了通往天台的那扇沉重鐵門。\n\n強風瞬間灌進妳的領口，凍得妳打了個寒顫。妳看見在那片血紅色的天空下，一個熟悉的背影正靜靜地站在天台邊緣，背對著妳。\n\n那是哥哥。他穿著早上出門時的那件外套，手裡拿著一支妳最愛喝的手搖飲，冰塊撞擊杯壁的「叮、叮」聲，在狂風中竟然聽得清清楚楚，彷彿那聲音是直接在妳腦袋裡響起的。",
       "choices": [
@@ -1270,6 +1277,7 @@
       ]
     },
     "scene_the_climax": {
+      "image": "assets/images/scenarios/ch02_school/scene_the_climax.webp",
       "bgm": "assets/audio/bgm/entropy-sad-horror-piano-music.mp3",
       "narrative": "透過天台機房玻璃上的倒影，他看見了站在門口的妳。那個背影微微一頓，接著，他緩緩地轉過身來。\n\n那張臉確實是妳熟悉的哥哥，他舉起拿著手搖飲的手對著妳搖了搖。\n\n「妹，妳在那邊發什麼呆？過來呀，我買了妳最愛喝的飲料，妳看這夕陽多美，我們看完再一起回家吧。」\n\n他溫柔地說著，但妳注意到他的嘴型與聲音有著詭異的延遲，那種殘響像是不斷重疊的幻聽。此時，他腳下的影子竟像怪物般，正沿著天台地板朝妳緩緩爬過來。\n\n見妳遲遲不肯過去，他指了指手腕上的手錶，那上面的指針正瘋狂倒轉，最後死死地卡在 23:47。\n\n「快點，妹妹。妳再不過來⋯⋯夕陽就要下山了喔。」",
       "choices": [
@@ -1356,6 +1364,7 @@
       ]
     },
     "scene_rejection_and_escape": {
+      "image": "assets/images/scenarios/ch02_school/scene_rejection_and_escape.webp",
       "bgm": "assets/audio/bgm/music-pain.mp3",
       "narrative": "「你不是我哥。」\n\n妳的話音剛落，空氣瞬間凝固。前一秒還溫柔微笑的「哥哥」，臉部肌肉開始像融化的蠟一樣垮下，那張臉迅速乾縮成一個漆黑的深淵。他手裡的那杯手搖飲「啪」地掉落在地，流出的卻是帶著腐臭味的黑色黏液。\n\n「⋯⋯被⋯⋯發現了⋯⋯啊⋯⋯」\n\n那聲音化作尖銳的嘶吼，整個天台開始崩塌，地面變得像沼澤般柔軟。那團黑影怪物猛地彈起，像一塊巨大的黑布朝妳撲過來！妳沒有一絲遲疑，轉身就往天台門口的樓梯間狂奔。\n\n背後傳來那種濕滑、黏稠的磨擦聲，而且越來越近，幾乎就貼在妳的後腦勺上。那股腥臭的惡寒讓妳全身的汗毛直豎。\n\n妳感覺到，只要一慢下來，背後那頭漆黑怪獸就會將妳整個人吞噬下去。",
       "choices": [
@@ -1483,6 +1492,7 @@
       ]
     },
     "scene_true_rescue": {
+      "image": "assets/images/scenarios/ch02_school/scene_true_rescue.webp",
       "bgm": "assets/audio/bgm/per-sempre-noi.mp3",
       "narrative": "",
       "ending": {
@@ -1492,6 +1502,7 @@
       }
     },
     "scene_self_break": {
+      "image": "assets/images/scenarios/ch02_school/scene_self_break.webp",
       "bgm": "assets/audio/bgm/melancholic-piano.mp3",
       "narrative": "",
       "ending": {
@@ -1501,6 +1512,7 @@
       }
     },
     "scene_normal_escape": {
+      "image": "assets/images/scenarios/ch02_school/scene_normal_escape.webp",
       "bgm": "assets/audio/bgm/sad-strings.mp3",
       "narrative": "",
       "ending": {
@@ -1510,6 +1522,7 @@
       }
     },
     "scene_rescued": {
+      "image": "assets/images/scenarios/ch02_school/scene_rescued.webp",
       "bgm": "assets/audio/bgm/entropy-sad-horror-piano-music.mp3",
       "narrative": "",
       "ending": {
@@ -1519,6 +1532,7 @@
       }
     },
     "scene_lost_soul": {
+      "image": "assets/images/scenarios/ch02_school/scene_lost_soul.webp",
       "bgm": "assets/audio/bgm/halloween-bgmkill-me-babydark.mp3",
       "narrative": "",
       "ending": {
@@ -1528,6 +1542,7 @@
       }
     },
     "scene_lost_sanity": {
+      "image": "assets/images/scenarios/ch02_school/scene_lost_sanity.webp",
       "bgm": "assets/audio/bgm/feedeorfano-terror.mp3",
       "narrative": "",
       "ending": {
@@ -1537,6 +1552,7 @@
       }
     },
     "scene_curse_spread": {
+      "image": "assets/images/scenarios/ch02_school/scene_curse_spread.webp",
       "bgm": "assets/audio/bgm/horror-ambience.mp3",
       "narrative": "",
       "ending": {

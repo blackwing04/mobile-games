@@ -89,14 +89,18 @@ def compress_one(src: Path) -> tuple[int, int]:
 
 
 def update_json_paths(json_path: Path) -> int:
-    """把 JSON 內所有 image / cover_image 欄位的 .png → .webp。回傳替換次數。"""
+    """把 JSON 內所有 image / cover_image 欄位的 .png/.jpg/.jpeg → .webp。回傳替換次數。"""
     text = json_path.read_text(encoding="utf-8")
     new_text = text
     count = 0
-    # 抓有 image / cover_image / ending image 等所有路徑欄位的 .png 字串
     for line in text.splitlines():
-        if "image" in line and ".png" in line and "scenarios/" in line:
-            new_line = line.replace(".png", ".webp")
+        if "image" in line and "scenarios/" in line and any(
+            ext in line for ext in (".png", ".jpg", ".jpeg")
+        ):
+            new_line = (line
+                        .replace(".png", ".webp")
+                        .replace(".jpeg", ".webp")
+                        .replace(".jpg", ".webp"))
             new_text = new_text.replace(line, new_line)
             count += 1
     if count > 0:
@@ -105,14 +109,17 @@ def update_json_paths(json_path: Path) -> int:
 
 
 def process_chapter(chapter_dir: Path) -> None:
-    pngs = sorted(chapter_dir.glob("*.png"))
-    if not pngs:
-        print(f"[{chapter_dir.name}] 沒有 PNG，略過")
+    sources = sorted(
+        [p for p in chapter_dir.iterdir()
+         if p.suffix.lower() in (".png", ".jpg", ".jpeg")]
+    )
+    if not sources:
+        print(f"[{chapter_dir.name}] 沒有 PNG/JPG，略過")
         return
 
-    print(f"\n[{chapter_dir.name}] 找到 {len(pngs)} 張 PNG")
+    print(f"\n[{chapter_dir.name}] 找到 {len(sources)} 張原始圖")
     total_src = total_dst = 0
-    for src in pngs:
+    for src in sources:
         s, d = compress_one(src)
         total_src += s
         total_dst += d
