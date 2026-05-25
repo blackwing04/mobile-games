@@ -83,17 +83,15 @@
 > 才過了三分鐘。但妳轉頭看向窗外，那抹原本應該緩緩沉落的橘紅夕陽，現在竟然像是融化的蠟一樣，在天邊拉出了幾道詭異的血色條紋。
 >
 > 妳看著那些斜射進教室的光影，光影的夾角和妳剛才坐下時似乎一模一樣，沒有絲毫移動。一種強烈的違和感像冷水般從腳底竄上脊椎，妳感到一陣莫名的不適，連呼吸都變得有些侷促。
->
-> 就在這時，手心裡的手機猛然震動 —— 是哥哥來電。
 
 選項：
 
 1. **「走過去仔細看那個掛鐘到底怎麼了」** — observe 檢定
-   - 大成功 → scene_phone_again [clue+2, san-3]
-   - 成功 → scene_phone_again [clue+1, san-5]
-   - 代價成功 → scene_phone_again [san-10]
-   - 失敗 → scene_phone_again [san-8]
-   - 大失敗 → scene_phone_again [san-20]
+   - 大成功 → scene_phone_again_clock [clue+2, san-3]
+   - 成功 → scene_phone_again_clock [clue+1, san-5]
+   - 代價成功 → scene_phone_again_clock [san-10]
+   - 失敗 → scene_phone_again_clock [san-8]
+   - 大失敗 → scene_phone_again_clock [san-20]
 2. **「這地方待不下去，不等了，立刻離開教室」** — strength 檢定
    - 大成功 → scene_endless_stairs [san-5]
    - 成功 → scene_endless_stairs [san-8]
@@ -239,6 +237,22 @@
    - 大失敗 → scene_dispatch_clue_check [san-20]（對面沉默後的尖銳笑聲）
 2. **「（求救）哥！這學校不對勁！你快點過來接我！」** → scene_dispatch_clue_check
 3. **「好，我現在上去找你⋯⋯」** → scene_dispatch_clue_check [san-25]（妹妹被聲音帶偏，朝壞結局偏移 — 玩家不知道）
+
+---
+
+## scene_phone_again_clock （**走向掛鐘途中接電話 perspective 變體** — wait_classroom 看掛鐘全 5 階走這裡）
+
+> 妳起身朝黑板邊的掛鐘走去，正想湊近看看那詭異的秒針究竟出了什麼問題 ——
+>
+> 才走兩步，手心裡的手機猛然震動。螢幕閃爍：「哥哥」。
+>
+> 妳停下腳步，按下接聽鍵 ——
+>
+> （後段「電話那頭安靜得詭異⋯⋯哥哥的聲音⋯⋯掛鐘聲加快⋯⋯門開縫隙」與 `scene_phone_again` 完全相同）
+
+選項：與 `scene_phone_again` 完全相同（共用三選項 → scene_dispatch_clue_check）。
+
+> **變體說明**：wait_classroom 第一選項「走過去仔細看那個掛鐘到底怎麼了」是玩家選擇主動起身觀察掛鐘。如果直接接 phone_again 主版的「螢幕閃爍：哥哥」，玩家剛起身走兩步就突然接電話、把觀察動作懸空很出戲。此變體開頭三段把「起身走向掛鐘 → 才走兩步 → 手機響 → 停下腳步接聽」的完整動作鏈寫清楚，再共用主版電話內容後段。
 
 ---
 
