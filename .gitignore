@@ -43,3 +43,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# 音訊母帶備份（normalize 前的原檔，git history 可還原，不重複佔 repo）
+tools/audio_source/
+
