@@ -1292,6 +1292,7 @@
       ]
     },
     "scene_phone_static": {
+      "image": "assets/images/scenarios/ch02_school/scene_phone_static.webp",
       "bgm": "assets/audio/bgm/horror-ambience.mp3",
       "narrative": "妳顫抖著按下哥哥的號碼，聽筒貼在耳邊。撥號音響了兩聲後，通話接通了。\n\n但聽筒裡傳出的不是哥哥的聲音，而是一陣刺耳的、忽大忽小的電子雜訊。妳隱約聽見背景裡有什麼聲音在說話，那聲音被雜訊撕成碎片，根本聽不清楚。\n\n「⋯⋯哥？」\n\n雜訊瞬間放大成一聲尖銳的嘯叫，妳痛得把手機從耳邊扯開。畫面顯示：通話已結束。\n\n妳僵在原地，背後那種被注視的感覺更強了。\n\n就在這時，手心裡的手機震動了一下。",
       "choices": [
@@ -1302,6 +1303,7 @@
       ]
     },
     "scene_monster_glimpse": {
+      "image": "assets/images/scenarios/ch02_school/scene_monster_glimpse.webp",
       "bgm": "assets/audio/bgm/feedeorfano-terror.mp3",
       "narrative": "妳深吸一口氣，按下手電筒鍵。一道慘白的光柱射向教室後排的陰影。\n\n在那一瞬間，妳看見了。\n\n一團蠕動的、濕漉漉的影子蹲在最後一排的課桌之間。它沒有臉，但有什麼東西在它「該是頭部的位置」朝妳轉了過來。妳認得那個輪廓——那是穿著校服的形狀，但比例都錯了，像是被誰把妳的剪影擰歪後重新拼裝的拙劣模仿。\n\n妳本能地關掉手電筒，但那個畫面已經烙在妳的視網膜上。\n\n就在這時，手心裡的手機震動了一下。",
       "choices": [
